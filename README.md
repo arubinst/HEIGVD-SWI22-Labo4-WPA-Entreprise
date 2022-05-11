@@ -2,7 +2,7 @@
 
 - [Échéance](#%c3%89ch%c3%a9ance)
 
-- [Quelques éléments à considérer](#quelques-%c3%a9l%c3%a9ments-%c3%a0-consid%c3%a9rer-pour-les-parties-2-et-3)
+- [Quelques éléments à considérer](#quelques-éléments-à-considérer-pour-les-parties-2-et-3-)
 
 - [Travail à réaliser](#travail-%c3%a0-r%c3%a9aliser)
 
