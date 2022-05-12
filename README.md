@@ -14,10 +14,9 @@ __A faire en équipes de deux personnes__
 
 ### Objectif :
 
-1.	Analyser les étapes d’une connexion WPA Entreprise avec une capture Wireshark
-2.	Implémenter une attaque WPE (Wireless Pwnage Edition) contre un réseau WPA Entreprise
-1.  Implémenter une attaque GTC Dowgrade contre un réseau WPA Entreprise
-
+1. Analyser les étapes d’une connexion WPA Entreprise avec une capture Wireshark
+2. Implémenter une attaque WPE (Wireless Pwnage Edition) contre un réseau WPA Entreprise
+3. Implémenter une attaque GTC Dowgrade contre un réseau WPA Entreprise
 
 ## Quelques éléments à considérer pour les parties 2 et 3 :
 
@@ -33,10 +32,10 @@ En principe, il devrait être possible de démarrer vos machines en Kali natif (
 nmcli radio wifi off
 rfkill unblock wlan
 ```
--	Pour pouvoir capturer une authentification complète, il faut se déconnecter d’un réseau et attendre 1 minute (timeout pour que l’AP « oublie » le client) 
--	Les échanges d’authentification entreprise peuvent être facilement trouvés utilisant le filtre d’affichage « ```eap``` » dans Wireshark
--   Il est __impératif__ de bien fixer le cannal lors de vos captures
 
+- Pour pouvoir capturer une authentification complète, il faut se déconnecter d’un réseau et attendre 1 minute (timeout pour que l’AP « oublie » le client) 
+- Les échanges d’authentification entreprise peuvent être facilement trouvés utilisant le filtre d’affichage « ```eap``` » dans Wireshark
+- Il est __impératif__ de bien fixer le cannal lors de vos captures
 
 ## Travail à réaliser
 
@@ -48,27 +47,57 @@ A tittre d'exemple, voici [une connexion WPA Entreprise](files/auth.pcap) qui co
 
 Pour réussir votre capture, vous pouvez procéder de la manière suivante :
 
-- 	Identifier l'AP le plus proche, en identifiant le canal utilisé par l’AP dont la puissance est la plus élevée (et dont le SSID est HEIG-VD...). Vous pouvez faire ceci avec ```airodump-ng```, par exemple
--   Lancer une capture avec Wireshark
--   Etablir une connexion depuis un poste de travail (PC), un smartphone ou n'importe quel autre client WiFi. __Attention__, il est important que la connexion se fasse à 2.4 GHz pour pouvoir sniffer avec les interfaces Alfa
+- Identifier l'AP le plus proche, en identifiant le canal utilisé par l’AP dont la puissance est la plus élevée (et dont le SSID est HEIG-VD...). Vous pouvez faire ceci avec ```airodump-ng```, par exemple
+
+- Lancer une capture avec Wireshark
+
+- Etablir une connexion depuis un poste de travail (PC), un smartphone ou n'importe quel autre client WiFi. __Attention__, il est important que la connexion se fasse à 2.4 GHz pour pouvoir sniffer avec les interfaces Alfa
+
 - Comparer votre capture au processus d’authentification donné en théorie (n’oubliez pas les captures d'écran pour illustrer vos comparaisons !). En particulier, identifier les étapes suivantes :
-	- Requête et réponse d’authentification système ouvert
- 	- Requête et réponse d’association (ou reassociation)
-	- Négociation de la méthode d’authentification entreprise (TLS?, TTLS?, PEAP?, LEAP?, autre?)
-	- Phase d’initiation
-	- Phase hello :
-		- Version TLS
-		- Suites cryptographiques et méthodes de compression proposées par le client et acceptées par l’AP
-		- Nonces
-		- Session ID
-	- Phase de transmission de certificats
-	 	- Echanges des certificats
-		- Change cipher spec
-	- Authentification interne et transmission de la clé WPA (échange chiffré, vu par Wireshark comme « Application data »)
-	- 4-way handshake
+
+- Requête et réponse d’authentification système ouvert
+  
+    **Requête** : 
+  ![open_auth_req.png](/home/miguel/Cours/SWI/Labos/04/assets/82b5ae9846f52f96915c44decd7da01ef7e6e1c0.png)
+  
+    **Réponse** : 
+  
+  ![open_auth_response.png](/home/miguel/Cours/SWI/Labos/04/assets/20d1efd77c208c5f12b9090a385b055ab705abb0.png)
+
+- Requête et réponse d’association (ou reassociation)
+  
+  **Requête** :
+  
+  ![a.png](/home/miguel/Cours/SWI/Labos/04/assets/c261d1640189b9403a3b6c239f14a384f23c09ec.png)
+  
+  **Réponse** :
+  
+  ![unknown_a.png](/home/miguel/Cours/SWI/Labos/04/assets/c3dfe3a97190f0362e2e7183e7301a7784bc2b65.png)
+  
+  
+
+- Négociation de la méthode d’authentification entreprise (TLS?, TTLS?, PEAP?, LEAP?, autre?)
+
+- Phase d’initiation
+
+- Phase hello :
+  
+  - Version TLS
+  - Suites cryptographiques et méthodes de compression proposées par le client et acceptées par l’AP
+  - Nonces
+  - Session ID
+
+- Phase de transmission de certificats
+  
+  - Echanges des certificats
+    - Change cipher spec
+
+- Authentification interne et transmission de la clé WPA (échange chiffré, vu par Wireshark comme « Application data »)
+
+- 4-way handshake
 
 ### Répondez aux questions suivantes :
- 
+
 > **_Question :_** Quelle ou quelles méthode(s) d’authentification est/sont proposé(s) au client ?
 > 
 > **_Réponse :_** 
@@ -96,7 +125,6 @@ Pour réussir votre capture, vous pouvez procéder de la manière suivante :
 > - b. Le client envoie-t-il un certificat au serveur ? Pourquoi oui ou non ?
 > 
 > **_Réponse:_**
-> 
 
 ---
 
@@ -136,8 +164,7 @@ Pour implémenter l’attaque :
 > 
 > **_Réponse:_**
 
-
-### 3. GTC Downgrade Attack avec [EAPHammer](https://github.com/s0lst1c3/eaphammer) 
+### 3. GTC Downgrade Attack avec [EAPHammer](https://github.com/s0lst1c3/eaphammer)
 
 [EAPHammer](https://github.com/s0lst1c3/eaphammer) est un outil de nouvelle génération pour les attaques WPA Entreprise. Il peut en particulier faire une attaque de downgrade GTC, pour tenter de capturer les identifiants du client __en clair__, ce qui évite le besoin de l'attaque par dictionnaire.
 
@@ -145,7 +172,6 @@ Pour implémenter l’attaque :
 - Modifier la configuration de ```EAPHammer``` pour proposer un réseau semblable au réseau de l’école ou le réseau de votre préférence. Le but est de réaliser une GTC Downgrade Attack.
 - Lancer une capture Wireshark
 - Tenter une connexion au réseau
-
 
 ### Répondez aux questions suivantes :
 
@@ -159,7 +185,6 @@ Pour implémenter l’attaque :
 > 
 > **_Réponse:_** 
 
-
 ### 4. En option, vous pouvez explorer d'autres outils comme [eapeak](https://github.com/rsmusllp/eapeak) ou [crEAP](https://github.com/W9HAX/crEAP/blob/master/crEAP.py) pour les garder dans votre arsenal de pentester.
 
 (Il n'y a pas de rendu pour cette partie...)
@@ -168,8 +193,8 @@ Pour implémenter l’attaque :
 
 Un fork du repo original . Puis, un Pull Request contenant :
 
--	Captures d’écran + commentaires
--	Réponses aux questions
+- Captures d’écran + commentaires
+- Réponses aux questions
 
 ## Échéance
 
