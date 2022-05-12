@@ -48,42 +48,164 @@ A tittre d'exemple, voici [une connexion WPA Entreprise](files/auth.pcap) qui co
 
 Pour réussir votre capture, vous pouvez procéder de la manière suivante :
 
-- 	Identifier l'AP le plus proche, en identifiant le canal utilisé par l’AP dont la puissance est la plus élevée (et dont le SSID est HEIG-VD...). Vous pouvez faire ceci avec ```airodump-ng```, par exemple
--   Lancer une capture avec Wireshark
--   Etablir une connexion depuis un poste de travail (PC), un smartphone ou n'importe quel autre client WiFi. __Attention__, il est important que la connexion se fasse à 2.4 GHz pour pouvoir sniffer avec les interfaces Alfa
+- Identifier l'AP le plus proche, en identifiant le canal utilisé par l’AP dont la puissance est la plus élevée (et dont le SSID est HEIG-VD...). Vous pouvez faire ceci avec ```airodump-ng```, par exemple
+
+- Lancer une capture avec Wireshark
+
+- Etablir une connexion depuis un poste de travail (PC), un smartphone ou n'importe quel autre client WiFi. __Attention__, il est important que la connexion se fasse à 2.4 GHz pour pouvoir sniffer avec les interfaces Alfa
+
 - Comparer votre capture au processus d’authentification donné en théorie (n’oubliez pas les captures d'écran pour illustrer vos comparaisons !). En particulier, identifier les étapes suivantes :
 	- Requête et réponse d’authentification système ouvert
- 	- Requête et réponse d’association (ou reassociation)
-	- Négociation de la méthode d’authentification entreprise (TLS?, TTLS?, PEAP?, LEAP?, autre?)
-	- Phase d’initiation
-	- Phase hello :
-		- Version TLS
-		- Suites cryptographiques et méthodes de compression proposées par le client et acceptées par l’AP
-		- Nonces
-		- Session ID
-	- Phase de transmission de certificats
-	 	- Echanges des certificats
-		- Change cipher spec
-	- Authentification interne et transmission de la clé WPA (échange chiffré, vu par Wireshark comme « Application data »)
-	- 4-way handshake
+	
+  - Requête et réponse d’association (ou reassociation)
+  - Négociation de la méthode d’authentification entreprise (TLS?, TTLS?, PEAP?, LEAP?, autre?)
+  - Phase d’initiation
+  - Phase hello :
+  	- Version TLS
+  	- Suites cryptographiques et méthodes de compression proposées par le client et acceptées par l’AP
+  	- Nonces
+  	- Session ID
+  - Phase de transmission de certificats
+   	- Echanges des certificats
+  	- Change cipher spec
+  - Authentification interne et transmission de la clé WPA (échange chiffré, vu par Wireshark comme « Application data »)
+  - 4-way handshake
+
+
+
+- Requête d'authentification du client :
+
+![image-20220512154532177](figures/image-20220512154532177.png)
+
+​	Réponse d'authentification de l'AP :
+
+![image-20220512154437407](figures/image-20220512154437407.png)
+
+
+
+Requête d'association du client :
+
+![image-20220512154936430](figures/image-20220512154936430.png)
+
+
+
+Réponse d'association de l'AP :
+
+![image-20220512155057802](figures/image-20220512155057802.png)
+
+
+
+Nous n'avons pas obtenu de paquets concernant la négociation de la méthode d’authentification entreprise donc voici celle du fichier de [capture](files/auth.pcap) fourni. 
+
+- Méthode d'authentification proposée par le serveur : 
+
+  ![image-20220512160537560](figures/image-20220512160537560.png)
+
+  
+
+- Refus du client et proposition d'une autre méthode d'authentification (EAP-PEAP) :
+
+  ![image-20220512160655300](figures/image-20220512160655300.png)
+
+
+
+Pour la phase d'initiation, nous avons obtenu la requête venant du serveur mais pas la réponse du client. 
+
+- Requête envoyée par le serveur d'authentification :
+
+![image-20220512161056064](figures/image-20220512161056064.png)
+
+
+
+- Réponse envoyée par le client où l'on peut voir son identité en clair :![image-20220512161326207](figures/image-20220512161326207.png)
+
+
+
+Pour la phase hello, nous avons obtenu le message envoyé par le serveur mais pas celui du client.
+
+- Message envoyé par le client :
+
+  - Version TLS :
+
+    ![image-20220512161909289](figures/image-20220512161909289.png)
+
+  - Version TLS utilisée par le serveur :
+
+    ![image-20220512162510312](figures/image-20220512162510312.png)
+
+  
+
+  - Méthodes de chiffrement et de compression (ici aucune) proposée par le client :
+
+    ![image-20220512162032158](figures/image-20220512162032158.png)
+
+  - Méthode de chiffrement et de compression acceptées par le serveur :
+
+    ![image-20220512162640048](figures/image-20220512162640048.png)
+
+  
+
+  - Nonce du client :
+
+    ![image-20220512162235928](figures/image-20220512162235928.png)
+
+  - Nonce du serveur : 
+
+    ![image-20220512162741080](figures/image-20220512162741080.png)
+
+    
+
+  - Session ID du client :
+
+    ![image-20220512162344568](figures/image-20220512162344568.png)
+
+  -  Session ID du serveur : 
+
+    ![image-20220512162810222](figures/image-20220512162810222.png)
+
+
+
+Pour la phase de transmission de certificat, nous avons obtenu ce message envoyé par le serveur :
+
+![image-20220512163542225](figures/image-20220512163542225.png)
+
+Comme EAP-PEAP est utilisé, seul le serveur envoie des certificats au client.
+
+Voici le message envoyé par le serveur concernant l'échange de certificat :
+
+![image-20220512163818448](figures/image-20220512163818448.png)
+
+
+
+Authentification interne et transmission de la clé WPA :
+
+![image-20220512164022332](figures/image-20220512164022332.png)
+
+
+
+WPA 4-way handshake :
+
+![image-20220512164125085](figures/image-20220512164125085.png)
+
+
 
 ### Répondez aux questions suivantes :
- 
+
 > **_Question :_** Quelle ou quelles méthode(s) d’authentification est/sont proposé(s) au client ?
 > 
-> **_Réponse :_** 
+> **_Réponse :_** EAP-TLS
 
 ---
 
 > **_Question:_** Quelle méthode d’authentification est finalement utilisée ?
 > 
-> **_Réponse:_** 
+> **_Réponse:_** EAP-PEAP
 
 ---
 
 > **_Question:_**Arrivez-vous à voir l’identité du client dans la phase d'initiation ? Oui ? Non ? Pourquoi ?
 > 
-> **_Réponse:_** 
+> **_Réponse:_** Oui
 
 ---
 
@@ -91,12 +213,11 @@ Pour réussir votre capture, vous pouvez procéder de la manière suivante :
 > 
 > - a. Le serveur envoie-t-il un certificat au client ? Pourquoi oui ou non ?
 > 
-> **_Réponse:_**
+> **_Réponse:_** Oui car on est en EAP-PEAP
 > 
 > - b. Le client envoie-t-il un certificat au serveur ? Pourquoi oui ou non ?
 > 
-> **_Réponse:_**
-> 
+> **_Réponse:_** Non car on est en EAP-PEAP
 
 ---
 
