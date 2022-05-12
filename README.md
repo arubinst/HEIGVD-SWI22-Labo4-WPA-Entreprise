@@ -83,8 +83,6 @@ Pour réussir votre capture, vous pouvez procéder de la manière suivante :
   ![auth.png](/home/miguel/Cours/SWI/Labos/04/assets/f8b683c3f8754ba2b28f908943cb0b627965ad88.png)
   
   
-  
-  
 
 - Phase d’initiation
   
@@ -152,31 +150,37 @@ Pour réussir votre capture, vous pouvez procéder de la manière suivante :
 
 > **_Question :_** Quelle ou quelles méthode(s) d’authentification est/sont proposé(s) au client ?
 > 
-> **_Réponse :_** 
+> **_Réponse :_** PEAP
 
 ---
 
 > **_Question:_** Quelle méthode d’authentification est finalement utilisée ?
 > 
-> **_Réponse:_** 
+> **_Réponse:_** PEAP
 
 ---
 
-> **_Question:_**Arrivez-vous à voir l’identité du client dans la phase d'initiation ? Oui ? Non ? Pourquoi ?
+> **_Question:_** Arrivez-vous à voir l’identité du client dans la phase d'initiation ? Oui ? Non ? Pourquoi ?
 > 
-> **_Réponse:_** 
+> **_Réponse:_** Oui, elle est donnée par le client dans le champ Identity lors de la réponse.
 
 ---
 
 > **_Question:_** Lors de l’échange de certificats entre le serveur d’authentification et le client :
 > 
-> - a. Le serveur envoie-t-il un certificat au client ? Pourquoi oui ou non ?
+> - a. Le serveur envoie-t-il un certificat au client ? Pourquoi oui ou non 
+>   
+>   **Réponse:**
+>   
+>   Oui, il envoie une chaîne de certificats : 
+>   
+>   ![certifs_wesh.png](/home/miguel/Cours/SWI/Labos/04/assets/1647fde5b219449ade18d3824195a253e18c7f8c.png)
+>   
+>   Cela lui permet de prouver son identité auprès du client qui va vérifier la chaîne de certificats.
 > 
-> **_Réponse:_**
-> 
-> - b. Le client envoie-t-il un certificat au serveur ? Pourquoi oui ou non ?
-> 
-> **_Réponse:_**
+> - b. Le client envoie-t-il un certificat au serveur ? Pourquoi oui ou non ?**Réponse:**
+>   
+>   Non, dans PEAP le client ne prouve pas son identité par un certificat. Il le fera à l'aide d'un processus d'authentification interne (EAP-MSCHAP-V2).
 
 ---
 
