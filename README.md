@@ -51,39 +51,112 @@ Pour réussir votre capture, vous pouvez procéder de la manière suivante :
 - 	Identifier l'AP le plus proche, en identifiant le canal utilisé par l’AP dont la puissance est la plus élevée (et dont le SSID est HEIG-VD...). Vous pouvez faire ceci avec ```airodump-ng```, par exemple
 -   Lancer une capture avec Wireshark
 -   Etablir une connexion depuis un poste de travail (PC), un smartphone ou n'importe quel autre client WiFi. __Attention__, il est important que la connexion se fasse à 2.4 GHz pour pouvoir sniffer avec les interfaces Alfa
-- Comparer votre capture au processus d’authentification donné en théorie (n’oubliez pas les captures d'écran pour illustrer vos comparaisons !). En particulier, identifier les étapes suivantes :
-	- Requête et réponse d’authentification système ouvert
- 	- Requête et réponse d’association (ou reassociation)
-	- Négociation de la méthode d’authentification entreprise (TLS?, TTLS?, PEAP?, LEAP?, autre?)
-	- Phase d’initiation
-	- Phase hello :
-		- Version TLS
-		- Suites cryptographiques et méthodes de compression proposées par le client et acceptées par l’AP
-		- Nonces
-		- Session ID
-	- Phase de transmission de certificats
-	 	- Echanges des certificats
-		- Change cipher spec
-	- Authentification interne et transmission de la clé WPA (échange chiffré, vu par Wireshark comme « Application data »)
-	- 4-way handshake
+- 	Comparer votre capture au processus d’authentification donné en théorie (n’oubliez pas les captures d'écran pour illustrer vos comparaisons !). En particulier, identifier les étapes suivantes :
+
+###################################################################################
+
+- Requête et réponse d’authentification système ouvert
+
+  ![](./img/auth1.png)
+
+  (La réponse n'a pas été capturée par wireshark)
+
+  - Requête et réponse d’association (ou reassociation)
+
+  ![](./img/ass1.png)
+
+  ![](./img/ass_resp.png)
+
+  - Négociation de la méthode d’authentification entreprise (TLS?, TTLS?, PEAP?, LEAP?, autre?)
+
+    La trame n'a pas été récupérée par Wireshark, nous l'avons alors pris depuis le fichier donné.
+
+    ![](./img/nego.png)
+
+    Requête :
+
+    ![](./img/desired_auth2.png)
+
+    Réponse :
+
+    ![](./img/desired_auth.png)
+
+  - Phase d’initiation
+
+    ![](./img/auth.png)
+
+    ​	Et on peut y voire l'identité de Lucas :
+
+    ![](./img/identity.png)
+
+  - Phase hello :
+  	
+  	![](./img/Client_Hello.png)
+  	
+  	- Version TLS
+  	
+  	  ![](./img/TLS_version.png)
+  	
+  	- Suites cryptographiques et méthodes de compression proposées par le client et acceptées par l’AP
+  	
+  	  ![](./img/ciphersuite_compresssion.png)
+  	
+  	- Nonces
+  	
+  	  ![](./img/nonce_client.png)
+  	
+  	- Session ID
+  	
+  	  ![](./img/session_id.png)
+  	
+  - Phase de transmission de certificats
+
+    Tous les fragments envoyé par le serveur pour la transmission de son certificat.
+
+    ![](./img/certif.png)
+
+    ![](./img/frags.png)
+
+   	- Echanges des certificats
+  	
+  	![](./img/cert3.png)
+  	
+  	On voit que le serveur utilise SwissSign pour son certificat.
+  	
+  	![](./img/cert4.png)
+  	
+  	- Change cipher spec
+  	  Les deux entités se mettent d'accord pour chiffrer la suite de la conversation.
+  	
+  	  ![](./img/spec.png)
+  	
+  	  ![](./img/spec2.png)
+  	
+  - Authentification interne et transmission de la clé WPA (échange chiffré, vu par Wireshark comme « Application data »)
+
+    ![](./img/success.png)
+
+  - 4-way handshake
+
+    ![](./img/4way.png)
 
 ### Répondez aux questions suivantes :
- 
+
 > **_Question :_** Quelle ou quelles méthode(s) d’authentification est/sont proposé(s) au client ?
 > 
-> **_Réponse :_** 
+> **_Réponse :_** TLS-EAP
 
 ---
 
 > **_Question:_** Quelle méthode d’authentification est finalement utilisée ?
 > 
-> **_Réponse:_** 
+> **_Réponse:_** EAP-PEAP
 
 ---
 
 > **_Question:_**Arrivez-vous à voir l’identité du client dans la phase d'initiation ? Oui ? Non ? Pourquoi ?
 > 
-> **_Réponse:_** 
+> **_Réponse:_** Oui car c'est envoyé en clair.
 
 ---
 
@@ -91,12 +164,11 @@ Pour réussir votre capture, vous pouvez procéder de la manière suivante :
 > 
 > - a. Le serveur envoie-t-il un certificat au client ? Pourquoi oui ou non ?
 > 
-> **_Réponse:_**
+> **_Réponse:_** Oui car le client a besoin de vérifier l'authenticité du serveur. Certains OSs donnent la possibilité de ne pas authentifier le certificat du serveur. Ce n'est pas le cas ici.
 > 
 > - b. Le client envoie-t-il un certificat au serveur ? Pourquoi oui ou non ?
 > 
-> **_Réponse:_**
-> 
+> **_Réponse:_** Non car dans EAP-PEAP seul le serveur a besoin de s'authentifier à l'aide d'un certificat pour l'établissement du tunnel TLS. Le client sera ensuite authentifier à l'interne.
 
 ---
 
