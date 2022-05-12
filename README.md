@@ -77,8 +77,24 @@ Pour réussir votre capture, vous pouvez procéder de la manière suivante :
   
 
 - Négociation de la méthode d’authentification entreprise (TLS?, TTLS?, PEAP?, LEAP?, autre?)
+  
+  On remarque que le client a directement accepté la proposition du serveur (PEAP) car il n'y a qu'un seul échange de ce type :
+  
+  ![auth.png](/home/miguel/Cours/SWI/Labos/04/assets/f8b683c3f8754ba2b28f908943cb0b627965ad88.png)
+  
+  
+  
+  
 
 - Phase d’initiation
+  
+  **Requête identité** :
+  
+  ![id_req.png](/home/miguel/Cours/SWI/Labos/04/assets/5dab3e02137756b2a329c1d93aed56db9dd377fd.png)
+  
+  **Réponse identité** :
+  
+  ![id_res.png](/home/miguel/Cours/SWI/Labos/04/assets/0c1348610cc81cb7bfc4678e5d3ba41b2b33d4d1.png)
 
 - Phase hello :
   
@@ -86,15 +102,51 @@ Pour réussir votre capture, vous pouvez procéder de la manière suivante :
   - Suites cryptographiques et méthodes de compression proposées par le client et acceptées par l’AP
   - Nonces
   - Session ID
+  
+  **Client hello** :
+  
+  ![hello.jpg](/home/miguel/Cours/SWI/Labos/04/assets/6038432d93a3a1bd70bf05c96d18f13fa69b30de.jpg)
+  
+  Le session ID ne figure pas sur la capture. Nous pensons que cela est dû au fait qu'il s'agit de la première connexion du client qui n'a pas encore de session.
+  
+  **Server hello** :
+  
+  ![server_hello.jpg](/home/miguel/Cours/SWI/Labos/04/assets/3856b20ca5e0db09eebe17a25e92792045c6b058.jpg)
+  
+  
 
 - Phase de transmission de certificats
   
   - Echanges des certificats
-    - Change cipher spec
+    
+    ![certif_exch.png](/home/miguel/Cours/SWI/Labos/04/assets/ed55739ccab7ad5284a577ff8c4e281525c6568f.png)
+    
+    On peut lire les informations suivantes sur le certificat : 
+    
+    ![certif.png](/home/miguel/Cours/SWI/Labos/04/assets/85513863dda99c0e8a760852a769a92c9fb23c73.png)
+    
+    
+  - Change cipher spec
+    
+    ![change_spher_spec.png](/home/miguel/Cours/SWI/Labos/04/assets/26debd0ca2c06b3f3c3227fc24e2d94985f769f2.png)
+    
+    
 
 - Authentification interne et transmission de la clé WPA (échange chiffré, vu par Wireshark comme « Application data »)
+  
+  ![wpa_exchange.png](/home/miguel/Cours/SWI/Labos/04/assets/5d3e8cc54a2a56c8b9c93d61e90c7ee533537e28.png)
+  
+  
 
 - 4-way handshake
+  
+  ![4-way.png](/home/miguel/Cours/SWI/Labos/04/assets/10e820b82a795d4f52c826e3f4f4e9895ea6758a.png)
+  
+  Le premier message comme exemple :
+  
+  ![4-way-1.png](/home/miguel/Cours/SWI/Labos/04/assets/758c9ff5c7431ad6e235117d7e70234c63e66661.png)
+  
+  
 
 ### Répondez aux questions suivantes :
 
