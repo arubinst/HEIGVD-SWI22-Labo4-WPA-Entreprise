@@ -58,21 +58,21 @@ Pour réussir votre capture, vous pouvez procéder de la manière suivante :
 - Requête et réponse d’authentification système ouvert
   
     **Requête** : 
-  ![open_auth_req.png](/home/miguel/Cours/SWI/Labos/04/assets/82b5ae9846f52f96915c44decd7da01ef7e6e1c0.png)
+  ![open_auth_req.png](./assets/82b5ae9846f52f96915c44decd7da01ef7e6e1c0.png)
   
     **Réponse** : 
   
-  ![open_auth_response.png](/home/miguel/Cours/SWI/Labos/04/assets/20d1efd77c208c5f12b9090a385b055ab705abb0.png)
+  ![open_auth_response.png](./assets/20d1efd77c208c5f12b9090a385b055ab705abb0.png)
 
 - Requête et réponse d’association (ou reassociation)
   
   **Requête** :
   
-  ![a.png](/home/miguel/Cours/SWI/Labos/04/assets/c261d1640189b9403a3b6c239f14a384f23c09ec.png)
+  ![a.png](./assets/c261d1640189b9403a3b6c239f14a384f23c09ec.png)
   
   **Réponse** :
   
-  ![unknown_a.png](/home/miguel/Cours/SWI/Labos/04/assets/c3dfe3a97190f0362e2e7183e7301a7784bc2b65.png)
+  ![unknown_a.png](./assets/c3dfe3a97190f0362e2e7183e7301a7784bc2b65.png)
   
   
 
@@ -80,7 +80,7 @@ Pour réussir votre capture, vous pouvez procéder de la manière suivante :
   
   On remarque que le client a directement accepté la proposition du serveur (PEAP) car il n'y a qu'un seul échange de ce type :
   
-  ![auth.png](/home/miguel/Cours/SWI/Labos/04/assets/f8b683c3f8754ba2b28f908943cb0b627965ad88.png)
+  ![auth.png](./assets/f8b683c3f8754ba2b28f908943cb0b627965ad88.png)
   
   
 
@@ -88,11 +88,11 @@ Pour réussir votre capture, vous pouvez procéder de la manière suivante :
   
   **Requête identité** :
   
-  ![id_req.png](/home/miguel/Cours/SWI/Labos/04/assets/5dab3e02137756b2a329c1d93aed56db9dd377fd.png)
+  ![id_req.png](./assets/5dab3e02137756b2a329c1d93aed56db9dd377fd.png)
   
   **Réponse identité** :
   
-  ![id_res.png](/home/miguel/Cours/SWI/Labos/04/assets/0c1348610cc81cb7bfc4678e5d3ba41b2b33d4d1.png)
+  ![id_res.png](./assets/0c1348610cc81cb7bfc4678e5d3ba41b2b33d4d1.png)
 
 - Phase hello :
   
@@ -103,13 +103,13 @@ Pour réussir votre capture, vous pouvez procéder de la manière suivante :
   
   **Client hello** :
   
-  ![hello.jpg](/home/miguel/Cours/SWI/Labos/04/assets/6038432d93a3a1bd70bf05c96d18f13fa69b30de.jpg)
+  ![hello.jpg](./assets/6038432d93a3a1bd70bf05c96d18f13fa69b30de.jpg)
   
   Le session ID ne figure pas sur la capture. Nous pensons que cela est dû au fait qu'il s'agit de la première connexion du client qui n'a pas encore de session.
   
   **Server hello** :
   
-  ![server_hello.jpg](/home/miguel/Cours/SWI/Labos/04/assets/3856b20ca5e0db09eebe17a25e92792045c6b058.jpg)
+  ![server_hello.jpg](./assets/3856b20ca5e0db09eebe17a25e92792045c6b058.jpg)
   
   
 
@@ -117,32 +117,32 @@ Pour réussir votre capture, vous pouvez procéder de la manière suivante :
   
   - Echanges des certificats
     
-    ![certif_exch.png](/home/miguel/Cours/SWI/Labos/04/assets/ed55739ccab7ad5284a577ff8c4e281525c6568f.png)
+    ![certif_exch.png](./assets/ed55739ccab7ad5284a577ff8c4e281525c6568f.png)
     
     On peut lire les informations suivantes sur le certificat : 
     
-    ![certif.png](/home/miguel/Cours/SWI/Labos/04/assets/85513863dda99c0e8a760852a769a92c9fb23c73.png)
+    ![certif.png](./assets/85513863dda99c0e8a760852a769a92c9fb23c73.png)
     
     
   - Change cipher spec
     
-    ![change_spher_spec.png](/home/miguel/Cours/SWI/Labos/04/assets/26debd0ca2c06b3f3c3227fc24e2d94985f769f2.png)
+    ![change_spher_spec.png](./assets/26debd0ca2c06b3f3c3227fc24e2d94985f769f2.png)
     
     
 
 - Authentification interne et transmission de la clé WPA (échange chiffré, vu par Wireshark comme « Application data »)
   
-  ![wpa_exchange.png](/home/miguel/Cours/SWI/Labos/04/assets/5d3e8cc54a2a56c8b9c93d61e90c7ee533537e28.png)
+  ![wpa_exchange.png](./assets/5d3e8cc54a2a56c8b9c93d61e90c7ee533537e28.png)
   
   
 
 - 4-way handshake
   
-  ![4-way.png](/home/miguel/Cours/SWI/Labos/04/assets/10e820b82a795d4f52c826e3f4f4e9895ea6758a.png)
+  ![4-way.png](./assets/10e820b82a795d4f52c826e3f4f4e9895ea6758a.png)
   
   Le premier message comme exemple :
   
-  ![4-way-1.png](/home/miguel/Cours/SWI/Labos/04/assets/758c9ff5c7431ad6e235117d7e70234c63e66661.png)
+  ![4-way-1.png](./assets/758c9ff5c7431ad6e235117d7e70234c63e66661.png)
   
   
 
@@ -174,7 +174,7 @@ Pour réussir votre capture, vous pouvez procéder de la manière suivante :
 >   
 >   Oui, il envoie une chaîne de certificats : 
 >   
->   ![certifs_wesh.png](/home/miguel/Cours/SWI/Labos/04/assets/1647fde5b219449ade18d3824195a253e18c7f8c.png)
+>   ![certifs_wesh.png](./assets/1647fde5b219449ade18d3824195a253e18c7f8c.png)
 >   
 >   Cela lui permet de prouver son identité auprès du client qui va vérifier la chaîne de certificats.
 > 
