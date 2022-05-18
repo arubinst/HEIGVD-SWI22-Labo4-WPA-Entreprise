@@ -199,13 +199,13 @@ WPA 4-way handshake :
 
 > **_Question:_** Quelle méthode d’authentification est finalement utilisée ?
 > 
-> **_Réponse:_** EAP-PEAP
+> **_Réponse:_** Comme le client a refusé d'utiliser la méthode EAP-TLS proposée par le serveur, il a ensuite proposé d'utiliser EAP-PEAP et le serveur a accepté.
 
 ---
 
-> **_Question:_**Arrivez-vous à voir l’identité du client dans la phase d'initiation ? Oui ? Non ? Pourquoi ?
+> **_Question:_** Arrivez-vous à voir l’identité du client dans la phase d'initiation ? Oui ? Non ? Pourquoi ?
 > 
-> **_Réponse:_** Oui
+> **_Réponse:_** Oui car le client a envoyé son identité en clair. Cependant il n'est pas obligatoire de l'envoyer, le client peut rester anonyme si le serveur d'authentification est configuré pour l'accepter.
 
 ---
 
@@ -213,11 +213,11 @@ WPA 4-way handshake :
 > 
 > - a. Le serveur envoie-t-il un certificat au client ? Pourquoi oui ou non ?
 > 
-> **_Réponse:_** Oui car on est en EAP-PEAP
+> **_Réponse:_** Oui car on est en EAP-PEAP et avec cette méthode, le serveur doit s'authentifier auprès du client.
 > 
 > - b. Le client envoie-t-il un certificat au serveur ? Pourquoi oui ou non ?
 > 
-> **_Réponse:_** Non car on est en EAP-PEAP
+> **_Réponse:_** Non car on est en EAP-PEAP et seul le serveur doit s'authentifier auprès du client. Par contre, si EAP-TLS avait été utilisée, le client aurait dû présenter un certificat.
 
 ---
 
