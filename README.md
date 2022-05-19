@@ -48,27 +48,86 @@ A tittre d'exemple, voici [une connexion WPA Entreprise](files/auth.pcap) qui co
 
 Pour réussir votre capture, vous pouvez procéder de la manière suivante :
 
-- 	Identifier l'AP le plus proche, en identifiant le canal utilisé par l’AP dont la puissance est la plus élevée (et dont le SSID est HEIG-VD...). Vous pouvez faire ceci avec ```airodump-ng```, par exemple
+-   Identifier l'AP le plus proche, en identifiant le canal utilisé par l’AP dont la puissance est la plus élevée (et dont le SSID est HEIG-VD...). Vous pouvez faire ceci avec ```airodump-ng```, par exemple
+
 -   Lancer une capture avec Wireshark
+
 -   Etablir une connexion depuis un poste de travail (PC), un smartphone ou n'importe quel autre client WiFi. __Attention__, il est important que la connexion se fasse à 2.4 GHz pour pouvoir sniffer avec les interfaces Alfa
+
 - Comparer votre capture au processus d’authentification donné en théorie (n’oubliez pas les captures d'écran pour illustrer vos comparaisons !). En particulier, identifier les étapes suivantes :
+	
 	- Requête et réponse d’authentification système ouvert
- 	- Requête et réponse d’association (ou reassociation)
+	
+	  ![image-20220519141421346](images/image-20220519141421346.png)
+	
+	- Requête et réponse d’association (ou reassociation)
+	
+	![image-20220519141613013](images/image-20220519141613013.png)
+	
 	- Négociation de la méthode d’authentification entreprise (TLS?, TTLS?, PEAP?, LEAP?, autre?)
+	
+	
+	
+	3 paquets permettent d'identifier la négotiation:
+	
+	![image-20220519151548799](images/image-20220519151548799.png)
+	
+	> 1. L'AP essaie de démarrer une connexion de type EAP-TLS
+	
+	> 2. Le client refuse, et lui indique avec un message "Legacy Nak" qu'il préfère une authentification EAP-PEAP
+	
+	![image-20220519142021620](images/image-20220519142021620.png)
+	
+	> 3. L'AP commence l'authentification PEAP
+	
+	
+	
 	- Phase d’initiation
+	
+	![image-20220519144030658](images/image-20220519144030658.png)
+	
+	> Dans le paquet "Response, Identity", on retrouve l'identité du suppliant: `einet\joel.gonin`
+	
+	![image-20220519145730732](images/image-20220519145730732.png)
+	
 	- Phase hello :
-		- Version TLS
-		- Suites cryptographiques et méthodes de compression proposées par le client et acceptées par l’AP
-		- Nonces
-		- Session ID
+	
+	  - Version TLS
+	  - Suites cryptographiques et méthodes de compression proposées par le client et acceptées par l’AP
+	  - Nonces
+	  - Session ID
+	
+	  > Hello client:
+	
+	  ![img](https://cdn.discordapp.com/attachments/689499826307596471/976826004687450122/unknown.png)
+	
+	  > Hello server:
+	
+	  ![img](https://cdn.discordapp.com/attachments/689499826307596471/976827417991708772/unknown.png)
+	
 	- Phase de transmission de certificats
-	 	- Echanges des certificats
-		- Change cipher spec
+	
+	  > Le serveur transmet ses certificats en  même temps que le `Hello`. Comme PEAP est utilisé, le client n'a pas de certificat à envoyer 
+	
+	![image-20220519144732478](images/image-20220519144732478.png)
+	
+	- Echanges des certificats
+	  - Change cipher spec
+	
+	  ![image-20220519150612376](images/image-20220519150612376.png)
+	
 	- Authentification interne et transmission de la clé WPA (échange chiffré, vu par Wireshark comme « Application data »)
+	
+	![image-20220519152605742](images/image-20220519152605742.png)
+	
+	
+	
 	- 4-way handshake
+	
+	![image-20220519151415756](images/image-20220519151415756.png)
 
 ### Répondez aux questions suivantes :
- 
+
 > **_Question :_** Quelle ou quelles méthode(s) d’authentification est/sont proposé(s) au client ?
 > 
 > **_Réponse :_** 
