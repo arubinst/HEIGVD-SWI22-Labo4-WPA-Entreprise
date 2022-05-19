@@ -246,6 +246,20 @@ Pour implémenter l’attaque :
 - Lancer une capture Wireshark
 - Tenter une connexion au réseau
 
+> Pour réaliser cette attaque, il a été nécessaire en premier lieu de générer un certification
+>
+> ![](media/hammer-certi.PNG)
+>
+> On peut ensuite lancer `eaphammer` avec les différents paramètres
+>
+> ![](media/attack3-1.PNG)
+>
+> On essaie de s'identifier avec un appareil sur l'AP correspondant
+>
+> ![](media/attack3-2.PNG)
+>
+> On constate alors immédiatement que les credentials utilisés sont affichés.
+
 
 ### Répondez aux questions suivantes :
 
@@ -259,7 +273,7 @@ Pour implémenter l’attaque :
 
 > **_Question:_** Quelles sont vos conclusions et réflexions par rapport à la méthode hostapd-wpe ?
 > 
-> **_Réponse:_** 
+> **_Réponse:_**  L'attaque est plus facile à mettre en place que `hostapd-wpe` pour un utilisateur non expérimenté donc elle peut être faite quasiment par n'importe qui (vu que l'on a directement les credentials en "clair"). De plus, avec la création du certificat, il peut paraitre à un utilisateur non-averti qu'il est bien réele (de l'entreprise / institution que l'on essaie de plagier) donc les smartphones / PC / etc.. nous affichant ces infos ont pourrait les prendre pour réeles.
 
 
 ### 4. En option, vous pouvez explorer d'autres outils comme [eapeak](https://github.com/rsmusllp/eapeak) ou [crEAP](https://github.com/W9HAX/crEAP/blob/master/crEAP.py) pour les garder dans votre arsenal de pentester.
