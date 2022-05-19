@@ -68,7 +68,7 @@ Pour réussir votre capture, vous pouvez procéder de la manière suivante :
 	- 4-way handshake
 
 ### Répondez aux questions suivantes :
- 
+
 > **_Question :_** Quelle ou quelles méthode(s) d’authentification est/sont proposé(s) au client ?
 > 
 > **_Réponse :_** 
@@ -127,13 +127,21 @@ Pour implémenter l’attaque :
 ---
 
 > **_Question:_** Quel type de hash doit-on indiquer à john ou l'outil que vous avez employé pour craquer le handshake ?
-> 
+>
 > **_Réponse:_** 
-
----
-
-> **_Question:_** Quelles méthodes d’authentification sont supportées par hostapd-wpe ?
+>
+> hashcat -m 5500 -O test::::40ac4dd44436c858e146c64f89d655b6d74d9f4f6a839590:5b142dfaad0383f9 /usr/share/wordlists/rockyou.txt
+>
+> C'est 5500 / NetNTLMv1 / NetNTLMv1+ESS  
+>
 > 
+
+![Captureshcat-1](./assets/Captureshcat-1.PNG)
+
+> ****
+>
+> **_Question:_** Quelles méthodes d’authentification sont supportées par hostapd-wpe ?
+>
 > **_Réponse:_**
 
 
@@ -150,14 +158,28 @@ Pour implémenter l’attaque :
 ### Répondez aux questions suivantes :
 
 > **_Question :_** Expliquez en quelques mots l'attaque GTC Downgrade
-> 
+>
 > **_Réponse :_** 
+>
+> Le but est de forcer un appareil client à utiliser GTC afin qu'un prompt demandant à l'utilisateur un mot de passe apparaisse.
+
+
+
+Lien : [https://solstice.sh/iii-eap-downgrade-attacks/#:~:text=access%20points%20instead.-,GTC%20Downgrade%20Attacks,the%20access%20point%20in%20plaintext](https://solstice.sh/iii-eap-downgrade-attacks/#:~:text=access%20points%20instead.-,GTC%20Downgrade%20Attacks,the%20access%20point%20in%20plaintext)
 
 ---
 
 > **_Question:_** Quelles sont vos conclusions et réflexions par rapport à la méthode hostapd-wpe ?
-> 
+>
 > **_Réponse:_** 
+>
+> C'est  très efficace. Les seuls différentes notables sont les suivantes :
+>
+> -Le système d'exploitation détecte que ce n'est pas le même réseau et ne va pas permettre une connexion automatique avec des crédentials déjà enregistrée.
+>
+> Mais un utilisateur pourra facilement trouver le comportement normal et va simplement  entrer ses crédentials.
+>
+> -
 
 
 ### 4. En option, vous pouvez explorer d'autres outils comme [eapeak](https://github.com/rsmusllp/eapeak) ou [crEAP](https://github.com/W9HAX/crEAP/blob/master/crEAP.py) pour les garder dans votre arsenal de pentester.
