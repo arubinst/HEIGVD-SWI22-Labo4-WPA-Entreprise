@@ -137,13 +137,14 @@ Pour implémenter l’attaque :
 
 > **_Question :_** Quelles modifications sont nécessaires dans la configuration de hostapd-wpe pour cette attaque ?
 > 
-> **_Réponse :_** 
+> **_Réponse :_** On a juste changé le nom du SSID qui va être diffusé (paramètre nommé `ssid=` dans le fichier de config `/etc/hostapd-wpe/hostapd-wpe.conf`)
 
 ---
 
 > **_Question:_** Quel type de hash doit-on indiquer à john ou l'outil que vous avez employé pour craquer le handshake ?
 > 
-> **_Réponse:_** 
+> **_Réponse:_** Le hash utilisé est NETNTLM (type 5500 avec hashcat). Voici la sortie hashcat pour craquer le mot de passe :  
+> ![](files/hashcat_p2.png)
 
 ---
 
