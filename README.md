@@ -234,7 +234,7 @@ Pour implémenter l’attaque :
 
 > **_Question:_** Quelles méthodes d’authentification sont supportées par hostapd-wpe ?
 > 
-> **Réponse: ** EAP, WPA, WPA2, RADIUS
+> **Réponse:** EAP, WPA, WPA2, RADIUS
 
 
 ### 3. GTC Downgrade Attack avec [EAPHammer](https://github.com/s0lst1c3/eaphammer) 
