@@ -242,20 +242,49 @@ Pour implémenter l’attaque :
 ### Répondez aux questions suivantes :
 
 > **_Question :_** Quelles modifications sont nécessaires dans la configuration de hostapd-wpe pour cette attaque ?
-> 
-> **_Réponse :_** 
+>
+> **_Réponse :_**  Il faut modifier le fichier hostapd-wpe.conf.
+>
+> Dans ce fichier, nous avons modifié le SSID en le remplaçant par HIEG-VD pour proposer un nom semblable au réseau HEIG-VD:
+>
+> ![image-20220519135701239](figures/image-20220519135701239.png)
+>
+> Nous avons également modifié le nom de l'interface par wlan0mon:
+>
+> ![image-20220519144850015](figures/image-20220519144850015.png)
+>
+> Puis nous avons modifié le paramètre eap_fast_a_id_info pour qu'il corresponde à notre SSID:
+>
+> ![image-20220519144915722](figures/image-20220519144915722.png)
+>
+> Nous obtenons finalement un résultat:
+>
+> ![image-20220519144619572](figures/image-20220519144619572.png)
 
 ---
 
 > **_Question:_** Quel type de hash doit-on indiquer à john ou l'outil que vous avez employé pour craquer le handshake ?
-> 
-> **_Réponse:_** 
+>
+> **_Réponse:_** On doit lui indiquer le type NETNTLM
+>
+> ![image-20220519144728243](figures/image-20220519144728243.png)
+>
+> Le mot de passe est donc: 123456
 
 ---
 
 > **_Question:_** Quelles méthodes d’authentification sont supportées par hostapd-wpe ?
-> 
-> **_Réponse:_**
+>
+> **_Réponse:_** 
+>
+> ```
+>     1. EAP-FAST/MSCHAPv2 (Phase 0)
+>     2. PEAP/MSCHAPv2
+>     3. EAP-TTLS/MSCHAPv2
+>     4. EAP-TTLS/MSCHAP
+>     5. EAP-TTLS/CHAP
+>     6. EAP-TTLS/PAP
+> ```
 
 
 ### 3. GTC Downgrade Attack avec [EAPHammer](https://github.com/s0lst1c3/eaphammer) 
@@ -271,14 +300,18 @@ Pour implémenter l’attaque :
 ### Répondez aux questions suivantes :
 
 > **_Question :_** Expliquez en quelques mots l'attaque GTC Downgrade
-> 
-> **_Réponse :_** 
+>
+> **_Réponse :_** Le but de l'attaque GTC downgrade est de forcer le client à utiliser la méthode EAP-GTC demandant au client un one-time password. Le problème dans cette méthode est que la réponse du client est envoyée en clair. De plus, de nombreux appareils clients ne parviennent pas à indiquer le type de mot de passe qu'ils demandent lorsqu'ils demandent aux utilisateurs des credentials. C'est pourquoi ceux-ci vont présenter un formulaire de login générique à l'utilisateur, qui va penser qu'il doit entrer ses credentials de connexion au réseau. Ils passeront donc en clair sur le réseau et pourront être interceptés par l'attaquant.
+>
+> Voilà par exemple ce que nous avons pu récupérer avec EAPHammer:
+>
+> ![image-20220519195113252](figures/image-20220519195113252.png)
 
 ---
 
 > **_Question:_** Quelles sont vos conclusions et réflexions par rapport à la méthode hostapd-wpe ?
 > 
-> **_Réponse:_** 
+> **_Réponse:_** Hostapd était bien plus facile à installer et à faire fonctionner que EAPHammer. Par contre, EAPHammer était plus facile à utiliser. En effet, tout peut se faire en ligne de commande alors qu'avec Hostapd il est nécessaire de modifier un fichier de configuration. De plus, il permet de nous fournir directement le password en clair. Avec Hostapd, nous sommes obligés d'utiliser John pour l'obtenir.
 
 
 ### 4. En option, vous pouvez explorer d'autres outils comme [eapeak](https://github.com/rsmusllp/eapeak) ou [crEAP](https://github.com/W9HAX/crEAP/blob/master/crEAP.py) pour les garder dans votre arsenal de pentester.
