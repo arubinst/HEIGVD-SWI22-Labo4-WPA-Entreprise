@@ -202,23 +202,39 @@ Pour implémenter l’attaque :
 - Tenter une connexion au réseau (ne pas utiliser vos identifiants réels)
 - Utiliser un outil de brute-force (```john```, ```hashcat``` ou ```asleap```, par exemple) pour attaquer le hash capturé (utiliser un mot de passe assez simple pour minimiser le temps)
 
+> Pour réaliser cette attaque, il a été nécessaire de modifier dans le fichier de configuration `hostapd-wpe.conf` les lignes suivantes afin de mettre le SSID de notre choix ainsi que le canal.
+>
+> ![](media/config-host.PNG)
+>
+> Ensuite, une fois l'attaque lancée à l'aide de la commande `sudo hostapd-wpe hostapd-wpe.conf`, on va essayer de se connecter à l'AP dont le *ssid* est celui renseigné plus haut avec des credentials (username = `temp` / mot de passe = `root`) et on va avoir l'affichage suivant :
+>
+> ![](media/hostwpe.PNG)
+>
+> On constate alors que le `challenge / response` s'affiche. Dans notre cas, on va utiliser `John` afin de pouvoir craquer le mot de passe. Pour ce faire, on crée un fichier `txt` avec la ligne `jtr NETNTLM` de la capture précédente.
+>
+> On lance ensuite `John` afin d'obtenir les différents crédentials
+>
+> ![](media/john.PNG)
+>
+> On remarque alors qu'on a réussi à retrouver les credentials
+
 ### Répondez aux questions suivantes :
 
 > **_Question :_** Quelles modifications sont nécessaires dans la configuration de hostapd-wpe pour cette attaque ?
 > 
-> **_Réponse :_** 
+> **_Réponse :_** Il est nécessaire de modifier le nom du SSID ainsi que le canal.
 
 ---
 
 > **_Question:_** Quel type de hash doit-on indiquer à john ou l'outil que vous avez employé pour craquer le handshake ?
 > 
-> **_Réponse:_** 
+> **_Réponse:_**  Les informations d'identification MSCHAPv2 sont produites au format NETNTLM (v1) pour `John the ripper`. 
 
 ---
 
 > **_Question:_** Quelles méthodes d’authentification sont supportées par hostapd-wpe ?
 > 
-> **_Réponse:_**
+> **Réponse: ** EAP, WPA, WPA2, RADIUS
 
 
 ### 3. GTC Downgrade Attack avec [EAPHammer](https://github.com/s0lst1c3/eaphammer) 
