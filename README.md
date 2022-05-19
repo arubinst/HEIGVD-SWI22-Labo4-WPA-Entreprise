@@ -86,9 +86,7 @@ Pour réussir votre capture, vous pouvez procéder de la manière suivante :
 	
 	![image-20220519144030658](images/image-20220519144030658.png)
 	
-	> Dans le paquet "Response, Identity", on retrouve l'identité du suppliant: `einet\joel.gonin`
 	
-	![image-20220519145730732](images/image-20220519145730732.png)
 	
 	- Phase hello :
 	
@@ -130,19 +128,21 @@ Pour réussir votre capture, vous pouvez procéder de la manière suivante :
 
 > **_Question :_** Quelle ou quelles méthode(s) d’authentification est/sont proposé(s) au client ?
 > 
-> **_Réponse :_** 
+> **_Réponse :_** EAP TLS et EAP PEAP ont été proposées au client lors de la négociation.
 
 ---
 
 > **_Question:_** Quelle méthode d’authentification est finalement utilisée ?
 > 
-> **_Réponse:_** 
+> **_Réponse:_** EAP-TLS a été refusé par le client, donc c'est EAP-PEAP a été utilisé.
 
 ---
 
-> **_Question:_**Arrivez-vous à voir l’identité du client dans la phase d'initiation ? Oui ? Non ? Pourquoi ?
-> 
-> **_Réponse:_** 
+> **_Question:_** Arrivez-vous à voir l’identité du client dans la phase d'initiation ? Oui ? Non ? Pourquoi ?
+>
+> **_Réponse:_** On voit que l'identité du client est `einet\joel.gonin`
+
+![image-20220519145730732](images/image-20220519145730732.png)
 
 ---
 
@@ -150,12 +150,11 @@ Pour réussir votre capture, vous pouvez procéder de la manière suivante :
 > 
 > - a. Le serveur envoie-t-il un certificat au client ? Pourquoi oui ou non ?
 > 
-> **_Réponse:_**
+> **_Réponse:_** Le serveur envoie un certificat lors du `Server Hello`. Cela permet au client d'établir la connexion TLS avec le serveur.
 > 
 > - b. Le client envoie-t-il un certificat au serveur ? Pourquoi oui ou non ?
 > 
-> **_Réponse:_**
-> 
+> **_Réponse:_** Le client n'envoie pas de certificat au serveur, car PEAP utilise l'authentification interne au tunnel TLS.
 
 ---
 
