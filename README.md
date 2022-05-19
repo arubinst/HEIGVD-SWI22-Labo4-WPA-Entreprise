@@ -1,9 +1,7 @@
+- 
 - [Livrables](#livrables)
-
 - [Échéance](#%c3%89ch%c3%a9ance)
-
 - [Quelques éléments à considérer](#quelques-éléments-à-considérer-pour-les-parties-2-et-3-)
-
 - [Travail à réaliser](#travail-%c3%a0-r%c3%a9aliser)
 
 # Sécurité des réseaux sans fil
@@ -204,18 +202,38 @@ Pour implémenter l’attaque :
 - Lancer une capture Wireshark
 - Tenter une connexion au réseau
 
+N'étant pas à l'école en faisant ce labo, j'ai testé l'attaque avec le même SSID que celui de l'école. 
+
+1. Configuration du certificat:
+ ![2022-05-19_16-43](images/2022-05-19_16-43.png)
+
+2. Lancement de l'outil:
+![2022-05-19_16-41](images/2022-05-19_16-41.png)
+
+J'ai ensuite connecté mon téléphone au réseau. L'appareil a envoyé immédiatement les identifiants au faux réseau:
+![2022-05-19_16-42](images/2022-05-19_16-42.png)
+
+Sur la capture Wireshark, on voit qu'une connexion a échoué. L'authentification GTC étant chiffrée dans le canal TLS avec le certificat généré précédemment, on ne peut pas faire la différence avec une vraie connexion:
+
+![2022-05-19_16-49](images/2022-05-19_16-49.png)
 
 ### Répondez aux questions suivantes :
 
 > **_Question :_** Expliquez en quelques mots l'attaque GTC Downgrade
-> 
-> **_Réponse :_** 
+>
+> **_Réponse :_** EAP-GTC est une méthode d'authentification supportant les hardware tokens et One-Time-Password. Elle a pour particularité d'être basée sur EAP-PEAP mais de transmettre en clair les mots de passe.
+>
+> L'attaque consiste à contrôler un evil twin AP qui accepte uniquement EAP-GTC et ainsi obliger l'authentification du client par à cette méthode. Selon l'appareil de la victime, le client pourrait envoyer des credentials en clair à l'AP.
+>
+> Référence: https://solstice.sh/2019/09/10/eap-downgrade-attacks/
 
 ---
 
-> **_Question:_** Quelles sont vos conclusions et réflexions par rapport à la méthode hostapd-wpe ?
-> 
-> **_Réponse:_** 
+> **_Question:_** Quelles sont vos conclusions et réflexions par rapport à la méthode eaphammer ?
+>
+> **_Réponse:_** L'attaque est plutôt effrayante car elle est facile à mettre en place, et peut récupérer très facilement des credentials dès qu'un appareil s'y connecte. Je ne sais pas si c'est à cause que mon smartphone est plutôt vieux (date de 2016), mais il n'y a pas eu d'erreur de certificat lors de ma connexion au faux "HEIG-VD". 
+>
+> Si les smartphones récents ont le même comportement, l'attaque peut être très efficace pour voler les logins des élèves dans un endroit autre que l'école, par exemple dans le train (ce qui est évidemment illégal !).
 
 
 ### 4. En option, vous pouvez explorer d'autres outils comme [eapeak](https://github.com/rsmusllp/eapeak) ou [crEAP](https://github.com/W9HAX/crEAP/blob/master/crEAP.py) pour les garder dans votre arsenal de pentester.
