@@ -234,8 +234,10 @@ Pour implémenter l’attaque :
 ### Répondez aux questions suivantes :
 
 > **_Question :_** Expliquez en quelques mots l'attaque GTC Downgrade
-> 
-> **_Réponse :_** 
+>
+> **_Réponse :_** Pour cette attaque, l'adversaire met en place un Evil Twin pour un réseau d'entreprise. Il suggère ensuite l'utilisation de EAP-GTC durant la négociation EAP avec le client qui tente de se connecter au réseau. 
+>
+> Si le client accepte la méthode d'authentification suggérée, soit une fenêtre va s'ouvrir et inviter l'utilisateur à entrer un mot de passe à usage unique, soit le mot de passe va être transmis en clair automatiquement.
 
 ---
 
