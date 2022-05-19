@@ -53,50 +53,65 @@ Pour réussir votre capture, vous pouvez procéder de la manière suivante :
 -   Etablir une connexion depuis un poste de travail (PC), un smartphone ou n'importe quel autre client WiFi. __Attention__, il est important que la connexion se fasse à 2.4 GHz pour pouvoir sniffer avec les interfaces Alfa
 - Comparer votre capture au processus d’authentification donné en théorie (n’oubliez pas les captures d'écran pour illustrer vos comparaisons !). En particulier, identifier les étapes suivantes :
 	- Requête et réponse d’authentification système ouvert
+    ![](./files/p1_imgs/1%20-%20auth.png)
  	- Requête et réponse d’association (ou reassociation)
+    > Request :
+    ![](./files/p1_imgs/2%20-%20assoc_request.png)
+    > Response :
+    ![](./files/p1_imgs/3%20-%20assoc_response.png)
 	- Négociation de la méthode d’authentification entreprise (TLS?, TTLS?, PEAP?, LEAP?, autre?)
+    ![](./files/p1_imgs/4%20-%20negoc_auth_method.png)
 	- Phase d’initiation
+    ![](./files/p1_imgs/5%20-%20initiation.png)
 	- Phase hello :
 		- Version TLS
 		- Suites cryptographiques et méthodes de compression proposées par le client et acceptées par l’AP
 		- Nonces
 		- Session ID
+        > Client hello :
+        ![](./files/p1_imgs/6a%20-%20client_hello.png)
+        > Server Hello
+        ![](./files/p1_imgs/6b%20-%20server_hello.png)
 	- Phase de transmission de certificats
 	 	- Echanges des certificats
+        ![](./files/p1_imgs/7a%20-%20certificates_exchange.png)
 		- Change cipher spec
+        ![](./files/p1_imgs/7b%20-%20change_cipher_spec.png)
 	- Authentification interne et transmission de la clé WPA (échange chiffré, vu par Wireshark comme « Application data »)
+    ![](./files/p1_imgs/8%20-%20key_transmissions.png)
 	- 4-way handshake
+    ![](./files/p1_imgs/9%20-%204way%20handshake.png)
 
 ### Répondez aux questions suivantes :
  
 > **_Question :_** Quelle ou quelles méthode(s) d’authentification est/sont proposé(s) au client ?
 > 
 > **_Réponse :_** 
-
+Uniquement EAP-PEAP, cette méthode est directement acceptée par le serveur d'authentification
 ---
 
 > **_Question:_** Quelle méthode d’authentification est finalement utilisée ?
 > 
 > **_Réponse:_** 
-
+EAP-PEAP
 ---
 
-> **_Question:_**Arrivez-vous à voir l’identité du client dans la phase d'initiation ? Oui ? Non ? Pourquoi ?
+> **_Question:_** Arrivez-vous à voir l’identité du client dans la phase d'initiation ? Oui ? Non ? Pourquoi ?
 > 
 > **_Réponse:_** 
-
+Oui, dans la identity response, cette trame n'est pas chiffrée 
 ---
 
 > **_Question:_** Lors de l’échange de certificats entre le serveur d’authentification et le client :
 > 
 > - a. Le serveur envoie-t-il un certificat au client ? Pourquoi oui ou non ?
-> 
+>
 > **_Réponse:_**
-> 
+> Oui, cela permet au client d'authentifier le serveur 
 > - b. Le client envoie-t-il un certificat au serveur ? Pourquoi oui ou non ?
 > 
 > **_Réponse:_**
-> 
+> Non, car ce n'est pas prévu dans EAP-PEAP
 
 ---
 
