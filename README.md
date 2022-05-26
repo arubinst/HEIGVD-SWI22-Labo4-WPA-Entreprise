@@ -265,9 +265,9 @@ Pour implémenter l’attaque :
 >
 > ![image-20220519135701239](figures/image-20220519135701239.png)
 >
-> Nous avons également modifié le nom de l'interface par wlan0mon:
+> Nous avons également modifié le nom de l'interface par wlan0:
 >
-> ![image-20220519144850015](figures/image-20220519144850015.png)
+> ![image-20220526141944758](figures/image-20220526141944758.png)
 >
 > Puis nous avons modifié le paramètre eap_fast_a_id_info pour qu'il corresponde à notre SSID:
 >
