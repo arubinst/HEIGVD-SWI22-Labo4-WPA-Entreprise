@@ -73,21 +73,23 @@ Pour réussir votre capture, vous pouvez procéder de la manière suivante :
 
 
 
-- Requête d'authentification du client :
+#### Requête et réponse d’authentification système ouvert
+
+Requête d'authentification du client :
 
 ![image-20220512154532177](figures/image-20220512154532177.png)
 
-​	Réponse d'authentification de l'AP :
+Réponse d'authentification de l'AP :
 
 ![image-20220512154437407](figures/image-20220512154437407.png)
 
 
 
+#### Requête et réponse d’association (ou reassociation)
+
 Requête d'association du client :
 
 ![image-20220512154936430](figures/image-20220512154936430.png)
-
-
 
 Réponse d'association de l'AP :
 
@@ -95,75 +97,79 @@ Réponse d'association de l'AP :
 
 
 
+#### Négociation de la méthode d’authentification entreprise
+
 Nous n'avons pas obtenu de paquets concernant la négociation de la méthode d’authentification entreprise donc voici celle du fichier de [capture](files/auth.pcap) fourni. 
 
-- Méthode d'authentification proposée par le serveur : 
+Méthode d'authentification proposée par le serveur : 
 
-  ![image-20220512160537560](figures/image-20220512160537560.png)
+![image-20220512160537560](figures/image-20220512160537560.png)
 
-  
+Refus du client et proposition d'une autre méthode d'authentification (EAP-PEAP) :
 
-- Refus du client et proposition d'une autre méthode d'authentification (EAP-PEAP) :
-
-  ![image-20220512160655300](figures/image-20220512160655300.png)
+![image-20220512160655300](figures/image-20220512160655300.png)
 
 
 
-Pour la phase d'initiation, nous avons obtenu la requête venant du serveur mais pas la réponse du client. 
+#### Phase d’initiation
 
-- Requête envoyée par le serveur d'authentification :
+Pour la phase d'initiation, nous avons obtenu la requête venant du serveur mais pas la réponse du client, elle vient donc du fichier de [capture](files/auth.pcap) fourni. 
+
+Requête envoyée par le serveur d'authentification :
 
 ![image-20220512161056064](figures/image-20220512161056064.png)
 
+Réponse envoyée par le client où l'on peut voir son identité en clair :
+
+![image-20220512161326207](figures/image-20220512161326207.png)
 
 
-- Réponse envoyée par le client où l'on peut voir son identité en clair :![image-20220512161326207](figures/image-20220512161326207.png)
+
+#### Phase hello
+
+Pour la phase hello, nous avons obtenu le message envoyé par le serveur mais pas celui du client. Nous avons donc utilisé le fichier de [capture](files/auth.pcap) fourni. Bien que nous ayons reçu le message envoyé par le serveur, nous avons décidé de montrer le paquet venant du fichier de capture fourni afin de rester cohérent au niveau des échanges.
+
+Version TLS utilisée par le client :
+
+![image-20220512161909289](figures/image-20220512161909289.png)
+
+Version TLS utilisée par le serveur :
+
+![image-20220512162510312](figures/image-20220512162510312.png)
 
 
 
-Pour la phase hello, nous avons obtenu le message envoyé par le serveur mais pas celui du client.
+Méthodes de chiffrement et de compression (ici aucune) proposées par le client :
 
-- Message envoyé par le client :
+![image-20220512162032158](figures/image-20220512162032158.png)
 
-  - Version TLS :
+Méthode de chiffrement et de compression acceptées par le serveur :
 
-    ![image-20220512161909289](figures/image-20220512161909289.png)
-
-  - Version TLS utilisée par le serveur :
-
-    ![image-20220512162510312](figures/image-20220512162510312.png)
-
-  
-
-  - Méthodes de chiffrement et de compression (ici aucune) proposée par le client :
-
-    ![image-20220512162032158](figures/image-20220512162032158.png)
-
-  - Méthode de chiffrement et de compression acceptées par le serveur :
-
-    ![image-20220512162640048](figures/image-20220512162640048.png)
-
-  
-
-  - Nonce du client :
-
-    ![image-20220512162235928](figures/image-20220512162235928.png)
-
-  - Nonce du serveur : 
-
-    ![image-20220512162741080](figures/image-20220512162741080.png)
-
-    
-
-  - Session ID du client :
-
-    ![image-20220512162344568](figures/image-20220512162344568.png)
-
-  -  Session ID du serveur : 
-
-    ![image-20220512162810222](figures/image-20220512162810222.png)
+![image-20220512162640048](figures/image-20220512162640048.png)
 
 
+
+Nonce du client :
+
+![image-20220512162235928](figures/image-20220512162235928.png)
+
+Nonce du serveur : 
+
+![image-20220512162741080](figures/image-20220512162741080.png)
+
+
+
+Session ID du client :
+
+![image-20220512162344568](figures/image-20220512162344568.png)
+
+Session ID du serveur : 
+
+![image-20220512162810222](figures/image-20220512162810222.png)
+
+
+
+#### Phase de transmission de certificats
 
 Pour la phase de transmission de certificat, nous avons obtenu ce message envoyé par le serveur :
 
@@ -171,19 +177,27 @@ Pour la phase de transmission de certificat, nous avons obtenu ce message envoy�
 
 Comme EAP-PEAP est utilisé, seul le serveur envoie des certificats au client.
 
-Voici le message envoyé par le serveur concernant l'échange de certificat :
+
+
+#### Echanges des certificats
+
+Voici le message envoyé par le serveur concernant l'échange de certificats :
 
 ![image-20220512163818448](figures/image-20220512163818448.png)
 
 
 
-Authentification interne et transmission de la clé WPA :
+#### Authentification interne et transmission de la clé WPA
+
+On observe bien que Wireshark voit cet échange chiffré comme des paquets «Application data» :
 
 ![image-20220512164022332](figures/image-20220512164022332.png)
 
 
 
-WPA 4-way handshake :
+#### 4-way handshake
+
+Comme nous n'avons pas pu obtenir tous les messages du 4-way handshake WPA lors de notre capture, nous avons utilisé ceux venant du fichier de [capture](files/auth.pcap) fourni :
 
 ![image-20220512164125085](figures/image-20220512164125085.png)
 
@@ -199,7 +213,7 @@ WPA 4-way handshake :
 
 > **_Question:_** Quelle méthode d’authentification est finalement utilisée ?
 > 
-> **_Réponse:_** Comme le client a refusé d'utiliser la méthode EAP-TLS proposée par le serveur, il a ensuite proposé d'utiliser EAP-PEAP et le serveur a accepté.
+> **_Réponse:_** Comme le client a refusé d'utiliser la méthode EAP-TLS proposée par le serveur, il a donc proposé d'utiliser EAP-PEAP et le serveur a accepté.
 
 ---
 
@@ -217,11 +231,13 @@ WPA 4-way handshake :
 > 
 > - b. Le client envoie-t-il un certificat au serveur ? Pourquoi oui ou non ?
 > 
-> **_Réponse:_** Non car on est en EAP-PEAP et seul le serveur doit s'authentifier auprès du client. Par contre, si EAP-TLS avait été utilisée, le client aurait dû présenter un certificat.
+> **_Réponse:_** Non car on est en EAP-PEAP et seul le serveur doit s'authentifier auprès du client. Par contre, si EAP-TLS avait été utilisée, le client aurait aussi dû présenter un certificat.
 
 ---
 
 __ATTENTION__ : pour l'utilisation des deux outils suivants, vous __ne devez pas__ configurer votre interface en mode monitor. Elle sera configurée automatiquement par l'outil en mode AP.
+
+
 
 ### 2. Attaque WPA Entreprise (hostapd)
 
@@ -287,6 +303,8 @@ Pour implémenter l’attaque :
 > ```
 
 
+
+
 ### 3. GTC Downgrade Attack avec [EAPHammer](https://github.com/s0lst1c3/eaphammer) 
 
 [EAPHammer](https://github.com/s0lst1c3/eaphammer) est un outil de nouvelle génération pour les attaques WPA Entreprise. Il peut en particulier faire une attaque de downgrade GTC, pour tenter de capturer les identifiants du client __en clair__, ce qui évite le besoin de l'attaque par dictionnaire.
@@ -312,6 +330,8 @@ Pour implémenter l’attaque :
 > **_Question:_** Quelles sont vos conclusions et réflexions par rapport à la méthode hostapd-wpe ?
 > 
 > **_Réponse:_** Hostapd était bien plus facile à installer et à faire fonctionner que EAPHammer. Par contre, EAPHammer était plus facile à utiliser. En effet, tout peut se faire en ligne de commande alors qu'avec Hostapd il est nécessaire de modifier un fichier de configuration. De plus, il permet de nous fournir directement le password en clair. Avec Hostapd, nous sommes obligés d'utiliser John pour l'obtenir.
+
+
 
 
 ### 4. En option, vous pouvez explorer d'autres outils comme [eapeak](https://github.com/rsmusllp/eapeak) ou [crEAP](https://github.com/W9HAX/crEAP/blob/master/crEAP.py) pour les garder dans votre arsenal de pentester.
