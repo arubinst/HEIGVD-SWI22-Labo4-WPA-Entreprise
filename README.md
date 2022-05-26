@@ -261,37 +261,37 @@ Pour implémenter l’attaque :
 >
 > **_Réponse :_**  Il faut modifier le fichier hostapd-wpe.conf.
 >
-> Dans ce fichier, nous avons modifié le SSID en le remplaçant par HIEG-VD pour proposer un nom semblable au réseau HEIG-VD:
+> Dans ce fichier, nous avons modifié le SSID en le remplaçant par `HIEG-VD` pour proposer un nom semblable au réseau HEIG-VD :
 >
 > ![image-20220519135701239](figures/image-20220519135701239.png)
 >
-> Nous avons également modifié le nom de l'interface par wlan0:
+> Nous avons également modifié le nom de l'interface par `wlan0` :
 >
 > ![image-20220526141944758](figures/image-20220526141944758.png)
 >
-> Puis nous avons modifié le paramètre eap_fast_a_id_info pour qu'il corresponde à notre SSID:
+> Puis nous avons modifié le paramètre `eap_fast_a_id_info` pour qu'il corresponde à notre SSID :
 >
 > ![image-20220519144915722](figures/image-20220519144915722.png)
 >
-> Nous obtenons finalement un résultat:
+> Nous obtenons finalement un résultat :
 >
-> ![image-20220519144619572](figures/image-20220519144619572.png)
+> ![image-20220519144619572](figures/hostapd-wpe.png)
 
 ---
 
 > **_Question:_** Quel type de hash doit-on indiquer à john ou l'outil que vous avez employé pour craquer le handshake ?
 >
-> **_Réponse:_** On doit lui indiquer le type NETNTLM
+> **_Réponse:_** On doit lui indiquer le type `NETNTLM` :
 >
-> ![image-20220519144728243](figures/image-20220519144728243.png)
+> ![image-20220519144728243](figures/john.png)
 >
-> Le mot de passe est donc: 123456
+> Le mot de passe est donc : 123456
 
 ---
 
 > **_Question:_** Quelles méthodes d’authentification sont supportées par hostapd-wpe ?
 >
-> **_Réponse:_** 
+> **_Réponse:_** Selon le GitHub de [OpenSecurityResearch](https://github.com/OpenSecurityResearch/hostapd-wpe), voici les méthodes supportées :
 >
 > ```
 >     1. EAP-FAST/MSCHAPv2 (Phase 0)
