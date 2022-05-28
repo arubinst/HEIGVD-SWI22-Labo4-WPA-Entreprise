@@ -48,24 +48,92 @@ A tittre d'exemple, voici [une connexion WPA Entreprise](files/auth.pcap) qui co
 
 Pour réussir votre capture, vous pouvez procéder de la manière suivante :
 
-- 	Identifier l'AP le plus proche, en identifiant le canal utilisé par l’AP dont la puissance est la plus élevée (et dont le SSID est HEIG-VD...). Vous pouvez faire ceci avec ```airodump-ng```, par exemple
--   Lancer une capture avec Wireshark
--   Etablir une connexion depuis un poste de travail (PC), un smartphone ou n'importe quel autre client WiFi. __Attention__, il est important que la connexion se fasse à 2.4 GHz pour pouvoir sniffer avec les interfaces Alfa
+- Identifier l'AP le plus proche, en identifiant le canal utilisé par l’AP dont la puissance est la plus élevée (et dont le SSID est HEIG-VD...). Vous pouvez faire ceci avec ```airodump-ng```, par exemple
+
+- Lancer une capture avec Wireshark
+
+- Etablir une connexion depuis un poste de travail (PC), un smartphone ou n'importe quel autre client WiFi. __Attention__, il est important que la connexion se fasse à 2.4 GHz pour pouvoir sniffer avec les interfaces Alfa
+
 - Comparer votre capture au processus d’authentification donné en théorie (n’oubliez pas les captures d'écran pour illustrer vos comparaisons !). En particulier, identifier les étapes suivantes :
 	- Requête et réponse d’authentification système ouvert
- 	- Requête et réponse d’association (ou reassociation)
-	- Négociation de la méthode d’authentification entreprise (TLS?, TTLS?, PEAP?, LEAP?, autre?)
-	- Phase d’initiation
-	- Phase hello :
-		- Version TLS
-		- Suites cryptographiques et méthodes de compression proposées par le client et acceptées par l’AP
-		- Nonces
-		- Session ID
-	- Phase de transmission de certificats
-	 	- Echanges des certificats
-		- Change cipher spec
-	- Authentification interne et transmission de la clé WPA (échange chiffré, vu par Wireshark comme « Application data »)
-	- 4-way handshake
+	
+	> Requête d'authentification :
+	>
+	> ![auth1](./img/auth1.PNG)
+	
+	> Réponse d'authentification :
+	>
+	> ![auth2](./img/auth2.PNG)
+
+  - Requête et réponse d’association (ou reassociation)
+
+  > Requête d'association :
+  >
+  > ![assoc1](./img/assoc1.PNG)
+
+  > Réponse d'association :
+  >
+  > ![assoc2](./img/assoc2.PNG)
+
+  - Négociation de la méthode d’authentification entreprise (TLS?, TTLS?, PEAP?, LEAP?, autre?)
+
+    > ![meth_auth](./img/meth_auth.PNG)
+    >
+    > Le serveur propose PEAP en premier et est directement accepté par le client.
+
+  - Phase d’initiation
+
+    > Request et Response Identity :
+    >
+    > ![init](./img/init.PNG)
+
+  - Phase hello :
+  	- Version TLS
+  	
+  	  > La version TLS utilisée par le client et le serveur est la 1.2.
+  	
+  	- Suites cryptographiques et méthodes de compression proposées par le client et acceptées par l’AP
+  	
+  	  > Le client propose 21 suites cryptographiques, le serveur choisit la TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384.
+  	  >
+  	  > Aucune méthode de compression n'est proposée.
+  	
+  	- Nonces
+  	
+  	  > Visibles dans les champs 'Random'.
+  	
+  	- Session ID
+  	
+  	  > Visibles dans les champs 'Session ID'.
+  	
+  	> Client Hello :
+  	>
+  	> ![clientHello](./img/clientHello.PNG)
+  	
+  	> Server Hello :
+  	>
+  	> ![serverHello](./img/serverHello.PNG)
+  	
+  - Phase de transmission de certificats
+
+    > 1 certificat serveur et 2 certificats client :
+    >
+    > ![certificats](./img/certificats.PNG)
+
+    - Echanges des certificats
+    - Change cipher spec
+
+      > ![cipher](./img/cipher.PNG)
+
+  - Authentification interne et transmission de la clé WPA (échange chiffré, vu par Wireshark comme « Application data »)
+
+    > ![application_data](./img/application_data.PNG)
+
+  - 4-way handshake
+
+    > ![4-way](./img/4-way.PNG)
+    >
+    > P.S: Drôle de comportement ici où il nous manque le message 3 sur 4.
 
 ### Répondez aux questions suivantes :
 
@@ -85,7 +153,7 @@ Pour réussir votre capture, vous pouvez procéder de la manière suivante :
 
 > **_Question:_** Arrivez-vous à voir l’identité du client dans la phase d'initiation ? Oui ? Non ? Pourquoi ?
 >
-> **_Réponse:_** Oui, car le serveur n'a sûrement pas été configuré pour pouvoir s'annoncer en anonyme. 
+> **_Réponse:_** Oui, car la trame n'est pas chiffrée et le serveur n'a sûrement pas été configuré pour pouvoir s'annoncer en anonyme. 
 >
 > ![part1_question3](./img/part1_question3.PNG)
 
@@ -101,9 +169,13 @@ Pour réussir votre capture, vous pouvez procéder de la manière suivante :
 >
 > - b. Le client envoie-t-il un certificat au serveur ? Pourquoi oui ou non ?
 >
-> **_Réponse: ** Oui, car le serveur a sûrement demander au client son certificat pour pouvoir également l'authentifier.
+> **_Réponse: ** Oui, car le serveur a sûrement demandé au client son certificat pour pouvoir également l'authentifier.
 >
 > ![certificate_client](./img/certificate_client.png)
+>
+> Certificat dans Windows :
+>
+> ![certif_client](./img/certif_client.PNG)
 
 ---
 
