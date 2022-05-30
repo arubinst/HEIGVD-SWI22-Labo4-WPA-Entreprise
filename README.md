@@ -23,7 +23,7 @@ __A faire en équipes de deux personnes__
 
 Les parties 2 et 3 nécessitent du matériel particulier. Si vous avez travaillé jusqu'ici avec l'interface WiFi interne de votre laptop, il y a des fortes probabilités qu'elle puisse aussi être utilisée pour les attaques Entreprise. Cela dépendra de la capacité de votra interface d'être configurée en mode AP. Ces attaques ne fonctionnent pas avec toutes les interfaces Alfa. Il faudra utiliser le bon modèle.
 
-En principe, il devrait être possible de démarrer vos machines en Kali natif (à partir d'une clé USB, avec une distro live par exemple) ou d'employer une autre version de Linux si vous voulez utiliser votre propre interface 
+En principe, il devrait être possible de démarrer vos machines en Kali natif (à partir d'une clé USB, avec une distro live par exemple) ou d'employer une autre version de Linux si vous voulez utiliser votre propre interface.
 
 ## Voici quelques informations qui peuvent vous aider :
 
@@ -70,8 +70,10 @@ Pour réussir votre capture, vous pouvez procéder de la manière suivante :
 ### Répondez aux questions suivantes :
 
 > **_Question :_** Quelle ou quelles méthode(s) d’authentification est/sont proposé(s) au client ?
-> 
+>
 > **_Réponse :_** 
+>
+> 
 
 ---
 
@@ -79,24 +81,33 @@ Pour réussir votre capture, vous pouvez procéder de la manière suivante :
 > 
 > **_Réponse:_** 
 
+EAP-PEAP
+
 ---
 
 > **_Question:_**Arrivez-vous à voir l’identité du client dans la phase d'initiation ? Oui ? Non ? Pourquoi ?
-> 
+>
 > **_Réponse:_** 
+>
+> Oui, car la communication n'est pas encore chiffrée à ce moment là
+>
+> ![identity-response](C:\Users\super\Documents\HEIG-git\swi\HEIGVD-SWI22-Labo4-WPA-Entreprise\assets\identity-response.PNG)
 
 ---
 
 > **_Question:_** Lors de l’échange de certificats entre le serveur d’authentification et le client :
-> 
+>
 > - a. Le serveur envoie-t-il un certificat au client ? Pourquoi oui ou non ?
-> 
+>
+> Non, la seul façon d'authentifier le serveur est d'ajouter le certificat dans la liste des certificats racine (par exemple)
+>
 > **_Réponse:_**
-> 
+>
 > - b. Le client envoie-t-il un certificat au serveur ? Pourquoi oui ou non ?
-> 
+>
 > **_Réponse:_**
-> 
+
+Lors de l'opération TLS certificate Verify, le client chiffreavec sa clé privé un hash (handhsake jusqu'à ce qui précède le certificate veritfy). Grâce au certificat envoyé par le client, le serveur d'authentification peut vérifier le hash en utilisant la clé publique transmis dans le certificat. Si le hash est valide, alors le serveur sait que le client possède la clé privée et est par conséquent authentifié.
 
 ---
 
