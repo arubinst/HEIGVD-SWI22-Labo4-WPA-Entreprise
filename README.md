@@ -211,13 +211,18 @@ Pour implémenter l’attaque :
 
 > **_Question:_** Quel type de hash doit-on indiquer à john ou l'outil que vous avez employé pour craquer le handshake ?
 > 
-> **_Réponse:_** 
-
+> **_Réponse:_** Un hash netntlm, nous avons récuperé le mot de passe (1234) avec john:
+> 
+> ![](.README_images/2bf1a551.png)
+>
 ---
 
 > **_Question:_** Quelles méthodes d’authentification sont supportées par hostapd-wpe ?
 > 
 > **_Réponse:_**
+> 
+> ![](.README_images/cbb83b17.png)
+> 
 
 
 ### 3. GTC Downgrade Attack avec [EAPHammer](https://github.com/s0lst1c3/eaphammer) 
