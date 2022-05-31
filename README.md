@@ -196,7 +196,16 @@ Pour implémenter l’attaque :
 
 > **_Question :_** Quelles modifications sont nécessaires dans la configuration de hostapd-wpe pour cette attaque ?
 > 
-> **_Réponse :_** 
+> **_Réponse :_** Nous avons modifié le fichier "hostapd.conf". Les modifications suivantes ont été apportées :
+> 
+> Moification de la section #802.11 option pour mettre un ssid similaire à HEIG-VD
+> 
+> ![](.README_images/option.png)
+> 
+> Modificaiton de la variable eap_fast_a_id_info pour mettre un ssid similaire à HEIG-VD
+> 
+> ![](.README_images/251174ff.png)
+> 
 
 ---
 
