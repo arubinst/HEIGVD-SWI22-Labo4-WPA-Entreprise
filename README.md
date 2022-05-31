@@ -190,6 +190,8 @@ Pour implémenter l’attaque :
 - Tenter une connexion au réseau (ne pas utiliser vos identifiants réels)
 - Utiliser un outil de brute-force (```john```, ```hashcat``` ou ```asleap```, par exemple) pour attaquer le hash capturé (utiliser un mot de passe assez simple pour minimiser le temps)
 
+![](./img/hostapd-wpe_1.png)
+
 ### Répondez aux questions suivantes :
 
 > **_Question :_** Quelles modifications sont nécessaires dans la configuration de hostapd-wpe pour cette attaque ?
