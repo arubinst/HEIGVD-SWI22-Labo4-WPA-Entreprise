@@ -48,24 +48,135 @@ A tittre d'exemple, voici [une connexion WPA Entreprise](files/auth.pcap) qui co
 
 Pour réussir votre capture, vous pouvez procéder de la manière suivante :
 
-- 	Identifier l'AP le plus proche, en identifiant le canal utilisé par l’AP dont la puissance est la plus élevée (et dont le SSID est HEIG-VD...). Vous pouvez faire ceci avec ```airodump-ng```, par exemple
--   Lancer une capture avec Wireshark
--   Etablir une connexion depuis un poste de travail (PC), un smartphone ou n'importe quel autre client WiFi. __Attention__, il est important que la connexion se fasse à 2.4 GHz pour pouvoir sniffer avec les interfaces Alfa
+- Identifier l'AP le plus proche, en identifiant le canal utilisé par l’AP dont la puissance est la plus élevée (et dont le SSID est HEIG-VD...). Vous pouvez faire ceci avec ```airodump-ng```, par exemple
+
+- Lancer une capture avec Wireshark
+
+- Etablir une connexion depuis un poste de travail (PC), un smartphone ou n'importe quel autre client WiFi. __Attention__, il est important que la connexion se fasse à 2.4 GHz pour pouvoir sniffer avec les interfaces Alfa
+
 - Comparer votre capture au processus d’authentification donné en théorie (n’oubliez pas les captures d'écran pour illustrer vos comparaisons !). En particulier, identifier les étapes suivantes :
-	- Requête et réponse d’authentification système ouvert
- 	- Requête et réponse d’association (ou reassociation)
-	- Négociation de la méthode d’authentification entreprise (TLS?, TTLS?, PEAP?, LEAP?, autre?)
-	- Phase d’initiation
-	- Phase hello :
-		- Version TLS
-		- Suites cryptographiques et méthodes de compression proposées par le client et acceptées par l’AP
-		- Nonces
-		- Session ID
-	- Phase de transmission de certificats
-	 	- Echanges des certificats
-		- Change cipher spec
-	- Authentification interne et transmission de la clé WPA (échange chiffré, vu par Wireshark comme « Application data »)
-	- 4-way handshake
+
+  #### Authentification système ouvert
+
+  Requête et réponse d’authentification système ouvert
+
+  ##### Client
+
+  ![OpenSystemAuth_client](.\assets\OpenSystemAuth_client.PNG)
+
+  ##### Cisco
+
+  ![OpenSystemAuth_cisco](.\assets\OpenSystemAuth_cisco.PNG)
+
+  #### Requête et réponse d’association (ou reassociation)
+
+  ##### Requête
+
+  ![request-peap](./assets/request-peap.PNG)
+
+  ##### Réponse
+
+  ![response-peap](./assets/response-peap.PNG)
+
+  #### Négociation
+
+  Négociation de la méthode d’authentification entreprise (TLS?, TTLS?, PEAP?, LEAP?, autre?)
+
+  ##### Requête
+
+  ![request-peap](./assets/request-peap.PNG)
+
+  ##### Response
+
+  ##### ![response-peap](./assets/response-peap.PNG)
+
+  #### Phase d’initiation
+
+  ##### Requête identity
+
+  ![identity-request](.\assets\identity-request.PNG)
+
+  ##### Response identity
+
+  ![response-identity](.\assets\response-identity.PNG)
+
+  #### Phase hello
+
+  ##### Client 
+
+  - Version TLS
+
+  ![version](./assets/client-hello/version.PNG)
+
+  - Suites cryptographiques et méthodes de compression proposées par le client et acceptées par l’AP
+
+  ![ciphersuite](./assets/client-hello/ciphersuite.PNG)
+
+  - Nonces
+
+  ![nonce](./assets/client-hello/nonce.PNG)
+
+  - Session ID
+
+  
+
+  ##### Cisco
+
+  Aucun serveur hello n'a pas été capturée avec wireshark. On a utilisé alors les captures du fichier auth.
+
+  - Version TLS
+
+  ![version-tls](./assets/server-hello/version-tls.PNG)
+
+  - Suites cryptographiques et méthodes de compression proposées par le client et acceptées par l’AP
+
+  ![ciphersuite](./assets/server-hello/ciphersuite.PNG)
+
+  - Nonces
+
+  ![nonce](./assets/server-hello/nonce.PNG)
+
+  - Session ID
+
+  ![session-id](./assets/server-hello/session-id.PNG)
+
+  #### Phase de transmission de certificats
+
+  ##### Echanges des certificats
+
+  
+
+  ##### Change cipher spec
+
+  Client -> AP
+
+  ![change-cipher-client](./assets/auth/change-cipher-client.PNG)
+
+  AP -> client
+
+  ![changier-cipher-ap](C:\Users\super\Documents\HEIG-git\swi\HEIGVD-SWI22-Labo4-WPA-Entreprise\assets\auth\changier-cipher-ap.PNG)
+
+#### Authentification interne et transmission de la clé WPA 
+
+Echange chiffré, vu par Wireshark comme « Application data »
+
+Du fichier Auth car on n'avait pas de data dans notre capture wireshark,
+
+![data-encrypt](./assets/auth/data-encrypt.PNG)
+
+
+
+#### 4-way handshake
+
+
+
+![4way-handsake-us](.\assets\4way-handsake-us.PNG)
+
+
+
+##### Fichier auth
+
+![4way-handshake](./assets/auth/4way-handshake.PNG)
 
 ### Répondez aux questions suivantes :
 
