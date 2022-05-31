@@ -234,18 +234,20 @@ Pour implémenter l’attaque :
 - Lancer une capture Wireshark
 - Tenter une connexion au réseau
 
+La commande pour lancer l'AP :
+
+![](./img/eaphammer_2.png)
+
+Le resultat où on y voit les crédenciales en clair :
+
+![](./img/eaphammer.png)
+
 
 ### Répondez aux questions suivantes :
 
 > **_Question :_** Expliquez en quelques mots l'attaque GTC Downgrade
 > 
 > **_Réponse :_** Le but est de forcer le client à utiliser la méthode EAP-GTC pour s'authentifier et exploiter le fait qu'avec cette méthode le client envoie le password en clair. https://solstice.sh/iii-eap-downgrade-attacks/.
->
-> ```
-> GTC: Tue May 31 15:01:22 2022
->       username:       Borris
->       password:       1234
-> ```
 ---
 
 > **_Question:_** Quelles sont vos conclusions et réflexions par rapport à la méthode hostapd-wpe ?
