@@ -239,13 +239,18 @@ Pour implémenter l’attaque :
 
 > **_Question :_** Expliquez en quelques mots l'attaque GTC Downgrade
 > 
-> **_Réponse :_** 
-
+> **_Réponse :_** Le but est de forcer le client à utiliser la méthode EAP-GTC pour s'authentifier et exploiter le fait qu'avec cette méthode le client envoie le password en clair. https://solstice.sh/iii-eap-downgrade-attacks/.
+>
+> ```
+> GTC: Tue May 31 15:01:22 2022
+>       username:       Borris
+>       password:       1234
+> ```
 ---
 
 > **_Question:_** Quelles sont vos conclusions et réflexions par rapport à la méthode hostapd-wpe ?
 > 
-> **_Réponse:_** 
+> **_Réponse:_** hostapd-wpe demande de déchiffrer le mot de passe après avoir intercepté le hash alors que avec EAPHammer nous obtenons directement le mot de passe en clair. EAPHammer nécessite que le client accepte le downgrade.
 
 
 ### 4. En option, vous pouvez explorer d'autres outils comme [eapeak](https://github.com/rsmusllp/eapeak) ou [crEAP](https://github.com/W9HAX/crEAP/blob/master/crEAP.py) pour les garder dans votre arsenal de pentester.
