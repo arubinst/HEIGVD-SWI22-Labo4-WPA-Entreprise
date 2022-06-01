@@ -62,11 +62,11 @@ Pour réussir votre capture, vous pouvez procéder de la manière suivante :
 
   ##### Client
 
-  ![OpenSystemAuth_client](.\assets\OpenSystemAuth_client.PNG)
+  ![OpenSystemAuth_client](./assets/OpenSystemAuth_client.PNG)
 
   ##### Cisco
 
-  ![OpenSystemAuth_cisco](.\assets\OpenSystemAuth_cisco.PNG)
+  ![OpenSystemAuth_cisco](./assets/OpenSystemAuth_cisco.PNG)
 
   #### Requête et réponse d’association (ou reassociation)
 
@@ -144,17 +144,21 @@ Pour réussir votre capture, vous pouvez procéder de la manière suivante :
 
   ##### Echanges des certificats
 
-  
+  On n'avait pas de certificats échangés avec notre capture, alors on a pris celle pour auth.
+
+  ![server-certificate](./assets/auth/server-certificate.PNG)
 
   ##### Change cipher spec
 
-  Client -> AP
+  - Client -> AP
 
-  ![change-cipher-client](./assets/auth/change-cipher-client.PNG)
-
-  AP -> client
-
-  ![changier-cipher-ap](C:\Users\super\Documents\HEIG-git\swi\HEIGVD-SWI22-Labo4-WPA-Entreprise\assets\auth\changier-cipher-ap.PNG)
+  
+![change-cipher-client](./assets/auth/change-cipher-client.PNG)
+  
+  - AP -> client
+  
+  
+  ![changier-cipher-ap](./assets/auth/changier-cipher-ap.PNG)
 
 #### Authentification interne et transmission de la clé WPA 
 
@@ -168,13 +172,17 @@ Du fichier Auth car on n'avait pas de data dans notre capture wireshark,
 
 #### 4-way handshake
 
+##### Notre fichier
 
+On peut constater que le Message 2 n'a pas été capturé.
 
-![4way-handsake-us](.\assets\4way-handsake-us.PNG)
+![4way-handsake-us](./assets/4way-handsake-us.PNG)
 
 
 
 ##### Fichier auth
+
+Avec le fichier auth, voici un 4 way handshake complet.
 
 ![4way-handshake](./assets/auth/4way-handshake.PNG)
 
@@ -184,7 +192,7 @@ Du fichier Auth car on n'avait pas de data dans notre capture wireshark,
 >
 > **_Réponse :_** 
 >
-> 
+> Dans notre cas, EAP-PEAP
 
 ---
 
@@ -210,7 +218,7 @@ EAP-PEAP
 >
 > - a. Le serveur envoie-t-il un certificat au client ? Pourquoi oui ou non ?
 >
-> Non, la seul façon d'authentifier le serveur est d'ajouter le certificat dans la liste des certificats racine (par exemple)
+> On a pas capturée la trame dans notre cas. Mais avec le fichier auth, on constate que le serveur s'authentifie bien en envoyant son certificat. Ce qui est demandé par EAP-PEAP
 >
 > **_Réponse:_**
 >
@@ -218,7 +226,9 @@ EAP-PEAP
 >
 > **_Réponse:_**
 
-Lors de l'opération TLS certificate Verify, le client chiffreavec sa clé privé un hash (handhsake jusqu'à ce qui précède le certificate veritfy). Grâce au certificat envoyé par le client, le serveur d'authentification peut vérifier le hash en utilisant la clé publique transmis dans le certificat. Si le hash est valide, alors le serveur sait que le client possède la clé privée et est par conséquent authentifié.
+Non avec EAP-PEAP, seul le serveur envoie son certificat au client.
+
+Avec EPA-TLS ce serait le cas
 
 ---
 
