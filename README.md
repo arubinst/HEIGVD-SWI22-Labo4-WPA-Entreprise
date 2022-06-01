@@ -150,7 +150,7 @@ Pour implémenter l’attaque :
 
 > **_Question:_** Quelles méthodes d’authentification sont supportées par hostapd-wpe ?
 > 
-> **_Réponse:_**
+> **_Réponse:_** Selon la documentation de [Kali](https://www.kali.org/tools/hostapd-wpe/), ces méthodes sont supportées : 1. EAP-FAST/MSCHAPv2 (Phase 0) 2. PEAP/MSCHAPv2 3. EAP-TTLS/MSCHAPv2 4. EAP-TTLS/MSCHAP 5. EAP-TTLS/CHAP 6. EAP-TTLS/PAP
 
 
 ### 3. GTC Downgrade Attack avec [EAPHammer](https://github.com/s0lst1c3/eaphammer) 
