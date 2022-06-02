@@ -317,7 +317,7 @@ Le réseau evil twin a bien été créé :
 
 ![fake-evil](./assets/fake-evil.jpg)
 
-Malheureusement il nous était impossible de nous y connecter (Connexion impossible). Et rien n'étais capturé par Wireshark :
+Malheureusement il nous était impossible de nous y connecter (Connexion impossible). Et rien n'était capturé par Wireshark :
 
 ![WiresharkVideEAPHammer](./assets/WiresharkVideEAPHammer.PNG)
 
@@ -348,7 +348,7 @@ Référence : [https://solstice.sh/iii-eap-downgrade-attacks/](https://solstice.
 >
 > **_Réponse:_** 
 
-Avec hostapd-wpe, l'attaque sera plus difficile voire impossible si le mot de passe dont est dérivé la clé est compliqué.
+Avec hostapd-wpe, l'attaque sera plus difficile voire impossible si le mot de passe dont est dérivé la clé est compliqué. En effet, avec cette attaque, on doit encore effectuer un brute-force sur le handshake.
 
 Avec GTC Downgrade Attack, on berne l'utilisateur pour obtenir son mot de passe. Ainsi, il sera cassé même s'il est compliqué.
 
