@@ -53,50 +53,65 @@ Pour réussir votre capture, vous pouvez procéder de la manière suivante :
 -   Etablir une connexion depuis un poste de travail (PC), un smartphone ou n'importe quel autre client WiFi. __Attention__, il est important que la connexion se fasse à 2.4 GHz pour pouvoir sniffer avec les interfaces Alfa
 - Comparer votre capture au processus d’authentification donné en théorie (n’oubliez pas les captures d'écran pour illustrer vos comparaisons !). En particulier, identifier les étapes suivantes :
 	- Requête et réponse d’authentification système ouvert
+    ![](./files/p1_imgs/1%20-%20auth.png)
  	- Requête et réponse d’association (ou reassociation)
+    > Request :
+    ![](./files/p1_imgs/2%20-%20assoc_request.png)
+    > Response :
+    ![](./files/p1_imgs/3%20-%20assoc_response.png)
 	- Négociation de la méthode d’authentification entreprise (TLS?, TTLS?, PEAP?, LEAP?, autre?)
+    ![](./files/p1_imgs/4%20-%20negoc_auth_method.png)
 	- Phase d’initiation
+    ![](./files/p1_imgs/5%20-%20initiation.png)
 	- Phase hello :
 		- Version TLS
 		- Suites cryptographiques et méthodes de compression proposées par le client et acceptées par l’AP
 		- Nonces
 		- Session ID
+        > Client hello :
+        ![](./files/p1_imgs/6a%20-%20client_hello.png)
+        > Server Hello
+        ![](./files/p1_imgs/6b%20-%20server_hello.png)
 	- Phase de transmission de certificats
 	 	- Echanges des certificats
+        ![](./files/p1_imgs/7a%20-%20certificates_exchange.png)
 		- Change cipher spec
+        ![](./files/p1_imgs/7b%20-%20change_cipher_spec.png)
 	- Authentification interne et transmission de la clé WPA (échange chiffré, vu par Wireshark comme « Application data »)
+    ![](./files/p1_imgs/8%20-%20key_transmissions.png)
 	- 4-way handshake
+    ![](./files/p1_imgs/9%20-%204way%20handshake.png)
 
 ### Répondez aux questions suivantes :
  
 > **_Question :_** Quelle ou quelles méthode(s) d’authentification est/sont proposé(s) au client ?
 > 
 > **_Réponse :_** 
-
+Uniquement EAP-PEAP, cette méthode est directement acceptée par le serveur d'authentification
 ---
 
 > **_Question:_** Quelle méthode d’authentification est finalement utilisée ?
 > 
 > **_Réponse:_** 
-
+EAP-PEAP
 ---
 
-> **_Question:_**Arrivez-vous à voir l’identité du client dans la phase d'initiation ? Oui ? Non ? Pourquoi ?
+> **_Question:_** Arrivez-vous à voir l’identité du client dans la phase d'initiation ? Oui ? Non ? Pourquoi ?
 > 
 > **_Réponse:_** 
-
+Oui, dans la identity response, cette trame n'est pas chiffrée 
 ---
 
 > **_Question:_** Lors de l’échange de certificats entre le serveur d’authentification et le client :
 > 
 > - a. Le serveur envoie-t-il un certificat au client ? Pourquoi oui ou non ?
-> 
+>
 > **_Réponse:_**
-> 
+> Oui, cela permet au client d'authentifier le serveur 
 > - b. Le client envoie-t-il un certificat au serveur ? Pourquoi oui ou non ?
 > 
 > **_Réponse:_**
-> 
+> Non, car ce n'est pas prévu dans EAP-PEAP
 
 ---
 
@@ -122,19 +137,20 @@ Pour implémenter l’attaque :
 
 > **_Question :_** Quelles modifications sont nécessaires dans la configuration de hostapd-wpe pour cette attaque ?
 > 
-> **_Réponse :_** 
+> **_Réponse :_** On a juste changé le nom du SSID qui va être diffusé (paramètre nommé `ssid=` dans le fichier de config `/etc/hostapd-wpe/hostapd-wpe.conf`)
 
 ---
 
 > **_Question:_** Quel type de hash doit-on indiquer à john ou l'outil que vous avez employé pour craquer le handshake ?
 > 
-> **_Réponse:_** 
+> **_Réponse:_** Le hash utilisé est NETNTLM (type 5500 avec hashcat). Voici la sortie hashcat pour craquer le mot de passe :  
+> ![](files/hashcat_p2.png)
 
 ---
 
 > **_Question:_** Quelles méthodes d’authentification sont supportées par hostapd-wpe ?
 > 
-> **_Réponse:_**
+> **_Réponse:_** Selon la documentation de [Kali](https://www.kali.org/tools/hostapd-wpe/), ces méthodes sont supportées : 1. EAP-FAST/MSCHAPv2 (Phase 0) 2. PEAP/MSCHAPv2 3. EAP-TTLS/MSCHAPv2 4. EAP-TTLS/MSCHAP 5. EAP-TTLS/CHAP 6. EAP-TTLS/PAP
 
 
 ### 3. GTC Downgrade Attack avec [EAPHammer](https://github.com/s0lst1c3/eaphammer) 
@@ -152,12 +168,45 @@ Pour implémenter l’attaque :
 > **_Question :_** Expliquez en quelques mots l'attaque GTC Downgrade
 > 
 > **_Réponse :_** 
+Cette attaque peut récupérer les identifiants entreprise en ciblant les appareils qui supportent la méthode d'authentification EAP-GTC (EAP Generic Token Card).
+L'attaquant propose un réseau evil twin et, dans le processus de négociation EAP, propose GTC comme premier choix. Si un client accepte la méthode d'authentification, il se verra afficher un prompt afin de fournir un "one-time password". Comme l'utilisateur est peu scrupuleux, il va entrer son mdp d'accès au réseau. Comme c'est un "one-time password", celui-ci sera transmis en clair à l'adversaire.
 
 ---
 
 > **_Question:_** Quelles sont vos conclusions et réflexions par rapport à la méthode hostapd-wpe ?
 > 
 > **_Réponse:_** 
+EAPHammer essaie le downgrade GTC, si celui-ci n'abouti pas il affiche aussi le hash, tout comme la méthode hostapd-wpe.
+
+Exemple d'output EAPHammer :
+```
+Using interface wlan0 with hwaddr 00:11:22:33:44:00 and ssid "HEIG-Corp"
+wlan0: interface state COUNTRY_UPDATE->ENABLED
+wlan0: AP-ENABLED 
+
+
+Press enter to quit...
+
+wlan0: STA 72:b1:fa:c9:29:eb IEEE 802.11: authenticated
+wlan0: STA 72:b1:fa:c9:29:eb IEEE 802.11: associated (aid 1)
+wlan0: CTRL-EVENT-EAP-STARTED 72:b1:fa:c9:29:eb
+wlan0: CTRL-EVENT-EAP-PROPOSED-METHOD vendor=0 method=1
+wlan0: CTRL-EVENT-EAP-PROPOSED-METHOD vendor=0 method=25
+
+
+GTC: Wed Jun  1 22:05:33 2022
+     username: stefan
+     password: djdhdhdhs
+wlan0: CTRL-EVENT-EAP-FAILURE 72:b1:fa:c9:29:eb
+wlan0: STA 72:b1:fa:c9:29:eb IEEE 802.1X: authentication failed - EAP type: 0 (unknown)
+wlan0: STA 72:b1:fa:c9:29:eb IEEE 802.1X: Supplicant used different EAP type: 25 (PEAP)
+wlan0: STA 72:b1:fa:c9:29:eb IEEE 802.11: authenticated
+wlan0: STA 72:b1:fa:c9:29:eb IEEE 802.11: associated (aid 1)
+wlan0: CTRL-EVENT-EAP-STARTED 72:b1:fa:c9:29:eb
+wlan0: CTRL-EVENT-EAP-PROPOSED-METHOD vendor=0 method=1
+wlan0: CTRL-EVENT-EAP-PROPOSED-METHOD vendor=0 method=25
+```
+Note : l'attaque a fonctionné avec un appareil Android (Samsung Galaxy S21 avec la dernière mise à jour). En revanche, depuis un desktop Windows, l'attaque n'a pas fonctionné.
 
 
 ### 4. En option, vous pouvez explorer d'autres outils comme [eapeak](https://github.com/rsmusllp/eapeak) ou [crEAP](https://github.com/W9HAX/crEAP/blob/master/crEAP.py) pour les garder dans votre arsenal de pentester.
