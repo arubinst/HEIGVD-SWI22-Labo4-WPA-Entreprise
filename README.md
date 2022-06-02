@@ -118,11 +118,17 @@ Pour réussir votre capture, vous pouvez procéder de la manière suivante :
 
   - Session ID
 
-  
+    Avec notre capture, nous avions aucun id de session, ce qui est étrange.
+
+  ![session-id](./assets/client-hello/session-id.PNG)
+
+  Avec la capture `auth`, nous avons pu avoir l'id de session suivant :
+
+  ![auth-session-id](./assets/auth/auth-session-id.PNG)
 
   ##### Cisco
 
-  Aucun serveur hello n'a pas été capturée avec wireshark. On a utilisé alors les captures du fichier auth.
+  Aucun serveur hello n'a pas été capturée avec wireshark. On a utilisé alors les captures du fichier `auth`.
 
   - Version TLS
 
@@ -144,14 +150,14 @@ Pour réussir votre capture, vous pouvez procéder de la manière suivante :
 
   ##### Echanges des certificats
 
-  On n'avait pas de certificats échangés avec notre capture, alors on a pris celle pour auth.
+  On n'avait pas de certificats échangés avec notre capture, alors on a pris celle pour `auth`.
 
   ![server-certificate](./assets/auth/server-certificate.PNG)
-
+  
   ##### Change cipher spec
-
+  
   - Client -> AP
-
+  
   
 
 ![change-cipher-client](./assets/auth/change-cipher-client.PNG)
@@ -183,7 +189,7 @@ On peut constater que le Message 2 n'a pas été capturé.
 
 ##### Fichier auth
 
-Avec le fichier auth, voici un 4 way handshake complet.
+Avec le fichier `auth`, voici un 4 way handshake complet.
 
 ![4way-handshake](./assets/auth/4way-handshake.PNG)
 
@@ -199,9 +205,7 @@ Avec le fichier auth, voici un 4 way handshake complet.
 
 > **_Question:_** Quelle méthode d’authentification est finalement utilisée ?
 > 
-> **_Réponse:_** 
-
-EAP-PEAP
+> **_Réponse:_** EAP-PEAP
 
 ---
 
@@ -227,9 +231,9 @@ EAP-PEAP
 >
 > **_Réponse:_**
 
-Non avec EAP-PEAP, seul le serveur envoie son certificat au client.
+Non avec EAP-PEAP, seul le serveur envoie son certificat au client. Contrairement à EAP-TLS, l 'utilisateur  entre et envoie ses informations d'identification au serveur RADIUS. Celui-ci les vérifie et les authentifie pour l'accès au réseau.
 
-Avec EPA-TLS ce serait le cas
+
 
 ---
 
@@ -257,7 +261,9 @@ Pour implémenter l’attaque :
 >
 > **_Réponse :_** 
 >
-> Dans le fichier de configuration, hostapd-wpe.conf, il faut modifier le ssid : ssid=HEIG-VD
+> Dans le fichier de configuration, hostapd-wpe.conf, il faut modifier le ssid :
+>
+>  ssid=HEIG-VD
 
 ---
 
@@ -308,7 +314,7 @@ Pour implémenter l’attaque :
 >
 > Le but est de forcer un appareil client à utiliser la méthode EAP-GTC. Celle-ci consiste à demander au client un mot de passe OTP.
 >
-> La plupart du temps, les logiciels ou appareils clients vont simplement présenter un formulaire de mot de passe générique. En raison de cela, l'utilisateur est confus et peut croire  qu'il doit entrer ses crédentials du réseau plutôt que le mot de passe OTP.
+> La plupart du temps, les logiciels ou appareils clients vont simplement présenter un formulaire de mot de passe générique. En raison de cela, l'utilisateur peut être confus et peut croire  qu'il doit entrer ses crédentials du réseau plutôt que le mot de passe OTP.
 >
 > Le problème avec cette transmission, c'est qu'elle se fait en clair. L'attaquant peut alors sniffer les crédentials de l'utilisateur.
 
@@ -322,9 +328,9 @@ Lien : [https://solstice.sh/iii-eap-downgrade-attacks/#:~:text=access%20points%2
 >
 > **_Réponse:_** 
 >
-> C'est  très efficace. Les seuls différentes notables sont les suivantes :
+> C'est  très efficace. Les seuls différences notables sont les suivantes :
 >
-> -Le système d'exploitation détecte que ce n'est pas le même réseau et ne va pas permettre une connexion automatique avec des crédentials déjà enregistrée.
+> -Le système d'exploitation détecte que ce n'est pas le même réseau et ne va pas permettre une connexion automatique avec des crédentials déjà enregistrés.
 >
 > Mais un utilisateur pourra facilement trouver le comportement normal et va simplement  entrer ses crédentials.
 >
