@@ -52,21 +52,21 @@ Pour réussir votre capture, vous pouvez procéder de la manière suivante :
 - 	Lancer une capture avec Wireshark
 - 	Etablir une connexion depuis un poste de travail (PC), un smartphone ou n'importe quel autre client WiFi. __Attention__, il est important que la connexion se fasse à 2.4 GHz pour pouvoir sniffer avec les interfaces Alfa
 - Comparer votre capture au processus d’authentification donné en théorie (n’oubliez pas les captures d'écran pour illustrer vos comparaisons !). En particulier, identifier les étapes suivantes :
-	- Requête et réponse d’authentification système ouvert![image-20220519151214429](C:\Users\Nicolas\AppData\Roaming\Typora\typora-user-images\image-20220519151214429.png)
+	- Requête et réponse d’authentification système ouvert![image-20220519151214429](figures/image-20220519151214429.png)
  	- Requête et réponse d’association (ou reassociation)
-	- Négociation de la méthode d’authentification entreprise (TLS?, TTLS?, PEAP?, LEAP?, autre?)![image-20220519145546983](C:\Users\Nicolas\AppData\Roaming\Typora\typora-user-images\image-20220519145546983.png)
-	- Phase d’initiation![image-20220519151600105](C:\Users\Nicolas\AppData\Roaming\Typora\typora-user-images\image-20220519151600105.png)
-	- Phase hello :![image-20220519145333577](C:\Users\Nicolas\AppData\Roaming\Typora\typora-user-images\image-20220519145333577.png)
+	- Négociation de la méthode d’authentification entreprise (TLS?, TTLS?, PEAP?, LEAP?, autre?)![image-20220519145546983](figures/image-20220519145546983.png)
+	- Phase d’initiation![image-20220519151600105](figures/image-20220519151600105.png)
+	- Phase hello :![image-20220519145333577](figures/image-20220519145333577.png)
 	  - Version TLS
 	  - Suites cryptographiques et méthodes de compression proposées par le client et acceptées par l’AP
 	  - Nonces
 	  - Session ID
-	  - ![image-20220519145348365](C:\Users\Nicolas\AppData\Roaming\Typora\typora-user-images\image-20220519145348365.png)
-	- Phase de transmission de certificats![image-20220519151016246](C:\Users\Nicolas\AppData\Roaming\Typora\typora-user-images\image-20220519151016246.png)
+	  - ![image-20220519145348365](figures/image-20220519145348365.png)
+	- Phase de transmission de certificats![image-20220519151016246](figures/image-20220519151016246.png)
 	 	- Echanges des certificats
-		- Change cipher spec![image-20220519145611333](C:\Users\Nicolas\AppData\Roaming\Typora\typora-user-images\image-20220519145611333.png)
-	- Authentification interne et transmission de la clé WPA (échange chiffré, vu par Wireshark comme « Application data »)![image-20220519151057941](C:\Users\Nicolas\AppData\Roaming\Typora\typora-user-images\image-20220519151057941.png)
-	- 4-way handshake![image-20220519151115609](C:\Users\Nicolas\AppData\Roaming\Typora\typora-user-images\image-20220519151115609.png)
+		- Change cipher spec![image-20220519145611333](figures/image-20220519145611333.png)
+	- Authentification interne et transmission de la clé WPA (échange chiffré, vu par Wireshark comme « Application data »)![image-20220519151057941](figures/image-20220519151057941.png)
+	- 4-way handshake![image-20220519151115609](figures/image-20220519151115609.png)
 
 ### Répondez aux questions suivantes :
 
@@ -74,7 +74,7 @@ Pour réussir votre capture, vous pouvez procéder de la manière suivante :
 >
 > **_Réponse :_** EAP-TLS, EAP-PEAP
 >
-> ![image-20220519144307341](C:\Users\Nicolas\AppData\Roaming\Typora\typora-user-images\image-20220519144307341.png)
+> ![image-20220519144307341](figures/image-20220519144307341.png)
 
 ---
 
@@ -82,19 +82,19 @@ Pour réussir votre capture, vous pouvez procéder de la manière suivante :
 >
 > **_Réponse:_** EAP-PEAP
 >
-> ![image-20220519144430752](C:\Users\Nicolas\AppData\Roaming\Typora\typora-user-images\image-20220519144430752.png)
+> ![image-20220519144430752](figures/image-20220519144430752.png)
 >
-> ![image-20220519144445587](C:\Users\Nicolas\AppData\Roaming\Typora\typora-user-images\image-20220519144445587.png)
+> ![image-20220519144445587](figures/image-20220519144445587.png)
 
 ---
 
 > **_Question:_**Arrivez-vous à voir l’identité du client dans la phase d'initiation ? Oui ? Non ? Pourquoi ?
 >
-> **_Réponse:_** Oui, car..
+> **_Réponse:_** Oui, car il est envoyé par le client au serveur
 >
-> ![image-20220519144506604](C:\Users\Nicolas\AppData\Roaming\Typora\typora-user-images\image-20220519144506604.png)
+> ![image-20220519144506604](figures/image-20220519144506604.png)
 >
-> ![image-20220519144530204](C:\Users\Nicolas\AppData\Roaming\Typora\typora-user-images\image-20220519144530204.png)
+> ![image-20220519144530204](figures/image-20220519144530204.png)
 
 ---
 
@@ -108,9 +108,9 @@ Pour réussir votre capture, vous pouvez procéder de la manière suivante :
 >
 > **_Réponse:_** Non, car..
 >
-> ![image-20220519144708726](C:\Users\Nicolas\AppData\Roaming\Typora\typora-user-images\image-20220519144708726.png)
+> ![image-20220519144708726](figures/image-20220519144708726.png)
 >
-> ![image-20220519144727397](C:\Users\Nicolas\AppData\Roaming\Typora\typora-user-images\image-20220519144727397.png)
+> ![image-20220519144727397](figures/image-20220519144727397.png)
 
 ---
 
@@ -183,7 +183,7 @@ Pour implémenter l’attaque :
 
 ### 4. En option, vous pouvez explorer d'autres outils comme [eapeak](https://github.com/rsmusllp/eapeak) ou [crEAP](https://github.com/W9HAX/crEAP/blob/master/crEAP.py) pour les garder dans votre arsenal de pentester.
 
-(Il n'y a pas de rendu pour cette partie...)
+(Il n'y a pas de rendu pour cette partie...
 
 ## Livrables
 
