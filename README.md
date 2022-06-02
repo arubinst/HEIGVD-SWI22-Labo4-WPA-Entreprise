@@ -60,6 +60,8 @@ Pour réussir votre capture, vous pouvez procéder de la manière suivante :
 
   Requête et réponse d’authentification système ouvert
 
+  Lien de notre capture Wireshark :  [SWI_Labo4_AutentificationWPA-Enterprise.pcapng](./files/SWI_Labo4_AutentificationWPA-Enterprise.pcapng) 
+
   ##### Client
 
   ![OpenSystemAuth_client](./assets/OpenSystemAuth_client.PNG)
@@ -126,7 +128,7 @@ Pour réussir votre capture, vous pouvez procéder de la manière suivante :
 
   ![auth-session-id](./assets/auth/auth-session-id.PNG)
 
-  ##### Cisco
+  ##### AP Cisco
 
   Aucun serveur hello n'a pas été capturée avec wireshark. On a utilisé alors les captures du fichier `auth`.
 
@@ -151,13 +153,12 @@ Pour réussir votre capture, vous pouvez procéder de la manière suivante :
   ##### Echanges des certificats
 
   On n'avait pas de certificats échangés avec notre capture, alors on a pris celle pour `auth`.
-
+  
   ![server-certificate](./assets/auth/server-certificate.PNG)
   
   ##### Change cipher spec
   
   - Client -> AP
-  
   
 
 ![change-cipher-client](./assets/auth/change-cipher-client.PNG)
@@ -230,10 +231,10 @@ Avec le fichier `auth`, voici un 4 way handshake complet.
 > - b. Le client envoie-t-il un certificat au serveur ? Pourquoi oui ou non ?
 >
 > **_Réponse:_**
-
-Non avec EAP-PEAP, seul le serveur envoie son certificat au client. Contrairement à EAP-TLS, l 'utilisateur entre et envoie ses informations d'identification au serveur RADIUS. Celui-ci les vérifie et les authentifie pour l'accès au réseau.
-
-Référence : [https://www.securew2.com/blog/eap-tls-vs-peap-mschapv2-which-authentication-protocol-is-superior](https://www.securew2.com/blog/eap-tls-vs-peap-mschapv2-which-authentication-protocol-is-superior)
+>
+> Non avec EAP-PEAP, seul le serveur envoie son certificat au client. Contrairement à EAP-TLS, l 'utilisateur entre et envoie ses informations d'identification au serveur RADIUS. Celui-ci les vérifie et les authentifie pour l'accès au réseau.
+>
+> Référence : [https://www.securew2.com/blog/eap-tls-vs-peap-mschapv2-which-authentication-protocol-is-superior](https://www.securew2.com/blog/eap-tls-vs-peap-mschapv2-which-authentication-protocol-is-superior)
 
 ---
 
@@ -295,8 +296,7 @@ Pour implémenter l’attaque :
 > -EAP-TTLS/CHAP
 > -EAP-TTLS/PAP
 > ```
-
-Référence : [https://github.com/aircrack-ng/aircrack-ng/tree/master/patches/wpe/hostapd-wpe](https://github.com/aircrack-ng/aircrack-ng/tree/master/patches/wpe/hostapd-wpe)
+> Référence : [https://github.com/aircrack-ng/aircrack-ng/tree/master/patches/wpe/hostapd-wpe](https://github.com/aircrack-ng/aircrack-ng/tree/master/patches/wpe/hostapd-wpe)
 
 ### 3. GTC Downgrade Attack avec [EAPHammer](https://github.com/s0lst1c3/eaphammer) 
 
@@ -337,24 +337,24 @@ Nous n'avons donc pas pu effectuer l'entièreté de l'attaque pour récupérer l
 > La plupart du temps, les logiciels ou appareils clients vont simplement présenter un formulaire de mot de passe générique. En raison de cela, l'utilisateur peut être confus et peut croire  qu'il doit entrer ses crédentials du réseau plutôt que le mot de passe OTP.
 >
 > Le problème avec cette transmission, c'est qu'elle se fait en clair. L'attaquant peut alors sniffer les crédentials de l'utilisateur.
+>
+> 
+>
+> Référence : [https://solstice.sh/iii-eap-downgrade-attacks/](https://solstice.sh/iii-eap-downgrade-attacks/#:~:text=access%20points%20instead.-,GTC%20Downgrade%20Attacks,the%20access%20point%20in%20plaintext)
 
 
-
-Référence : [https://solstice.sh/iii-eap-downgrade-attacks/](https://solstice.sh/iii-eap-downgrade-attacks/#:~:text=access%20points%20instead.-,GTC%20Downgrade%20Attacks,the%20access%20point%20in%20plaintext)
 
 ---
 
 > **_Question:_** Quelles sont vos conclusions et réflexions par rapport à la méthode hostapd-wpe ?
 >
 > **_Réponse:_** 
-
-Avec hostapd-wpe, l'attaque sera plus difficile voire impossible si le mot de passe dont est dérivé la clé est compliqué.
-
-Avec GTC Downgrade Attack, on berne l'utilisateur pour obtenir son mot de passe. Ainsi, il sera cassé même s'il est compliqué.
-
-Néanmoins, si l'utilisateur est vigilant alors l'attaque GTC Downgrade pourrait ne pas fonctionner car l'utilisateur ne rentrera alors pas son mot de passe.
-
-
+>
+> Avec hostapd-wpe, l'attaque sera plus difficile voire impossible si le mot de passe dont est dérivé la clé est compliqué.
+>
+> Avec GTC Downgrade Attack, on berne l'utilisateur pour obtenir son mot de passe. Ainsi, il sera cassé même s'il est compliqué.
+>
+> Néanmoins, si l'utilisateur est vigilant alors l'attaque GTC Downgrade pourrait ne pas fonctionner car l'utilisateur ne rentrera alors pas son mot de passe.
 
 ### 4. En option, vous pouvez explorer d'autres outils comme [eapeak](https://github.com/rsmusllp/eapeak) ou [crEAP](https://github.com/W9HAX/crEAP/blob/master/crEAP.py) pour les garder dans votre arsenal de pentester.
 
