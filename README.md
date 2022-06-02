@@ -86,17 +86,17 @@ Pour réussir votre capture, vous pouvez procéder de la manière suivante :
 
   ![request-peap](./assets/request-peap.PNG)
 
-  ##### Response
+  ##### Réponse
 
   ##### ![response-peap](./assets/response-peap.PNG)
 
   #### Phase d’initiation
 
-  ##### Requête identity
+  ##### Requête d'identité
 
   ![identity-request](./assets/identity-request.PNG)
 
-  ##### Response identity
+  ##### Réponse d'identité
 
   ![response-identity](./assets/response-identity.PNG)
 
@@ -209,7 +209,7 @@ Avec le fichier `auth`, voici un 4 way handshake complet.
 
 ---
 
-> **_Question:_**Arrivez-vous à voir l’identité du client dans la phase d'initiation ? Oui ? Non ? Pourquoi ?
+> **_Question:_** Arrivez-vous à voir l’identité du client dans la phase d'initiation ? Oui ? Non ? Pourquoi ?
 >
 > **_Réponse:_** 
 >
@@ -223,7 +223,7 @@ Avec le fichier `auth`, voici un 4 way handshake complet.
 >
 > - a. Le serveur envoie-t-il un certificat au client ? Pourquoi oui ou non ?
 >
-> On a pas capturée la trame dans notre cas. Mais avec le fichier auth, on constate que le serveur s'authentifie bien en envoyant son certificat. Ce qui est demandé par EAP-PEAP
+> On n'a pas capturée la trame dans notre cas. Mais avec le fichier auth, on constate que le serveur s'authentifie bien en envoyant son certificat. Ce qui est demandé par EAP-PEAP. Une fois le certificat accepté par le client, le serveur est alors authentifié auprès du client.
 >
 > **_Réponse:_**
 >
@@ -336,11 +336,11 @@ Référence : [https://solstice.sh/iii-eap-downgrade-attacks/](https://solstice.
 >
 > **_Réponse:_** 
 
-Avec hostapd, l'attaque sera plus difficile voir impossible si le mot de passe dont est dérivé la clé est compliqué.
+Avec hostapd-wpe, l'attaque sera plus difficile voire impossible si le mot de passe dont est dérivé la clé est compliqué.
 
-Avec GTC Downgrade Attack, on berne l'utilisateur pour obtenir son mot de passe. Ainsi, il sera cassé même si il est compliqué.
+Avec GTC Downgrade Attack, on berne l'utilisateur pour obtenir son mot de passe. Ainsi, il sera cassé même s'il est compliqué.
 
-Néanmoins, si l'utilisateur est vigilent alors l'attaque GTC Downgrade pourrait ne pas fonctionner car l'utilisateur ne rentrera alors pas son mot de passe.
+Néanmoins, si l'utilisateur est vigilant alors l'attaque GTC Downgrade pourrait ne pas fonctionner car l'utilisateur ne rentrera alors pas son mot de passe.
 
 
 
