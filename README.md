@@ -259,7 +259,7 @@ Données reçues par *hostapd-wpe:*
 
 
 
-Cracking du hash récupéré pour retrouver le mot de passe, ici *pasword*
+Cracking du hash récupéré pour retrouver le mot de passe, ici *password*
 
 ![](./images/l3c.png)
 
