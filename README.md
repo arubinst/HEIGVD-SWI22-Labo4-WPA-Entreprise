@@ -328,7 +328,7 @@ Référence : [https://github.com/aircrack-ng/aircrack-ng/tree/master/patches/wp
 
 
 
-Références : [https://solstice.sh/iii-eap-downgrade-attacks/](https://solstice.sh/iii-eap-downgrade-attacks/#:~:text=access%20points%20instead.-,GTC%20Downgrade%20Attacks,the%20access%20point%20in%20plaintext)
+Référence : [https://solstice.sh/iii-eap-downgrade-attacks/](https://solstice.sh/iii-eap-downgrade-attacks/#:~:text=access%20points%20instead.-,GTC%20Downgrade%20Attacks,the%20access%20point%20in%20plaintext)
 
 ---
 
