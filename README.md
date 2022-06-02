@@ -223,7 +223,7 @@ Sur la capture Wireshark, on voit qu'une connexion a échoué. L'authentificatio
 >
 > **_Réponse :_** EAP-GTC est une méthode d'authentification supportant les hardware tokens et One-Time-Password. Elle a pour particularité d'être basée sur EAP-PEAP mais de transmettre en clair les mots de passe.
 >
-> L'attaque consiste à contrôler un evil twin AP qui accepte uniquement EAP-GTC et ainsi obliger l'authentification du client par à cette méthode. Selon l'appareil de la victime, le client pourrait envoyer des credentials en clair à l'AP.
+> L'attaque consiste à contrôler un evil twin AP qui accepte uniquement EAP-GTC et ainsi obliger l'authentification du client via cette méthode. Selon l'appareil de la victime, le client pourrait envoyer des credentials en clair à l'AP.
 >
 > Référence: https://solstice.sh/2019/09/10/eap-downgrade-attacks/
 
