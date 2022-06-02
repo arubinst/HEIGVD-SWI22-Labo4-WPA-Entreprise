@@ -279,11 +279,11 @@ Sur la capture Wireshark, on voit qu'une connexion a échoué. L'authentificatio
 
 ---
 
-> **_Question:_** Quelles sont vos conclusions et réflexions par rapport à la méthode eaphammer ?
+> **_Question:_** Quelles sont vos conclusions et réflexions par rapport à la méthode hostapd-wpe ?
 >
-> **_Réponse:_** L'attaque est plutôt effrayante car elle est facile à mettre en place, et peut récupérer très facilement des credentials dès qu'un appareil s'y connecte. Je ne sais pas si c'est à cause que mon smartphone est plutôt vieux (date de 2016), mais il n'y a pas eu d'erreur de certificat lors de ma connexion au faux "HEIG-VD". 
->
-> Si les smartphones récents ont le même comportement, l'attaque peut être très efficace pour voler les logins des élèves dans un endroit autre que l'école, par exemple dans le train (ce qui est évidemment illégal !).
+> **_Réponse:_** 
+> 
+> Les deux attaques sont assez similaires et peuvent être très effrayantes car elles permettent de récupérer facilement les credentials si l'utilisateur tombe dans le piège. La différence entre les deux est que l'attaque hostapd-wpe récupère le challenge-response, qui doit encore être bruteforcé. GTC-Downgrade abuse de la faiblesse de GTC et enlève le besoin de bruteforce, qui peut compliquer la tâche selon la force du mot de passe 
 
 
 ### 4. En option, vous pouvez explorer d'autres outils comme [eapeak](https://github.com/rsmusllp/eapeak) ou [crEAP](https://github.com/W9HAX/crEAP/blob/master/crEAP.py) pour les garder dans votre arsenal de pentester.
