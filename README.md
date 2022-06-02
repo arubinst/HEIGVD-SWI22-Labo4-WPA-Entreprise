@@ -58,9 +58,13 @@ Pour réussir votre capture, vous pouvez procéder de la manière suivante :
   - 	Requête et réponse d’association (ou reassociation)
   - 	![image-20220602161304477](figures/image-20220602161304477.png)
   - 	![image-20220602161323138](figures/image-20220602161323138.png)
-  - 	Négociation de la méthode d’authentification entreprise (TLS?, TTLS?, PEAP?, LEAP?, autre?)![image-20220519145546983](figures/image-20220519145546983.png)
-  - 	Phase d’initiation![image-20220519151600105](figures/image-20220519151600105.png)
-  - 	Phase hello :![image-20220519145333577](figures/image-20220519145333577.png)
+  - 	Négociation de la méthode d’authentification entreprise (TLS?, TTLS?, PEAP?, LEAP?, autre?)
+     - 	![image-20220519145546983](figures/image-20220519145546983.png)
+
+  - 	Phase d’initiation
+     - 	![image-20220519151600105](figures/image-20220519151600105.png)
+
+  - 	Phase hello :
     - 	![image-20220519145348365](figures/image-20220519145348365.png)
     - 	![image-20220602155856989](figures/image-20220602155856989.png)
     - 	Version TLS
@@ -82,8 +86,11 @@ Pour réussir votre capture, vous pouvez procéder de la manière suivante :
     - 	Echanges des certificats
     - Change cipher spec
       - ![image-20220602161052479](figures/image-20220602161052479.png)
-  - 	Authentification interne et transmission de la clé WPA (échange chiffré, vu par Wireshark comme « Application data »)![image-20220519151057941](figures/image-20220519151057941.png)
-  - 	4-way handshake![image-20220519151115609](figures/image-20220519151115609.png)
+  - 	Authentification interne et transmission de la clé WPA (échange chiffré, vu par Wireshark comme « Application data »)
+     - 	![image-20220519151057941](figures/image-20220519151057941.png)
+
+  - 	4-way handshake
+     - 	![image-20220519151115609](figures/image-20220519151115609.png)
 
 
 ### Répondez aux questions suivantes :
