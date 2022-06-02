@@ -72,14 +72,14 @@ Pour réussir votre capture, vous pouvez procéder de la manière suivante :
   
   **Réponse** :
 
-![unknown_a.png](/home/miguel/Cours/SWI/Labos/04/assets/c3dfe3a97190f0362e2e7183e7301a7784bc2b65.png)
+![unknown_a.png](./assets/c3dfe3a97190f0362e2e7183e7301a7784bc2b65.png)
 
 
 - Négociation de la méthode d’authentification entreprise (TLS?, TTLS?, PEAP?, LEAP?, autre?)
   
   On remarque que le client a directement accepté la proposition du serveur (PEAP) car il n'y a qu'un seul échange de ce type :
 
-![auth.png](/home/miguel/Cours/SWI/Labos/04/assets/f8b683c3f8754ba2b28f908943cb0b627965ad88.png)
+![auth.png](./assets/f8b683c3f8754ba2b28f908943cb0b627965ad88.png)
 
 
 - Phase d’initiation
@@ -105,7 +105,7 @@ Pour réussir votre capture, vous pouvez procéder de la manière suivante :
   
   Le session ID ne figure pas sur la capture. Nous pensons que cela est dû au fait qu'il s'agit de la première connexion du client qui n'a pas encore de session.
   
-  **Server hello** :  ![server_hello.jpg](/home/miguel/Cours/SWI/Labos/04/assets/3856b20ca5e0db09eebe17a25e92792045c6b058.jpg)
+  **Server hello** :  ![server_hello.jpg](./assets/3856b20ca5e0db09eebe17a25e92792045c6b058.jpg)
   
 
 - Phase de transmission de certificats
@@ -115,22 +115,22 @@ Pour réussir votre capture, vous pouvez procéder de la manière suivante :
     ![certif_exch.png](./assets/ed55739ccab7ad5284a577ff8c4e281525c6568f.png)
     
     On peut lire les informations suivantes sur le certificat : <<<<<<< HEAD<<<<<<< HEAD
-        ![certif.png](/home/miguel/Cours/SWI/Labos/04/assets/85513863dda99c0e8a760852a769a92c9fb23c73.png)
+        ![certif.png](./assets/85513863dda99c0e8a760852a769a92c9fb23c73.png)
 
 - Change cipher spec
   
-  ![change_spher_spec.png](/home/miguel/Cours/SWI/Labos/04/assets/26debd0ca2c06b3f3c3227fc24e2d94985f769f2.png)
+  ![change_spher_spec.png](./assets/26debd0ca2c06b3f3c3227fc24e2d94985f769f2.png)
 
 - Authentification interne et transmission de la clé WPA (échange chiffré, vu par Wireshark comme « Application data »)
   
-  ![wpa_exchange.png](/home/miguel/Cours/SWI/Labos/04/assets/5d3e8cc54a2a56c8b9c93d61e90c7ee533537e28.png)
+  ![wpa_exchange.png](./assets/5d3e8cc54a2a56c8b9c93d61e90c7ee533537e28.png)
   =======
 
 - 4-way handshake
   
   ![4-way.png](./assets/10e820b82a795d4f52c826e3f4f4e9895ea6758a.png)
   
-  Le premier message comme exemple :  ![4-way-1.png](/home/miguel/Cours/SWI/Labos/04/assets/758c9ff5c7431ad6e235117d7e70234c63e66661.png)
+  Le premier message comme exemple :  ![4-way-1.png](./assets/758c9ff5c7431ad6e235117d7e70234c63e66661.png)
   
 
 ### Répondez aux questions suivantes :
@@ -191,11 +191,11 @@ Pour implémenter l’attaque :
 
 **Résultats de l'attaque**
 
-![ah.png](/home/miguel/Cours/SWI/Labos/04/assets/fbd8bb81df1285a7725ab785e5294cff11b9f13f.png)
+![ah.png](./assets/fbd8bb81df1285a7725ab785e5294cff11b9f13f.png)
 
 **Résultats après brute-force avec john**
 
-![unknown.png](/home/miguel/Cours/SWI/Labos/04/assets/4e2f5a1686a8d5801fab5aa5e2c1046d9a82dfee.png)
+![unknown.png](./assets/4e2f5a1686a8d5801fab5aa5e2c1046d9a82dfee.png)
 
 ### Répondez aux questions suivantes :
 
@@ -240,7 +240,7 @@ Pour implémenter l’attaque :
 
 **Résultats de l'attaque**
 
-![](/home/miguel/Cours/SWI/Labos/04/assets/2022-05-19-15-00-36-image.png)
+![](./assets/2022-05-19-15-00-36-image.png)
 
 ### Répondez aux questions suivantes :
 
