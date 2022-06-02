@@ -64,7 +64,7 @@ Pour réussir votre capture, vous pouvez procéder de la manière suivante :
 
   ![OpenSystemAuth_client](./assets/OpenSystemAuth_client.PNG)
 
-  ##### Cisco
+  ##### AP Cisco
 
   ![OpenSystemAuth_cisco](./assets/OpenSystemAuth_cisco.PNG)
 
@@ -94,11 +94,11 @@ Pour réussir votre capture, vous pouvez procéder de la manière suivante :
 
   ##### Requête identity
 
-  ![identity-request](.\assets\identity-request.PNG)
+  ![identity-request](./assets/identity-request.PNG)
 
   ##### Response identity
 
-  ![response-identity](.\assets\response-identity.PNG)
+  ![response-identity](./assets/response-identity.PNG)
 
   #### Phase hello
 
@@ -211,7 +211,7 @@ EAP-PEAP
 >
 > Oui, car la communication n'est pas encore chiffrée à ce moment là
 >
-> ![identity-response](C:\Users\super\Documents\HEIG-git\swi\HEIGVD-SWI22-Labo4-WPA-Entreprise\assets\identity-response.PNG)
+> ![identity-response](./assets/identity-response.PNG)
 
 ---
 
