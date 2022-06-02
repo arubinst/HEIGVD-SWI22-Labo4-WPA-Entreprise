@@ -50,24 +50,71 @@ A tittre d'exemple, voici [une connexion WPA Entreprise](files/auth.pcap) qui co
 
 Pour réussir votre capture, vous pouvez procéder de la manière suivante :
 
-- 	Identifier l'AP le plus proche, en identifiant le canal utilisé par l’AP dont la puissance est la plus élevée (et dont le SSID est HEIG-VD...). Vous pouvez faire ceci avec ```airodump-ng```, par exemple
--   Lancer une capture avec Wireshark
--   Etablir une connexion depuis un poste de travail (PC), un smartphone ou n'importe quel autre client WiFi. __Attention__, il est important que la connexion se fasse à 2.4 GHz pour pouvoir sniffer avec les interfaces Alfa
+- Identifier l'AP le plus proche, en identifiant le canal utilisé par l’AP dont la puissance est la plus élevée (et dont le SSID est HEIG-VD...). Vous pouvez faire ceci avec ```airodump-ng```, par exemple
+
+- Lancer une capture avec Wireshark
+
+- Etablir une connexion depuis un poste de travail (PC), un smartphone ou n'importe quel autre client WiFi. __Attention__, il est important que la connexion se fasse à 2.4 GHz pour pouvoir sniffer avec les interfaces Alfa
+
 - Comparer votre capture au processus d’authentification donné en théorie (n’oubliez pas les captures d'écran pour illustrer vos comparaisons !). En particulier, identifier les étapes suivantes :
+	
+	*Pour ce laboratoire, nous n'avons pas réussis à récupérer une capture contenant toutes les informations nécessaires, nous avons donc repris la capture fournie par défaut.*
+	
 	- Requête et réponse d’authentification système ouvert
- 	- Requête et réponse d’association (ou reassociation)
+	
+	![](images\1_1.PNG)
+	
+	- Requête et réponse d’association (ou reassociation)
+	
+	![](images\1_2.PNG)
+	
 	- Négociation de la méthode d’authentification entreprise (TLS?, TTLS?, PEAP?, LEAP?, autre?)
+	
+	![](images\1_3.PNG)
+	
 	- Phase d’initiation
+	
+	![](images\1_4.PNG)
+	
 	- Phase hello :
-		- Version TLS
-		- Suites cryptographiques et méthodes de compression proposées par le client et acceptées par l’AP
-		- Nonces
-		- Session ID
+	
+	  ![](images\1_6.PNG)
+	
+	  - Version TLS
+	
+	  ![](images\1_7.PNG)
+	
+	  - Suites cryptographiques et méthodes de compression proposées par le client et acceptées par l’AP
+	
+	  ![](images\1_8.PNG)
+	
+	  - Nonces
+	
+	  ![](images\1_9.PNG)
+	
+	  - Session ID
+	
+	  ![](images\1_10.PNG)
+	
 	- Phase de transmission de certificats
-	 	- Echanges des certificats
-		- Change cipher spec
+	
+	![](images\1_11.PNG)
+	
+	- Echanges des certificats
+	  
+	  ![](images\1_15.PNG)
+	  
+	  - Change cipher spec
+	  
+	  ![](images\1_16.PNG)
+	  
 	- Authentification interne et transmission de la clé WPA (échange chiffré, vu par Wireshark comme « Application data »)
+	
+	![](images\1_13.PNG)
+	
 	- 4-way handshake
+	
+	![](images\1_14.PNG)
 
 ### Répondez aux questions suivantes :
 
@@ -75,19 +122,21 @@ Nous nous sommes basés sur la capture Wireshark fournie
 
 > **_Question :_** Quelle ou quelles méthode(s) d’authentification est/sont proposé(s) au client ?
 > 
-> **_Réponse :_** 
+> **_Réponse :_**  EAP-TLS
 
 ---
 
 > **_Question:_** Quelle méthode d’authentification est finalement utilisée ?
 > 
-> **_Réponse:_** 
+> **_Réponse:_**  EAP-PEAP
 
 ---
 
-> **_Question:_**Arrivez-vous à voir l’identité du client dans la phase d'initiation ? Oui ? Non ? Pourquoi ?
-> 
-> **_Réponse:_** 
+> **_Question: _**Arrivez-vous à voir l’identité du client dans la phase d'initiation ? Oui ? Non ? Pourquoi ?
+>
+> **_Réponse:_**  Il semble s'agit de Joel Gonin
+>
+> ![](images\1_5.PNG)
 
 ---
 
@@ -95,12 +144,11 @@ Nous nous sommes basés sur la capture Wireshark fournie
 > 
 > - a. Le serveur envoie-t-il un certificat au client ? Pourquoi oui ou non ?
 > 
-> **_Réponse:_**
+> **_Réponse:_** Oui, car dans PEAP, le serveur d'authentification doit s'identifier auprès du client, il le fait grâce au certificat.
 > 
 > - b. Le client envoie-t-il un certificat au serveur ? Pourquoi oui ou non ?
 > 
-> **_Réponse:_**
-> 
+> **_Réponse:_** Non, dans PEAP, le client s'identifie en répondant à un challenge-response.
 
 ---
 
