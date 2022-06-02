@@ -254,8 +254,10 @@ Pour implémenter l’attaque :
 ### Répondez aux questions suivantes :
 
 > **_Question :_** Quelles modifications sont nécessaires dans la configuration de hostapd-wpe pour cette attaque ?
-> 
+>
 > **_Réponse :_** 
+>
+> Dans le fichier de configuration, hostapd-wpe.conf, il faut modifier le ssid : ssid=HEIG-VD
 
 ---
 
