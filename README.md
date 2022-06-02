@@ -56,8 +56,8 @@ Pour réussir votre capture, vous pouvez procéder de la manière suivante :
 	  - ![image-20220602161621257](figures/image-20220602161621257.png)
 	  - ![image-20220602161649609](figures/image-20220602161649609.png)
   - 	Requête et réponse d’association (ou reassociation)
-  - 	![image-20220602161304477](figures/image-20220602161304477.png)
-  - 	![image-20220602161323138](figures/image-20220602161323138.png)
+  	- ![image-20220602161304477](figures/image-20220602161304477.png)
+  	- ![image-20220602161323138](figures/image-20220602161323138.png)
   - 	Négociation de la méthode d’authentification entreprise (TLS?, TTLS?, PEAP?, LEAP?, autre?)
      - 	![image-20220519145546983](figures/image-20220519145546983.png)
 
