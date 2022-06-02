@@ -261,16 +261,10 @@ Pour implémenter l’attaque :
 >
 > **_Réponse :_** 
 >
-> <<<<<<< HEAD
-> Dans le fichier de configuration, hostapd-wpe.conf, il faut modifier le ssid :
->
-> ssid=HEIG-VD
-> =======
 > Dans le fichier de configuration, hostapd-wpe.conf, il faut modifier le ssid : ssid=HEIG-VD. Dans notre cas nous avons aussi fixé le channel à 1.
->
-> ![configsHostapd](assets/configsHostapd.PNG)
->
-> >>>>>> c2ac3f4e098a78b86ba5f15d1e025b1c58cc13a5
+> 
+>![configsHostapd](assets/configsHostapd.PNG)
+> 
 
 ---
 
