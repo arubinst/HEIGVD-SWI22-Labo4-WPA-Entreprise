@@ -62,59 +62,59 @@ Pour réussir votre capture, vous pouvez procéder de la manière suivante :
 	
 	- Requête et réponse d’authentification système ouvert
 	
-	![](images\1_1.PNG)
+	![](images/1_1.PNG)
 	
 	- Requête et réponse d’association (ou reassociation)
 	
-	![](images\1_2.PNG)
+	![](images/1_2.PNG)
 	
 	- Négociation de la méthode d’authentification entreprise (TLS?, TTLS?, PEAP?, LEAP?, autre?)
 	
-	![](images\1_3.PNG)
+	![](images/1_3.PNG)
 	
 	- Phase d’initiation
 	
-	![](images\1_4.PNG)
+	![](images/1_4.PNG)
 	
 	- Phase hello :
 	
-	  ![](images\1_6.PNG)
+	  ![](images/1_6.PNG)
 	
 	  - Version TLS
 	
-	  ![](images\1_7.PNG)
+	  ![](images/1_7.PNG)
 	
 	  - Suites cryptographiques et méthodes de compression proposées par le client et acceptées par l’AP
 	
-	  ![](images\1_8.PNG)
+	  ![](images/1_8.PNG)
 	
 	  - Nonces
 	
-	  ![](images\1_9.PNG)
+	  ![](images/1_9.PNG)
 	
 	  - Session ID
 	
-	  ![](images\1_10.PNG)
+	  ![](images/1_10.PNG)
 	
 	- Phase de transmission de certificats
 	
-	![](images\1_11.PNG)
+	![](images/1_11.PNG)
 	
 	- Echanges des certificats
 	  
-	  ![](images\1_15.PNG)
+	  ![](images/1_15.PNG)
 	  
 	  - Change cipher spec
 	  
-	  ![](images\1_16.PNG)
+	  ![](images/1_16.PNG)
 	  
 	- Authentification interne et transmission de la clé WPA (échange chiffré, vu par Wireshark comme « Application data »)
 	
-	![](images\1_13.PNG)
+	![](images/1_13.PNG)
 	
 	- 4-way handshake
 	
-	![](images\1_14.PNG)
+	![](images/1_14.PNG)
 
 ### Répondez aux questions suivantes :
 
@@ -136,7 +136,7 @@ Nous nous sommes basés sur la capture Wireshark fournie
 >
 > **_Réponse:_**  Il semble s'agit de Joel Gonin
 >
-> ![](images\1_5.PNG)
+> ![](images/1_5.PNG)
 
 ---
 
