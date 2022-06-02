@@ -168,17 +168,67 @@ Pour faire fonctionner cette attaque, __il est impératif que la victime soit co
 
 Pour implémenter l’attaque :
 
-- Installer [```hostapd-wpe```](https://www.kali.org/tools/hostapd-wpe/) (il existe des versions modifiées qui peuvent peut-être faciliter la tâche... je ne les connais pas mais si vous en trouvez une qui vous rend les choses plus faciles, vous pouvez l'utiliser et nous apprendre quelque chose ! Dans le doute, utiliser la version originale...). Lire la documentation [du site de l’outil](https://github.com/OpenSecurityResearch/hostapd-wpe), celle de Kali ou d’autres ressources sur Internet pour comprendre son utilisation
+- Installer [```hostapd-wpe```](https://www.kali.org/tools/hostapd-wpe/) (il existe des versions modifiées qui peuvent peut-être faciliter la tâche... je ne les connais pas mais si vous en trouvez une qui vous rend les choses plus faciles, vous pouvez l'utiliser et nous apprendre quelque chose ! Dans le doute, utiliser la version originbashale...). Lire la documentation [du site de l’outil](https://github.com/OpenSecurityResearch/hostapd-wpe), celle de Kali ou d’autres ressources sur Internet pour comprendre son utilisation
+
 - Modifier la configuration de ```hostapd-wpe``` pour proposer un réseau semblable (mais pas le même !!!) au réseau de l’école ou le réseau de votre préférence, sachant que dans le cas d'une attaque réelle, il faudrait utiliser le vrai SSID du réseau de la cible
+
+  La config est donnée en racine du projet.
+
+  Nous lançons la commande:
+
+  ```bash
+  sudo hostapd-wpe /etc/hostapd/host-wpe.conf
+  ```
+
+  L'AP est simulé
+
+  ![](images/2022-06-02_13-45.png)
+
 - Lancer une capture Wireshark
-- Tenter une connexion au réseau (ne pas utiliser vos identifiants réels)
+
+  C'est l'archive "capture_wireshark.pcpng" donnée en racine du projet. On y voit l'authentification décrite ci-dessous.
+
+  - Tenter une connexion au réseau (ne pas utiliser vos identifiants réels)
+
+    Depuis l'un de nos téléphone:
+
+    - On voit que HEIGFAKE est proposé:
+
+    ![](images/photo_1.jpg)
+
+    - C'est bien un réseau entreprise
+
+      ![](images/photo_2.jpg)
+
+    - Nous mettons: USERNAME = michael et PASSWORD = 123456
+
+      ![](images/photo_3.jpg)
+
+    - Pas de connexion
+
+      ![](images/photo_4.jpg)
+
+    - Mais nous avons capturé challenge et réponse! (Et un format pour hashcat!!!)
+
+      ![](images/hostapd.png)
+
 - Utiliser un outil de brute-force (```john```, ```hashcat``` ou ```asleap```, par exemple) pour attaquer le hash capturé (utiliser un mot de passe assez simple pour minimiser le temps)
+
+Nous utilisons la commande:
+
+```bash
+sudo hashcat -m 5500 -a michael::::dd438caa62b8f2f7e4b314c1b84e4954cac9d33a264b6780:1350722d5e8bfb1d <dictionary>
+```
+
+L'attaque par dictionnaire récupère bien notre mot de passe!
+
+![](images/hash_cat.png)
 
 ### Répondez aux questions suivantes :
 
 > **_Question :_** Quelles modifications sont nécessaires dans la configuration de hostapd-wpe pour cette attaque ?
 > 
-> **_Réponse :_** 
+> **_Réponse :_** J'ai simplement dû changer le ssid: ssid=HEIGVDFAKE
 
 ---
 
