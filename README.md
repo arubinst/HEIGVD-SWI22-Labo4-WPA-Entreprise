@@ -73,16 +73,12 @@ Pour réussir votre capture, vous pouvez procéder de la manière suivante :
   **Réponse** :
   
   ![unknown_a.png](/home/miguel/Cours/SWI/Labos/04/assets/c3dfe3a97190f0362e2e7183e7301a7784bc2b65.png)
-  
-  
 
 - Négociation de la méthode d’authentification entreprise (TLS?, TTLS?, PEAP?, LEAP?, autre?)
   
   On remarque que le client a directement accepté la proposition du serveur (PEAP) car il n'y a qu'un seul échange de ce type :
   
   ![auth.png](/home/miguel/Cours/SWI/Labos/04/assets/f8b683c3f8754ba2b28f908943cb0b627965ad88.png)
-  
-  
 
 - Phase d’initiation
   
@@ -110,8 +106,6 @@ Pour réussir votre capture, vous pouvez procéder de la manière suivante :
   **Server hello** :
   
   ![server_hello.jpg](/home/miguel/Cours/SWI/Labos/04/assets/3856b20ca5e0db09eebe17a25e92792045c6b058.jpg)
-  
-  
 
 - Phase de transmission de certificats
   
@@ -122,19 +116,14 @@ Pour réussir votre capture, vous pouvez procéder de la manière suivante :
     On peut lire les informations suivantes sur le certificat : 
     
     ![certif.png](/home/miguel/Cours/SWI/Labos/04/assets/85513863dda99c0e8a760852a769a92c9fb23c73.png)
-    
-    
-  - Change cipher spec
-    
-    ![change_spher_spec.png](/home/miguel/Cours/SWI/Labos/04/assets/26debd0ca2c06b3f3c3227fc24e2d94985f769f2.png)
-    
-    
+
+- Change cipher spec
+  
+  ![change_spher_spec.png](/home/miguel/Cours/SWI/Labos/04/assets/26debd0ca2c06b3f3c3227fc24e2d94985f769f2.png)
 
 - Authentification interne et transmission de la clé WPA (échange chiffré, vu par Wireshark comme « Application data »)
   
   ![wpa_exchange.png](/home/miguel/Cours/SWI/Labos/04/assets/5d3e8cc54a2a56c8b9c93d61e90c7ee533537e28.png)
-  
-  
 
 - 4-way handshake
   
@@ -143,8 +132,6 @@ Pour réussir votre capture, vous pouvez procéder de la manière suivante :
   Le premier message comme exemple :
   
   ![4-way-1.png](/home/miguel/Cours/SWI/Labos/04/assets/758c9ff5c7431ad6e235117d7e70234c63e66661.png)
-  
-  
 
 ### Répondez aux questions suivantes :
 
@@ -202,23 +189,45 @@ Pour implémenter l’attaque :
 - Tenter une connexion au réseau (ne pas utiliser vos identifiants réels)
 - Utiliser un outil de brute-force (```john```, ```hashcat``` ou ```asleap```, par exemple) pour attaquer le hash capturé (utiliser un mot de passe assez simple pour minimiser le temps)
 
+**Résultats de l'attaque**
+
+![ah.png](/home/miguel/Cours/SWI/Labos/04/assets/fbd8bb81df1285a7725ab785e5294cff11b9f13f.png)
+
+**Résultats après brute-force avec john**
+
+![unknown.png](/home/miguel/Cours/SWI/Labos/04/assets/4e2f5a1686a8d5801fab5aa5e2c1046d9a82dfee.png)
+
 ### Répondez aux questions suivantes :
 
 > **_Question :_** Quelles modifications sont nécessaires dans la configuration de hostapd-wpe pour cette attaque ?
 > 
-> **_Réponse :_** 
+> **_Réponse :_** Il faut modifier le ssid par le nom du réseau de notre evil-twin. 
+> 
+> ![](https://cdn.discordapp.com/attachments/908358746323972146/976834077875384330/unknown.png)
 
 ---
 
 > **_Question:_** Quel type de hash doit-on indiquer à john ou l'outil que vous avez employé pour craquer le handshake ?
 > 
-> **_Réponse:_** 
+> **_Réponse:_** Pas besoin de préciser le type de hash car john peut le deviner. Mais il s'agit d'un NETNTLM
 
 ---
 
 > **_Question:_** Quelles méthodes d’authentification sont supportées par hostapd-wpe ?
 > 
 > **_Réponse:_**
+> 
+> 1. EAP-FAST/MSCHAPv2 (Phase 0)
+> 
+> 2. PEAP/MSCHAPv2
+> 
+> 3. EAP-TTLS/MSCHAPv2
+> 
+> 4. EAP-TTLS/MSCHAP
+> 
+> 5. EAP-TTLS/CHAP
+> 
+> 6. EAP-TTLS/PAP
 
 ### 3. GTC Downgrade Attack avec [EAPHammer](https://github.com/s0lst1c3/eaphammer)
 
@@ -229,17 +238,23 @@ Pour implémenter l’attaque :
 - Lancer une capture Wireshark
 - Tenter une connexion au réseau
 
+
+
+**Résultats de l'attaque**
+
+![](/home/miguel/Cours/SWI/Labos/04/assets/2022-05-19-15-00-36-image.png)
+
 ### Répondez aux questions suivantes :
 
 > **_Question :_** Expliquez en quelques mots l'attaque GTC Downgrade
 > 
-> **_Réponse :_** 
+> **_Réponse :_** EAP-GTC est une méthode d'authentification qui fait passer les credentials en clair dans le tunnel TLS. Si la victime cherche à se connecter à l'AP de l'attaquant (evil-twin), celui-ci peut lui proposer cette méthode d'authentification à la place de PEAP. Si le client accepte, les credentials passent en clair et c'est le jackpot pour l'attaquant qui peut les lire (il contrôle le tunnel TLS).
 
 ---
 
 > **_Question:_** Quelles sont vos conclusions et réflexions par rapport à la méthode hostapd-wpe ?
 > 
-> **_Réponse:_** 
+> **_Réponse:_** Downgrade GTC a l'avantage de pouvoir récupérer directement le mot de passe. Si celui-ci est complexe, il est difficile (voire impossible) de le brute-force avec hostapd-wpe. Cependant, pas tous les clients n'acceptent un downgrade GTC...  
 
 ### 4. En option, vous pouvez explorer d'autres outils comme [eapeak](https://github.com/rsmusllp/eapeak) ou [crEAP](https://github.com/W9HAX/crEAP/blob/master/crEAP.py) pour les garder dans votre arsenal de pentester.
 
