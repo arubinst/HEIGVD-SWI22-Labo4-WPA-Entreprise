@@ -1,4 +1,3 @@
-- 
 - [Livrables](#livrables)
 - [Échéance](#%c3%89ch%c3%a9ance)
 - [Quelques éléments à considérer](#quelques-éléments-à-considérer-pour-les-parties-2-et-3-)
