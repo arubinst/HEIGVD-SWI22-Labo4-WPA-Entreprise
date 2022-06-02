@@ -8,6 +8,8 @@
 
 # Sécurité des réseaux sans fil
 
+> Auteurs: Blanc Jean-Luc & Plancherel Noémie
+
 ## Laboratoire 802.11 Sécurité WPA Entreprise
 
 __A faire en équipes de deux personnes__
@@ -21,7 +23,7 @@ __A faire en équipes de deux personnes__
 
 ## Quelques éléments à considérer pour les parties 2 et 3 :
 
-Les parties 2 et 3 nécessitent du matériel particulier. Si vous avez travaillé jusqu'ici avec l'interface WiFi interne de votre laptop, il y a des fortes probabilités qu'elle puisse aussi être utilisée pour les attaques Entreprise. Cela dépendra de la capacité de votra interface d'être configurée en mode AP. Ces attaques ne fonctionnent pas avec toutes les interfaces Alfa. Il faudra utiliser le bon modèle.
+Les parties 2 et 3 nécessitent du matériel particulier. Si vous avez travaillé jusqu'ici avec l'interface WiFi interne de votre laptop, il y a des fortes probabilités qu'elle puisse aussi être utilisée pour les attaques Entreprise. Cela dépendra de la capacité de votre interface d'être configurée en mode AP. Ces attaques ne fonctionnent pas avec toutes les interfaces Alfa. Il faudra utiliser le bon modèle.
 
 En principe, il devrait être possible de démarrer vos machines en Kali natif (à partir d'une clé USB, avec une distro live par exemple) ou d'employer une autre version de Linux si vous voulez utiliser votre propre interface 
 
@@ -68,7 +70,9 @@ Pour réussir votre capture, vous pouvez procéder de la manière suivante :
 	- 4-way handshake
 
 ### Répondez aux questions suivantes :
- 
+
+Nous nous sommes basés sur la capture Wireshark fournie 
+
 > **_Question :_** Quelle ou quelles méthode(s) d’authentification est/sont proposé(s) au client ?
 > 
 > **_Réponse :_** 
@@ -124,17 +128,67 @@ Pour implémenter l’attaque :
 > 
 > **_Réponse :_** 
 
+Dans le fichier de configuration `hostpad-wpe`, il est nécessaire de modifier les paramètres suivants:
+
+```
+interface=wlp1s0mon
+```
+
+Et pour le SSID et le canal du réseau:
+
+```
+ssid=heigvd
+channel=1
+```
+
+On modifie également `eap_fast_a_id_info` pour qu'il corresponde à notre SSID:
+
+```
+eap_fast_a_id_info=heigvd
+```
+
 ---
 
 > **_Question:_** Quel type de hash doit-on indiquer à john ou l'outil que vous avez employé pour craquer le handshake ?
 > 
 > **_Réponse:_** 
 
+Une fois que nous avons lancé l'attaque avec `hostpad-wpe` de la manière suivante:
+
+```bash
+hostapd-wpe /etc/hostapd-wpe/hostapd-wpe.conf
+```
+
+Et qu'on essaie de se connecter au réseau `heigvd` avec nos identifiants, nous remarquons que des données ont pu être récupérées:
+
+![2_1](images/2_1.png)
+
+Nous récupérons le username de l'utilisateur, le hash de son mot de passe et finalement le challenge envoyé par le serveur d'authentification.
+
+Le format du hash à indiquer à `john` est de type `NETNLM`.
+
+Ainsi, nous pouvons lancer `john` avec le hash reçu pour trouver le mot de passe de l'utilisateur:
+
+![2_2](images/2_2.png)
+
+Nous voyons que le mot de passe trouvé est `admin123`, ce qui est correct.
+
 ---
 
 > **_Question:_** Quelles méthodes d’authentification sont supportées par hostapd-wpe ?
 > 
 > **_Réponse:_**
+
+D'après [OpenSecurityResearch][https://github.com/OpenSecurityResearch/hostapd-wpe], les méthodes supportées sont les suivantes:
+
+```
+1. EAP-FAST/MSCHAPv2 (Phase 0)
+2. PEAP/MSCHAPv2
+3. EAP-TTLS/MSCHAPv2
+4. EAP-TTLS/MSCHAP
+5. EAP-TTLS/CHAP
+6. EAP-TTLS/PAP
+```
 
 
 ### 3. GTC Downgrade Attack avec [EAPHammer](https://github.com/s0lst1c3/eaphammer) 
@@ -146,6 +200,12 @@ Pour implémenter l’attaque :
 - Lancer une capture Wireshark
 - Tenter une connexion au réseau
 
+Pour lancer l'attaque, on peut utiliser la commande suivante:
+
+```bash
+sudo ./eaphammer -i wlan0 --auth wpa-eap --negociate gtc-downgrade -e heigvd --creds
+```
+
 
 ### Répondez aux questions suivantes :
 
@@ -153,11 +213,15 @@ Pour implémenter l’attaque :
 > 
 > **_Réponse :_** 
 
+L'attaque GTC Downgrade va forcer n'importe quel client qui tente de se connecter à un réseau d'utiliser EAP-GTC durant la négociation EAP. Sur les devices des clients, en général le type d'authentification de mot de passe n'est pas spécifié, ainsi le serveur peut lui même suggérer le type d'authentification. Donc, ceux-ci peuvent présenter un formulaire de connexion générique et les utilisateurs entreront leur credentials en pensant qu'on leur demande les credentials pour se connecter au réseau. Or, ils seront envoyés en clair sur le réseau, dû à la méthode one-time password utilisée dans EAP-GTC et un attaquant pourra les intercepter.
+
 ---
 
 > **_Question:_** Quelles sont vos conclusions et réflexions par rapport à la méthode hostapd-wpe ?
 > 
 > **_Réponse:_** 
+
+Avec `EAPHammer`, le mot de passe récupéré est directement en clair alors qu'avec `hostapd-wpe`, il est nécessaire d'utiliser un outil comme `john` pour récupérer le mot de passe car on reçoit un hash. La configuration de `EAPHammer` est plus simple et rapide que pour `hostapd-wpe`; on peut ajouter tous les arguments directement via la ligne de commande, alors que pour ce dernier, il est nécessaire de modifier tout le fichier de configuration.
 
 
 ### 4. En option, vous pouvez explorer d'autres outils comme [eapeak](https://github.com/rsmusllp/eapeak) ou [crEAP](https://github.com/W9HAX/crEAP/blob/master/crEAP.py) pour les garder dans votre arsenal de pentester.
