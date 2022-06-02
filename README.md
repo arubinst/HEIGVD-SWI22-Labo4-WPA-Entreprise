@@ -317,7 +317,7 @@ Le réseau evil twin a bien été créé :
 
 ![fake-evil](./assets/fake-evil.jpg)
 
-Malheureusement il nous était impossible de nous y connecter (Connexion impossible). Et rien n'étais capturé par Wireshark :
+Malheureusement il nous était impossible de nous y connecter (Connexion impossible). Et rien n'était capturé par Wireshark :
 
 ![WiresharkVideEAPHammer](./assets/WiresharkVideEAPHammer.PNG)
 
@@ -349,12 +349,12 @@ Nous n'avons donc pas pu effectuer l'entièreté de l'attaque pour récupérer l
 > **_Question:_** Quelles sont vos conclusions et réflexions par rapport à la méthode hostapd-wpe ?
 >
 > **_Réponse:_** 
->
-> Avec hostapd-wpe, l'attaque sera plus difficile voire impossible si le mot de passe dont est dérivé la clé est compliqué.
->
-> Avec GTC Downgrade Attack, on berne l'utilisateur pour obtenir son mot de passe. Ainsi, il sera cassé même s'il est compliqué.
->
-> Néanmoins, si l'utilisateur est vigilant alors l'attaque GTC Downgrade pourrait ne pas fonctionner car l'utilisateur ne rentrera alors pas son mot de passe.
+
+>Avec hostapd-wpe, l'attaque sera plus difficile voire impossible si le mot de passe dont est dérivé la clé est compliqué. En effet, avec cette attaque, on doit encore effectuer un brute-force sur le handshake.
+> 
+>Avec GTC Downgrade Attack, on berne l'utilisateur pour obtenir son mot de passe. Ainsi, il sera cassé même s'il est compliqué.
+> 
+>Néanmoins, si l'utilisateur est vigilant alors l'attaque GTC Downgrade pourrait ne pas fonctionner car l'utilisateur ne rentrera alors pas son mot de passe.
 
 ### 4. En option, vous pouvez explorer d'autres outils comme [eapeak](https://github.com/rsmusllp/eapeak) ou [crEAP](https://github.com/W9HAX/crEAP/blob/master/crEAP.py) pour les garder dans votre arsenal de pentester.
 
