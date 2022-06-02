@@ -72,14 +72,14 @@ Pour réussir votre capture, vous pouvez procéder de la manière suivante :
   
   **Réponse** :
 
-![unknown_a.png](./assets/c3dfe3a97190f0362e2e7183e7301a7784bc2b65.png)
+  ![unknown_a.png](./assets/c3dfe3a97190f0362e2e7183e7301a7784bc2b65.png)
 
 
 - Négociation de la méthode d’authentification entreprise (TLS?, TTLS?, PEAP?, LEAP?, autre?)
   
   On remarque que le client a directement accepté la proposition du serveur (PEAP) car il n'y a qu'un seul échange de ce type :
 
-![auth.png](./assets/f8b683c3f8754ba2b28f908943cb0b627965ad88.png)
+  ![auth.png](./assets/f8b683c3f8754ba2b28f908943cb0b627965ad88.png)
 
 
 - Phase d’initiation
@@ -114,8 +114,9 @@ Pour réussir votre capture, vous pouvez procéder de la manière suivante :
     
     ![certif_exch.png](./assets/ed55739ccab7ad5284a577ff8c4e281525c6568f.png)
     
-    On peut lire les informations suivantes sur le certificat : <<<<<<< HEAD<<<<<<< HEAD
-        ![certif.png](./assets/85513863dda99c0e8a760852a769a92c9fb23c73.png)
+    On peut lire les informations suivantes sur le certificat :
+    
+    ![certif.png](./assets/85513863dda99c0e8a760852a769a92c9fb23c73.png)
 
 - Change cipher spec
   
