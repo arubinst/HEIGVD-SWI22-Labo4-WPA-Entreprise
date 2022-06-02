@@ -198,18 +198,34 @@ Pour implémenter l’attaque :
 - Lancer une capture Wireshark
 - Tenter une connexion au réseau
 
+> Création de certificats : 
+>
+> ![](figures/cert.png)
+
+> ![](figures/cert2.png)
+>
+> ![](figures/attack.png)
+>
+> L'attaque ne fonctionnait malheureusement pas avec notre carte.
+
 
 ### Répondez aux questions suivantes :
 
 > **_Question :_** Expliquez en quelques mots l'attaque GTC Downgrade
-> 
-> **_Réponse :_** 
+>
+> **_Réponse :_**  Lorsque l'utilisateur essaie de se connecter à l'AP, l'authentification est explicitement demandée en EAP-GTC. EAP-GTC est une méthode créée par Microsoft et Cisco pour permettre l'utilisation de mots de passe à usage unique. Ces mots de passe sont alors envoyés en clair et il est alors possible de les récupérer. 
+>
+> Beaucoup d'appareil ne spécifient pas que ce sont des mots de passe à usage unique et affichent simplement un formulaire d'authentification banal. L'utilisateur entre alors ces identifiants et ceux-ci sont alors exposés.
+>
+> Source : https://solstice.sh/iii-eap-downgrade-attacks/
 
 ---
 
 > **_Question:_** Quelles sont vos conclusions et réflexions par rapport à la méthode hostapd-wpe ?
-> 
-> **_Réponse:_** 
+>
+> **_Réponse:_** La principale différence est que le mot de passe récupéré est en clair, pas besoin d'utiliser un outil tel que John pour le récupérer ce qui permet de gagner du temps.
+>
+> Certains appareils peuvent également détecter qu'un mot de passe unique est demandé et le spécifier à l'utilisateur. Si ce dernier est attentif et le remarque, il peut alors se douter que l'AP est suspect et ne pas y entrer ses identifiants.
 
 
 ### 4. En option, vous pouvez explorer d'autres outils comme [eapeak](https://github.com/rsmusllp/eapeak) ou [crEAP](https://github.com/W9HAX/crEAP/blob/master/crEAP.py) pour les garder dans votre arsenal de pentester.
