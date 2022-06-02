@@ -320,6 +320,8 @@ Référence : [https://github.com/aircrack-ng/aircrack-ng/tree/master/patches/wp
 >
 > **_Réponse :_** 
 >
+> L'attaque consiste à créer un faux AP avec le nom d'un SSID cible (evil twin) utilisant EAP-GTC.
+>
 > Le but est de forcer un appareil client à utiliser la méthode EAP-GTC. Celle-ci consiste à demander au client un mot de passe OTP.
 >
 > La plupart du temps, les logiciels ou appareils clients vont simplement présenter un formulaire de mot de passe générique. En raison de cela, l'utilisateur peut être confus et peut croire  qu'il doit entrer ses crédentials du réseau plutôt que le mot de passe OTP.
