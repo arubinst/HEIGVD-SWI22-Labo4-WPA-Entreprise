@@ -168,12 +168,17 @@ Pour implémenter l’attaque :
 > **_Question :_** Expliquez en quelques mots l'attaque GTC Downgrade
 > 
 > **_Réponse :_** 
+Cette attaque peut récupérer les identifiants entreprise en ciblant les appareils qui supportent la méthode d'authentification EAP-GTC (EAP Generic Token Card).
+L'attaquant propose un réseau evil twin et, dans le processus de négociation EAP, propose GTC comme premier choix. Si un client accepte la méthode d'authentification, il se verra afficher un prompt afin de fournir un "one-time password". Comme l'utilisateur est peu scrupuleux, il va entrer son mdp d'accès au réseau. Comme c'est un "one-time password", celui-ci sera transmis en clair à l'adversaire.
 
 ---
 
 > **_Question:_** Quelles sont vos conclusions et réflexions par rapport à la méthode hostapd-wpe ?
 > 
-> **_Réponse:_** Essaie de downgrad, sinon récupère hash comme hostapd-wpe
+> **_Réponse:_** 
+EAPHammer essaie le downgrade GTC, si celui-ci n'abouti pas il affiche aussi le hash, tout comme la méthode hostapd-wpe.
+
+Exemple d'output EAPHammer :
 ```
 Using interface wlan0 with hwaddr 00:11:22:33:44:00 and ssid "HEIG-Corp"
 wlan0: interface state COUNTRY_UPDATE->ENABLED
@@ -201,7 +206,7 @@ wlan0: CTRL-EVENT-EAP-STARTED 72:b1:fa:c9:29:eb
 wlan0: CTRL-EVENT-EAP-PROPOSED-METHOD vendor=0 method=1
 wlan0: CTRL-EVENT-EAP-PROPOSED-METHOD vendor=0 method=25
 ```
-L'attaque a fonctionné avec un appareil Android (Samsung Galaxy S21 avec la dernière mise à jour). En revanche, depuis un desktop Windows, l'attaque n'a pas fonctionné.
+Note : l'attaque a fonctionné avec un appareil Android (Samsung Galaxy S21 avec la dernière mise à jour). En revanche, depuis un desktop Windows, l'attaque n'a pas fonctionné.
 
 
 ### 4. En option, vous pouvez explorer d'autres outils comme [eapeak](https://github.com/rsmusllp/eapeak) ou [crEAP](https://github.com/W9HAX/crEAP/blob/master/crEAP.py) pour les garder dans votre arsenal de pentester.
