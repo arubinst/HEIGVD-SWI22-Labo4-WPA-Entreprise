@@ -171,7 +171,7 @@ Pour réussir votre capture, vous pouvez procéder de la manière suivante :
 
 Echange chiffré, vu par Wireshark comme « Application data »
 
-Du fichier Auth car on n'avait pas de data dans notre capture wireshark,
+Du fichier `Auth`car on n'avait pas de data dans notre capture wireshark,
 
 ![data-encrypt](./assets/auth/data-encrypt.PNG)
 
@@ -231,9 +231,9 @@ Avec le fichier `auth`, voici un 4 way handshake complet.
 >
 > **_Réponse:_**
 
-Non avec EAP-PEAP, seul le serveur envoie son certificat au client. Contrairement à EAP-TLS, l 'utilisateur  entre et envoie ses informations d'identification au serveur RADIUS. Celui-ci les vérifie et les authentifie pour l'accès au réseau.
+Non avec EAP-PEAP, seul le serveur envoie son certificat au client. Contrairement à EAP-TLS, l 'utilisateur entre et envoie ses informations d'identification au serveur RADIUS. Celui-ci les vérifie et les authentifie pour l'accès au réseau.
 
-
+Référence : [https://www.securew2.com/blog/eap-tls-vs-peap-mschapv2-which-authentication-protocol-is-superior](https://www.securew2.com/blog/eap-tls-vs-peap-mschapv2-which-authentication-protocol-is-superior)
 
 ---
 
@@ -261,15 +261,16 @@ Pour implémenter l’attaque :
 >
 > **_Réponse :_** 
 >
-<<<<<<< HEAD
+> <<<<<<< HEAD
 > Dans le fichier de configuration, hostapd-wpe.conf, il faut modifier le ssid :
 >
->  ssid=HEIG-VD
-=======
+> ssid=HEIG-VD
+> =======
 > Dans le fichier de configuration, hostapd-wpe.conf, il faut modifier le ssid : ssid=HEIG-VD. Dans notre cas nous avons aussi fixé le channel à 1.
 >
 > ![configsHostapd](assets/configsHostapd.PNG)
->>>>>>> c2ac3f4e098a78b86ba5f15d1e025b1c58cc13a5
+>
+> >>>>>> c2ac3f4e098a78b86ba5f15d1e025b1c58cc13a5
 
 ---
 
@@ -293,14 +294,15 @@ Pour implémenter l’attaque :
 >
 > ```
 > hostapd-wpe supporte les méthodes suivantes :
->     1. EAP-FAST/MSCHAPv2 (Phase 0)
->     2. PEAP/MSCHAPv2
->     3. EAP-TTLS/MSCHAPv2
->     4. EAP-TTLS/MSCHAP
->     5. EAP-TTLS/CHAP
->     6. EAP-TTLS/PAP
+> -EAP-FAST/MSCHAPv2 (Phase 0)
+> -PEAP/MSCHAPv2
+> -EAP-TTLS/MSCHAPv2
+> -EAP-TTLS/MSCHAP
+> -EAP-TTLS/CHAP
+> -EAP-TTLS/PAP
 > ```
 
+Référence : [https://github.com/aircrack-ng/aircrack-ng/tree/master/patches/wpe/hostapd-wpe](https://github.com/aircrack-ng/aircrack-ng/tree/master/patches/wpe/hostapd-wpe)
 
 ### 3. GTC Downgrade Attack avec [EAPHammer](https://github.com/s0lst1c3/eaphammer) 
 
@@ -326,21 +328,20 @@ Pour implémenter l’attaque :
 
 
 
-Lien : [https://solstice.sh/iii-eap-downgrade-attacks/#:~:text=access%20points%20instead.-,GTC%20Downgrade%20Attacks,the%20access%20point%20in%20plaintext](https://solstice.sh/iii-eap-downgrade-attacks/#:~:text=access%20points%20instead.-,GTC%20Downgrade%20Attacks,the%20access%20point%20in%20plaintext)
+Références : [https://solstice.sh/iii-eap-downgrade-attacks/](https://solstice.sh/iii-eap-downgrade-attacks/#:~:text=access%20points%20instead.-,GTC%20Downgrade%20Attacks,the%20access%20point%20in%20plaintext)
 
 ---
 
 > **_Question:_** Quelles sont vos conclusions et réflexions par rapport à la méthode hostapd-wpe ?
 >
 > **_Réponse:_** 
->
-> C'est  très efficace. Les seuls différences notables sont les suivantes :
->
-> -Le système d'exploitation détecte que ce n'est pas le même réseau et ne va pas permettre une connexion automatique avec des crédentials déjà enregistrés.
->
-> Mais un utilisateur pourra facilement trouver le comportement normal et va simplement  entrer ses crédentials.
->
-> -
+
+Avec hostapd, l'attaque sera plus difficile voir impossible si le mot de passe dont est dérivé la clé est compliqué.
+
+Avec GTC Downgrade Attack, on berne l'utilisateur pour obtenir son mot de passe. Ainsi, il sera cassé même si il est compliqué.
+
+Néanmoins, si l'utilisateur est vigilent alors l'attaque GTC Downgrade pourrait ne pas fonctionner car l'utilisateur ne rentrera alors pas son mot de passe.
+
 
 
 ### 4. En option, vous pouvez explorer d'autres outils comme [eapeak](https://github.com/rsmusllp/eapeak) ou [crEAP](https://github.com/W9HAX/crEAP/blob/master/crEAP.py) pour les garder dans votre arsenal de pentester.
