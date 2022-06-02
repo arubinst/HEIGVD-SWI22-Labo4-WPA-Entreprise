@@ -313,6 +313,12 @@ Référence : [https://github.com/aircrack-ng/aircrack-ng/tree/master/patches/wp
 - Lancer une capture Wireshark
 - Tenter une connexion au réseau
 
+## Capture
+
+Le réseau evil twin crée
+
+![fake-evil](.\assets\fake-evil.jpg)
+
 
 ### Répondez aux questions suivantes :
 
