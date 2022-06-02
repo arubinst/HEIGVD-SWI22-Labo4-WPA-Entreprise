@@ -49,54 +49,99 @@ A tittre d'exemple, voici [une connexion WPA Entreprise](files/auth.pcap) qui co
 Pour réussir votre capture, vous pouvez procéder de la manière suivante :
 
 - 	Identifier l'AP le plus proche, en identifiant le canal utilisé par l’AP dont la puissance est la plus élevée (et dont le SSID est HEIG-VD...). Vous pouvez faire ceci avec ```airodump-ng```, par exemple
--   Lancer une capture avec Wireshark
--   Etablir une connexion depuis un poste de travail (PC), un smartphone ou n'importe quel autre client WiFi. __Attention__, il est important que la connexion se fasse à 2.4 GHz pour pouvoir sniffer avec les interfaces Alfa
+- 	Lancer une capture avec Wireshark
+- 	Etablir une connexion depuis un poste de travail (PC), un smartphone ou n'importe quel autre client WiFi. __Attention__, il est important que la connexion se fasse à 2.4 GHz pour pouvoir sniffer avec les interfaces Alfa
 - Comparer votre capture au processus d’authentification donné en théorie (n’oubliez pas les captures d'écran pour illustrer vos comparaisons !). En particulier, identifier les étapes suivantes :
 	- Requête et réponse d’authentification système ouvert
- 	- Requête et réponse d’association (ou reassociation)
-	- Négociation de la méthode d’authentification entreprise (TLS?, TTLS?, PEAP?, LEAP?, autre?)
-	- Phase d’initiation
-	- Phase hello :
-		- Version TLS
-		- Suites cryptographiques et méthodes de compression proposées par le client et acceptées par l’AP
-		- Nonces
-		- Session ID
-	- Phase de transmission de certificats
-	 	- Echanges des certificats
-		- Change cipher spec
-	- Authentification interne et transmission de la clé WPA (échange chiffré, vu par Wireshark comme « Application data »)
-	- 4-way handshake
+	  - ![image-20220602161621257](figures/image-20220602161621257.png)
+	  - ![image-20220602161649609](figures/image-20220602161649609.png)
+  - 	Requête et réponse d’association (ou reassociation)
+  	- ![image-20220602161304477](figures/image-20220602161304477.png)
+  	- ![image-20220602161323138](figures/image-20220602161323138.png)
+  - 	Négociation de la méthode d’authentification entreprise (TLS?, TTLS?, PEAP?, LEAP?, autre?)
+     - 	![image-20220519145546983](figures/image-20220519145546983.png)
+
+  - 	Phase d’initiation
+     - 	![image-20220519151600105](figures/image-20220519151600105.png)
+
+  - 	Phase hello :
+    - 	![image-20220519145348365](figures/image-20220519145348365.png)
+    - 	![image-20220602155856989](figures/image-20220602155856989.png)
+    - 	Version TLS
+       - ![image-20220602160054438](figures/image-20220602160054438.png)
+       - ![image-20220602160133967](figures/image-20220602160133967.png)
+    - 	Suites cryptographiques et méthodes de compression proposées par le client et acceptées par l’AP
+       - ![image-20220602160232287](figures/image-20220602160232287.png)
+       - ![image-20220602160351485](figures/image-20220602160351485.png)
+       - ![image-20220602160731021](figures/image-20220602160731021.png)
+    - 	Nonces
+       - ![image-20220602160531154](figures/image-20220602160531154.png)
+       - ![image-20220602160553925](figures/image-20220602160553925.png)
+    - 	Session ID
+       - ![image-20220602160840364](figures/image-20220602160840364.png)
+       - ![image-20220602160907010](figures/image-20220602160907010.png)
+
+  - 	Phase de transmission de certificats
+     - ![image-20220602161008657](figures/image-20220602161008657.png)
+    - 	Echanges des certificats
+    - Change cipher spec
+      - ![image-20220602161052479](figures/image-20220602161052479.png)
+  - 	Authentification interne et transmission de la clé WPA (échange chiffré, vu par Wireshark comme « Application data »)
+     - 	![image-20220519151057941](figures/image-20220519151057941.png)
+
+  - 	4-way handshake
+     - 	![image-20220519151115609](figures/image-20220519151115609.png)
+
 
 ### Répondez aux questions suivantes :
- 
+
 > **_Question :_** Quelle ou quelles méthode(s) d’authentification est/sont proposé(s) au client ?
+>
+> **_Réponse :_** EAP-TLS, EAP-PEAP
+>
+> ![image-20220602162114492](figures/image-20220602162114492.png)
+>
+> ![image-20220602162132961](figures/image-20220602162132961.png)
+>
 > 
-> **_Réponse :_** 
 
 ---
 
 > **_Question:_** Quelle méthode d’authentification est finalement utilisée ?
-> 
-> **_Réponse:_** 
+>
+> **_Réponse:_** EAP-PEAP
+>
+> ![image-20220519144430752](figures/image-20220519144430752.png)
+>
+> ![image-20220519144445587](figures/image-20220519144445587.png)
 
 ---
 
 > **_Question:_**Arrivez-vous à voir l’identité du client dans la phase d'initiation ? Oui ? Non ? Pourquoi ?
-> 
-> **_Réponse:_** 
+>
+> **_Réponse:_** Oui, car il est envoyé par le client au serveur
+>
+> ![image-20220519144506604](figures/image-20220519144506604.png)
+>
+> ![image-20220519144530204](figures/image-20220519144530204.png)
+>
+> Serveur : ![image-20220602161442081](figures/image-20220602161442081.png)
 
 ---
 
 > **_Question:_** Lors de l’échange de certificats entre le serveur d’authentification et le client :
-> 
+>
 > - a. Le serveur envoie-t-il un certificat au client ? Pourquoi oui ou non ?
-> 
-> **_Réponse:_**
-> 
+>
+> **_Réponse:_** Oui, car EAP-PEAP utilise un certificat PKI pour créer un tunnel TLS
+>
 > - b. Le client envoie-t-il un certificat au serveur ? Pourquoi oui ou non ?
-> 
-> **_Réponse:_**
-> 
+>
+> **_Réponse:_** Non, car le client s'est déjà authentifié avec ses credentials
+>
+> ![image-20220519144708726](figures/image-20220519144708726.png)
+>
+> ![image-20220519144727397](figures/image-20220519144727397.png)
 
 ---
 
@@ -122,19 +167,28 @@ Pour implémenter l’attaque :
 
 > **_Question :_** Quelles modifications sont nécessaires dans la configuration de hostapd-wpe pour cette attaque ?
 > 
-> **_Réponse :_** 
+> **_Réponse :_** Simplement le SSID
 
 ---
 
 > **_Question:_** Quel type de hash doit-on indiquer à john ou l'outil que vous avez employé pour craquer le handshake ?
 > 
-> **_Réponse:_** 
+> **_Réponse:_** NETNTLM 
 
 ---
 
 > **_Question:_** Quelles méthodes d’authentification sont supportées par hostapd-wpe ?
-> 
-> **_Réponse:_**
+>
+> **_Réponse:_** 
+>
+> ```
+>     1. EAP-FAST/MSCHAPv2 (Phase 0)
+>     2. PEAP/MSCHAPv2
+>     3. EAP-TTLS/MSCHAPv2
+>     4. EAP-TTLS/MSCHAP
+>     5. EAP-TTLS/CHAP
+>     6. EAP-TTLS/PAP
+> ```
 
 
 ### 3. GTC Downgrade Attack avec [EAPHammer](https://github.com/s0lst1c3/eaphammer) 
@@ -146,23 +200,39 @@ Pour implémenter l’attaque :
 - Lancer une capture Wireshark
 - Tenter une connexion au réseau
 
+> Création de certificats : 
+>
+> ![](figures/cert.png)
+
+> ![](figures/cert2.png)
+>
+> ![](figures/attack.png)
+>
+> L'attaque ne fonctionnait malheureusement pas avec notre carte.
+
 
 ### Répondez aux questions suivantes :
 
 > **_Question :_** Expliquez en quelques mots l'attaque GTC Downgrade
-> 
-> **_Réponse :_** 
+>
+> **_Réponse :_**  Lorsque l'utilisateur essaie de se connecter à l'AP, l'authentification est explicitement demandée en EAP-GTC. EAP-GTC est une méthode créée par Microsoft et Cisco pour permettre l'utilisation de mots de passe à usage unique. Ces mots de passe sont alors envoyés en clair et il est alors possible de les récupérer. 
+>
+> Beaucoup d'appareil ne spécifient pas que ce sont des mots de passe à usage unique et affichent simplement un formulaire d'authentification banal. L'utilisateur entre alors ces identifiants et ceux-ci sont alors exposés.
+>
+> Source : https://solstice.sh/iii-eap-downgrade-attacks/
 
 ---
 
 > **_Question:_** Quelles sont vos conclusions et réflexions par rapport à la méthode hostapd-wpe ?
-> 
-> **_Réponse:_** 
+>
+> **_Réponse:_** La principale différence est que le mot de passe récupéré est en clair, pas besoin d'utiliser un outil tel que John pour le récupérer ce qui permet de gagner du temps.
+>
+> Certains appareils peuvent également détecter qu'un mot de passe unique est demandé et le spécifier à l'utilisateur. Si ce dernier est attentif et le remarque, il peut alors se douter que l'AP est suspect et ne pas y entrer ses identifiants.
 
 
 ### 4. En option, vous pouvez explorer d'autres outils comme [eapeak](https://github.com/rsmusllp/eapeak) ou [crEAP](https://github.com/W9HAX/crEAP/blob/master/crEAP.py) pour les garder dans votre arsenal de pentester.
 
-(Il n'y a pas de rendu pour cette partie...)
+(Il n'y a pas de rendu pour cette partie...
 
 ## Livrables
 
