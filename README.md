@@ -49,54 +49,68 @@ A tittre d'exemple, voici [une connexion WPA Entreprise](files/auth.pcap) qui co
 Pour réussir votre capture, vous pouvez procéder de la manière suivante :
 
 - 	Identifier l'AP le plus proche, en identifiant le canal utilisé par l’AP dont la puissance est la plus élevée (et dont le SSID est HEIG-VD...). Vous pouvez faire ceci avec ```airodump-ng```, par exemple
--   Lancer une capture avec Wireshark
--   Etablir une connexion depuis un poste de travail (PC), un smartphone ou n'importe quel autre client WiFi. __Attention__, il est important que la connexion se fasse à 2.4 GHz pour pouvoir sniffer avec les interfaces Alfa
+- 	Lancer une capture avec Wireshark
+- 	Etablir une connexion depuis un poste de travail (PC), un smartphone ou n'importe quel autre client WiFi. __Attention__, il est important que la connexion se fasse à 2.4 GHz pour pouvoir sniffer avec les interfaces Alfa
 - Comparer votre capture au processus d’authentification donné en théorie (n’oubliez pas les captures d'écran pour illustrer vos comparaisons !). En particulier, identifier les étapes suivantes :
-	- Requête et réponse d’authentification système ouvert
+	- Requête et réponse d’authentification système ouvert![image-20220519151214429](C:\Users\Nicolas\AppData\Roaming\Typora\typora-user-images\image-20220519151214429.png)
  	- Requête et réponse d’association (ou reassociation)
-	- Négociation de la méthode d’authentification entreprise (TLS?, TTLS?, PEAP?, LEAP?, autre?)
-	- Phase d’initiation
-	- Phase hello :
-		- Version TLS
-		- Suites cryptographiques et méthodes de compression proposées par le client et acceptées par l’AP
-		- Nonces
-		- Session ID
-	- Phase de transmission de certificats
+	- Négociation de la méthode d’authentification entreprise (TLS?, TTLS?, PEAP?, LEAP?, autre?)![image-20220519145546983](C:\Users\Nicolas\AppData\Roaming\Typora\typora-user-images\image-20220519145546983.png)
+	- Phase d’initiation![image-20220519151600105](C:\Users\Nicolas\AppData\Roaming\Typora\typora-user-images\image-20220519151600105.png)
+	- Phase hello :![image-20220519145333577](C:\Users\Nicolas\AppData\Roaming\Typora\typora-user-images\image-20220519145333577.png)
+	  - Version TLS
+	  - Suites cryptographiques et méthodes de compression proposées par le client et acceptées par l’AP
+	  - Nonces
+	  - Session ID
+	  - ![image-20220519145348365](C:\Users\Nicolas\AppData\Roaming\Typora\typora-user-images\image-20220519145348365.png)
+	- Phase de transmission de certificats![image-20220519151016246](C:\Users\Nicolas\AppData\Roaming\Typora\typora-user-images\image-20220519151016246.png)
 	 	- Echanges des certificats
-		- Change cipher spec
-	- Authentification interne et transmission de la clé WPA (échange chiffré, vu par Wireshark comme « Application data »)
-	- 4-way handshake
+		- Change cipher spec![image-20220519145611333](C:\Users\Nicolas\AppData\Roaming\Typora\typora-user-images\image-20220519145611333.png)
+	- Authentification interne et transmission de la clé WPA (échange chiffré, vu par Wireshark comme « Application data »)![image-20220519151057941](C:\Users\Nicolas\AppData\Roaming\Typora\typora-user-images\image-20220519151057941.png)
+	- 4-way handshake![image-20220519151115609](C:\Users\Nicolas\AppData\Roaming\Typora\typora-user-images\image-20220519151115609.png)
 
 ### Répondez aux questions suivantes :
- 
+
 > **_Question :_** Quelle ou quelles méthode(s) d’authentification est/sont proposé(s) au client ?
-> 
-> **_Réponse :_** 
+>
+> **_Réponse :_** EAP-TLS, EAP-PEAP
+>
+> ![image-20220519144307341](C:\Users\Nicolas\AppData\Roaming\Typora\typora-user-images\image-20220519144307341.png)
 
 ---
 
 > **_Question:_** Quelle méthode d’authentification est finalement utilisée ?
-> 
-> **_Réponse:_** 
+>
+> **_Réponse:_** EAP-PEAP
+>
+> ![image-20220519144430752](C:\Users\Nicolas\AppData\Roaming\Typora\typora-user-images\image-20220519144430752.png)
+>
+> ![image-20220519144445587](C:\Users\Nicolas\AppData\Roaming\Typora\typora-user-images\image-20220519144445587.png)
 
 ---
 
 > **_Question:_**Arrivez-vous à voir l’identité du client dans la phase d'initiation ? Oui ? Non ? Pourquoi ?
-> 
-> **_Réponse:_** 
+>
+> **_Réponse:_** Oui, car..
+>
+> ![image-20220519144506604](C:\Users\Nicolas\AppData\Roaming\Typora\typora-user-images\image-20220519144506604.png)
+>
+> ![image-20220519144530204](C:\Users\Nicolas\AppData\Roaming\Typora\typora-user-images\image-20220519144530204.png)
 
 ---
 
 > **_Question:_** Lors de l’échange de certificats entre le serveur d’authentification et le client :
-> 
+>
 > - a. Le serveur envoie-t-il un certificat au client ? Pourquoi oui ou non ?
-> 
-> **_Réponse:_**
-> 
+>
+> **_Réponse:_** Oui, car..
+>
 > - b. Le client envoie-t-il un certificat au serveur ? Pourquoi oui ou non ?
-> 
-> **_Réponse:_**
-> 
+>
+> **_Réponse:_** Non, car..
+>
+> ![image-20220519144708726](C:\Users\Nicolas\AppData\Roaming\Typora\typora-user-images\image-20220519144708726.png)
+>
+> ![image-20220519144727397](C:\Users\Nicolas\AppData\Roaming\Typora\typora-user-images\image-20220519144727397.png)
 
 ---
 
@@ -120,19 +134,28 @@ Pour implémenter l’attaque :
 
 > **_Question :_** Quelles modifications sont nécessaires dans la configuration de hostapd-wpe pour cette attaque ?
 > 
-> **_Réponse :_** 
+> **_Réponse :_** Simplement le SSID
 
 ---
 
 > **_Question:_** Quel type de hash doit-on indiquer à john ou l'outil que vous avez employé pour craquer le handshake ?
 > 
-> **_Réponse:_** 
+> **_Réponse:_** NETNTLM 
 
 ---
 
 > **_Question:_** Quelles méthodes d’authentification sont supportées par hostapd-wpe ?
-> 
-> **_Réponse:_**
+>
+> **_Réponse:_** 
+>
+> ```
+>     1. EAP-FAST/MSCHAPv2 (Phase 0)
+>     2. PEAP/MSCHAPv2
+>     3. EAP-TTLS/MSCHAPv2
+>     4. EAP-TTLS/MSCHAP
+>     5. EAP-TTLS/CHAP
+>     6. EAP-TTLS/PAP
+> ```
 
 
 ### 3. GTC Downgrade Attack avec [EAPHammer](https://github.com/s0lst1c3/eaphammer) 
