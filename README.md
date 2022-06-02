@@ -315,9 +315,19 @@ Référence : [https://github.com/aircrack-ng/aircrack-ng/tree/master/patches/wp
 
 ## Capture
 
-Le réseau evil twin crée
+Nous avons eu plusieurs problèmes pour faire fonctionner EAPHammer, nous avons enfin pu le lancer :
+
+![EAPHammer](./assets/EAPHammer.PNG)
+
+Le réseau evil twin a bien été créé :
 
 ![fake-evil](./assets/fake-evil.jpg)
+
+Malheureusement il nous était impossible de nous y connecter (Connexion impossible). Et rien n'étais capturé par Wireshark :
+
+![WiresharkVideEAPHammer](./assets/WiresharkVideEAPHammer.PNG)
+
+Nous n'avons donc pas pu effectuer l'entièreté de l'attaque pour récupérer les crédentials.
 
 
 ### Répondez aux questions suivantes :
