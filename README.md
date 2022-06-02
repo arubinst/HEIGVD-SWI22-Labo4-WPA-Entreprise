@@ -52,21 +52,39 @@ Pour réussir votre capture, vous pouvez procéder de la manière suivante :
 - 	Lancer une capture avec Wireshark
 - 	Etablir une connexion depuis un poste de travail (PC), un smartphone ou n'importe quel autre client WiFi. __Attention__, il est important que la connexion se fasse à 2.4 GHz pour pouvoir sniffer avec les interfaces Alfa
 - Comparer votre capture au processus d’authentification donné en théorie (n’oubliez pas les captures d'écran pour illustrer vos comparaisons !). En particulier, identifier les étapes suivantes :
-	- Requête et réponse d’authentification système ouvert![image-20220519151214429](figures/image-20220519151214429.png)
- 	- Requête et réponse d’association (ou reassociation)
-	- Négociation de la méthode d’authentification entreprise (TLS?, TTLS?, PEAP?, LEAP?, autre?)![image-20220519145546983](figures/image-20220519145546983.png)
-	- Phase d’initiation![image-20220519151600105](figures/image-20220519151600105.png)
-	- Phase hello :![image-20220519145333577](figures/image-20220519145333577.png)
-	  - Version TLS
-	  - Suites cryptographiques et méthodes de compression proposées par le client et acceptées par l’AP
-	  - Nonces
-	  - Session ID
-	  - ![image-20220519145348365](figures/image-20220519145348365.png)
-	- Phase de transmission de certificats![image-20220519151016246](figures/image-20220519151016246.png)
-	 	- Echanges des certificats
-		- Change cipher spec![image-20220519145611333](figures/image-20220519145611333.png)
-	- Authentification interne et transmission de la clé WPA (échange chiffré, vu par Wireshark comme « Application data »)![image-20220519151057941](figures/image-20220519151057941.png)
-	- 4-way handshake![image-20220519151115609](figures/image-20220519151115609.png)
+	- Requête et réponse d’authentification système ouvert
+	  - ![image-20220602161621257](figures/image-20220602161621257.png)
+	  - ![image-20220602161649609](figures/image-20220602161649609.png)
+  - 	Requête et réponse d’association (ou reassociation)
+  - 	![image-20220602161304477](figures/image-20220602161304477.png)
+  - 	![image-20220602161323138](figures/image-20220602161323138.png)
+  - 	Négociation de la méthode d’authentification entreprise (TLS?, TTLS?, PEAP?, LEAP?, autre?)![image-20220519145546983](figures/image-20220519145546983.png)
+  - 	Phase d’initiation![image-20220519151600105](figures/image-20220519151600105.png)
+  - 	Phase hello :![image-20220519145333577](figures/image-20220519145333577.png)
+    - 	![image-20220519145348365](figures/image-20220519145348365.png)
+    - 	![image-20220602155856989](figures/image-20220602155856989.png)
+    - 	Version TLS
+       - ![image-20220602160054438](figures/image-20220602160054438.png)
+       - ![image-20220602160133967](figures/image-20220602160133967.png)
+    - 	Suites cryptographiques et méthodes de compression proposées par le client et acceptées par l’AP
+       - ![image-20220602160232287](figures/image-20220602160232287.png)
+       - ![image-20220602160351485](figures/image-20220602160351485.png)
+       - ![image-20220602160731021](figures/image-20220602160731021.png)
+    - 	Nonces
+       - ![image-20220602160531154](figures/image-20220602160531154.png)
+       - ![image-20220602160553925](figures/image-20220602160553925.png)
+    - 	Session ID
+       - ![image-20220602160840364](figures/image-20220602160840364.png)
+       - ![image-20220602160907010](figures/image-20220602160907010.png)
+
+  - 	Phase de transmission de certificats
+     - ![image-20220602161008657](figures/image-20220602161008657.png)
+    - 	Echanges des certificats
+    - Change cipher spec
+      - ![image-20220602161052479](figures/image-20220602161052479.png)
+  - 	Authentification interne et transmission de la clé WPA (échange chiffré, vu par Wireshark comme « Application data »)![image-20220519151057941](figures/image-20220519151057941.png)
+  - 	4-way handshake![image-20220519151115609](figures/image-20220519151115609.png)
+
 
 ### Répondez aux questions suivantes :
 
@@ -74,7 +92,11 @@ Pour réussir votre capture, vous pouvez procéder de la manière suivante :
 >
 > **_Réponse :_** EAP-TLS, EAP-PEAP
 >
-> ![image-20220519144307341](figures/image-20220519144307341.png)
+> ![image-20220602162114492](figures/image-20220602162114492.png)
+>
+> ![image-20220602162132961](figures/image-20220602162132961.png)
+>
+> 
 
 ---
 
@@ -95,6 +117,8 @@ Pour réussir votre capture, vous pouvez procéder de la manière suivante :
 > ![image-20220519144506604](figures/image-20220519144506604.png)
 >
 > ![image-20220519144530204](figures/image-20220519144530204.png)
+>
+> Serveur : ![image-20220602161442081](figures/image-20220602161442081.png)
 
 ---
 
@@ -102,11 +126,11 @@ Pour réussir votre capture, vous pouvez procéder de la manière suivante :
 >
 > - a. Le serveur envoie-t-il un certificat au client ? Pourquoi oui ou non ?
 >
-> **_Réponse:_** Oui, car..
+> **_Réponse:_** Oui, car EAP-PEAP utilise un certificat PKI pour créer un tunnel TLS
 >
 > - b. Le client envoie-t-il un certificat au serveur ? Pourquoi oui ou non ?
 >
-> **_Réponse:_** Non, car..
+> **_Réponse:_** Non, car le client s'est déjà authentifié avec ses credentials
 >
 > ![image-20220519144708726](figures/image-20220519144708726.png)
 >
