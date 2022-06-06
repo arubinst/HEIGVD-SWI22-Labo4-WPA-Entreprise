@@ -14,10 +14,9 @@ __A faire en équipes de deux personnes__
 
 ### Objectif :
 
-1.	Analyser les étapes d’une connexion WPA Entreprise avec une capture Wireshark
-2.	Implémenter une attaque WPE (Wireless Pwnage Edition) contre un réseau WPA Entreprise
-1.  Implémenter une attaque GTC Dowgrade contre un réseau WPA Entreprise
-
+1. Analyser les étapes d’une connexion WPA Entreprise avec une capture Wireshark
+2. Implémenter une attaque WPE (Wireless Pwnage Edition) contre un réseau WPA Entreprise
+3. Implémenter une attaque GTC Dowgrade contre un réseau WPA Entreprise
 
 ## Quelques éléments à considérer pour les parties 2 et 3 :
 
@@ -33,10 +32,10 @@ En principe, il devrait être possible de démarrer vos machines en Kali natif (
 nmcli radio wifi off
 rfkill unblock wlan
 ```
--	Pour pouvoir capturer une authentification complète, il faut se déconnecter d’un réseau et attendre 1 minute (timeout pour que l’AP « oublie » le client) 
--	Les échanges d’authentification entreprise peuvent être facilement trouvés utilisant le filtre d’affichage « ```eap``` » dans Wireshark
--   Il est __impératif__ de bien fixer le cannal lors de vos captures
 
+- Pour pouvoir capturer une authentification complète, il faut se déconnecter d’un réseau et attendre 1 minute (timeout pour que l’AP « oublie » le client) 
+- Les échanges d’authentification entreprise peuvent être facilement trouvés utilisant le filtre d’affichage « ```eap``` » dans Wireshark
+- Il est __impératif__ de bien fixer le cannal lors de vos captures
 
 ## Travail à réaliser
 
@@ -48,55 +47,128 @@ A tittre d'exemple, voici [une connexion WPA Entreprise](files/auth.pcap) qui co
 
 Pour réussir votre capture, vous pouvez procéder de la manière suivante :
 
-- 	Identifier l'AP le plus proche, en identifiant le canal utilisé par l’AP dont la puissance est la plus élevée (et dont le SSID est HEIG-VD...). Vous pouvez faire ceci avec ```airodump-ng```, par exemple
--   Lancer une capture avec Wireshark
--   Etablir une connexion depuis un poste de travail (PC), un smartphone ou n'importe quel autre client WiFi. __Attention__, il est important que la connexion se fasse à 2.4 GHz pour pouvoir sniffer avec les interfaces Alfa
+- Identifier l'AP le plus proche, en identifiant le canal utilisé par l’AP dont la puissance est la plus élevée (et dont le SSID est HEIG-VD...). Vous pouvez faire ceci avec ```airodump-ng```, par exemple
+
+- Lancer une capture avec Wireshark
+
+- Etablir une connexion depuis un poste de travail (PC), un smartphone ou n'importe quel autre client WiFi. __Attention__, il est important que la connexion se fasse à 2.4 GHz pour pouvoir sniffer avec les interfaces Alfa
+
 - Comparer votre capture au processus d’authentification donné en théorie (n’oubliez pas les captures d'écran pour illustrer vos comparaisons !). En particulier, identifier les étapes suivantes :
-	- Requête et réponse d’authentification système ouvert
- 	- Requête et réponse d’association (ou reassociation)
-	- Négociation de la méthode d’authentification entreprise (TLS?, TTLS?, PEAP?, LEAP?, autre?)
-	- Phase d’initiation
-	- Phase hello :
-		- Version TLS
-		- Suites cryptographiques et méthodes de compression proposées par le client et acceptées par l’AP
-		- Nonces
-		- Session ID
-	- Phase de transmission de certificats
-	 	- Echanges des certificats
-		- Change cipher spec
-	- Authentification interne et transmission de la clé WPA (échange chiffré, vu par Wireshark comme « Application data »)
-	- 4-way handshake
+
+- Requête et réponse d’authentification système ouvert
+  
+    **Requête** : 
+  ![open_auth_req.png](./assets/82b5ae9846f52f96915c44decd7da01ef7e6e1c0.png)
+  
+    **Réponse** : 
+  
+  ![open_auth_response.png](./assets/20d1efd77c208c5f12b9090a385b055ab705abb0.png)
+
+- Requête et réponse d’association (ou reassociation)
+  
+  **Requête** :
+  
+  ![a.png](./assets/c261d1640189b9403a3b6c239f14a384f23c09ec.png)
+  
+  **Réponse** :
+
+  ![unknown_a.png](./assets/c3dfe3a97190f0362e2e7183e7301a7784bc2b65.png)
+
+
+- Négociation de la méthode d’authentification entreprise (TLS?, TTLS?, PEAP?, LEAP?, autre?)
+  
+  On remarque que le client a directement accepté la proposition du serveur (PEAP) car il n'y a qu'un seul échange de ce type :
+
+  ![auth.png](./assets/f8b683c3f8754ba2b28f908943cb0b627965ad88.png)
+
+
+- Phase d’initiation
+  
+  **Requête identité** :
+  
+  ![id_req.png](./assets/5dab3e02137756b2a329c1d93aed56db9dd377fd.png)
+  
+  **Réponse identité** :
+  
+  ![id_res.png](./assets/0c1348610cc81cb7bfc4678e5d3ba41b2b33d4d1.png)
+
+- Phase hello :
+  
+  - Version TLS
+  - Suites cryptographiques et méthodes de compression proposées par le client et acceptées par l’AP
+  - Nonces
+  - Session ID
+  
+  **Client hello** :
+  
+  ![hello.jpg](./assets/6038432d93a3a1bd70bf05c96d18f13fa69b30de.jpg)
+  
+  Le session ID ne figure pas sur la capture. Nous pensons que cela est dû au fait qu'il s'agit de la première connexion du client qui n'a pas encore de session.
+  
+  **Server hello** :  ![server_hello.jpg](./assets/3856b20ca5e0db09eebe17a25e92792045c6b058.jpg)
+  
+
+- Phase de transmission de certificats
+  
+  - Echanges des certificats
+    
+    ![certif_exch.png](./assets/ed55739ccab7ad5284a577ff8c4e281525c6568f.png)
+    
+    On peut lire les informations suivantes sur le certificat :
+    
+    ![certif.png](./assets/85513863dda99c0e8a760852a769a92c9fb23c73.png)
+
+- Change cipher spec
+  
+  ![change_spher_spec.png](./assets/26debd0ca2c06b3f3c3227fc24e2d94985f769f2.png)
+
+- Authentification interne et transmission de la clé WPA (échange chiffré, vu par Wireshark comme « Application data »)
+  
+  ![wpa_exchange.png](./assets/5d3e8cc54a2a56c8b9c93d61e90c7ee533537e28.png)
+  =======
+
+- 4-way handshake
+  
+  ![4-way.png](./assets/10e820b82a795d4f52c826e3f4f4e9895ea6758a.png)
+  
+  Le premier message comme exemple :  ![4-way-1.png](./assets/758c9ff5c7431ad6e235117d7e70234c63e66661.png)
+  
 
 ### Répondez aux questions suivantes :
- 
+
 > **_Question :_** Quelle ou quelles méthode(s) d’authentification est/sont proposé(s) au client ?
 > 
-> **_Réponse :_** 
+> **_Réponse :_** PEAP
 
 ---
 
 > **_Question:_** Quelle méthode d’authentification est finalement utilisée ?
 > 
-> **_Réponse:_** 
+> **_Réponse:_** PEAP
 
 ---
 
-> **_Question:_**Arrivez-vous à voir l’identité du client dans la phase d'initiation ? Oui ? Non ? Pourquoi ?
+> **_Question:_** Arrivez-vous à voir l’identité du client dans la phase d'initiation ? Oui ? Non ? Pourquoi ?
 > 
-> **_Réponse:_** 
+> **_Réponse:_** Oui, elle est donnée par le client dans le champ Identity lors de la réponse.
 
 ---
 
 > **_Question:_** Lors de l’échange de certificats entre le serveur d’authentification et le client :
 > 
-> - a. Le serveur envoie-t-il un certificat au client ? Pourquoi oui ou non ?
+> - a. Le serveur envoie-t-il un certificat au client ? Pourquoi oui ou non 
+>   
+>   **Réponse:**
+>   
+>   Oui, il envoie une chaîne de certificats : 
+>   
+>   ![certifs_wesh.png](./assets/1647fde5b219449ade18d3824195a253e18c7f8c.png)
+>   
+>   Cela lui permet de prouver son identité auprès du client qui va vérifier la chaîne de certificats.
 > 
-> **_Réponse:_**
-> 
-> - b. Le client envoie-t-il un certificat au serveur ? Pourquoi oui ou non ?
-> 
-> **_Réponse:_**
-> 
+> - b. Le client envoie-t-il un certificat au serveur ? Pourquoi oui ou non ?**Réponse:**
+>   
+>   Non, dans PEAP le client ne prouve pas son identité par un certificat. Il le fera à l'aide d'un processus d'authentification interne (EAP-MSCHAP-V2).
 
 ---
 
@@ -118,26 +190,47 @@ Pour implémenter l’attaque :
 - Tenter une connexion au réseau (ne pas utiliser vos identifiants réels)
 - Utiliser un outil de brute-force (```john```, ```hashcat``` ou ```asleap```, par exemple) pour attaquer le hash capturé (utiliser un mot de passe assez simple pour minimiser le temps)
 
+**Résultats de l'attaque**
+
+![ah.png](./assets/fbd8bb81df1285a7725ab785e5294cff11b9f13f.png)
+
+**Résultats après brute-force avec john**
+
+![unknown.png](./assets/4e2f5a1686a8d5801fab5aa5e2c1046d9a82dfee.png)
+
 ### Répondez aux questions suivantes :
 
 > **_Question :_** Quelles modifications sont nécessaires dans la configuration de hostapd-wpe pour cette attaque ?
 > 
-> **_Réponse :_** 
+> **_Réponse :_** Il faut modifier le ssid par le nom du réseau de notre evil-twin. 
+> 
+> ![](https://cdn.discordapp.com/attachments/908358746323972146/976834077875384330/unknown.png)
 
 ---
 
 > **_Question:_** Quel type de hash doit-on indiquer à john ou l'outil que vous avez employé pour craquer le handshake ?
 > 
-> **_Réponse:_** 
+> **_Réponse:_** Pas besoin de préciser le type de hash car john peut le deviner. Mais il s'agit d'un NETNTLM
 
 ---
 
 > **_Question:_** Quelles méthodes d’authentification sont supportées par hostapd-wpe ?
 > 
 > **_Réponse:_**
+> 
+> 1. EAP-FAST/MSCHAPv2 (Phase 0)
+> 
+> 2. PEAP/MSCHAPv2
+> 
+> 3. EAP-TTLS/MSCHAPv2
+> 
+> 4. EAP-TTLS/MSCHAP
+> 
+> 5. EAP-TTLS/CHAP
+> 
+> 6. EAP-TTLS/PAP
 
-
-### 3. GTC Downgrade Attack avec [EAPHammer](https://github.com/s0lst1c3/eaphammer) 
+### 3. GTC Downgrade Attack avec [EAPHammer](https://github.com/s0lst1c3/eaphammer)
 
 [EAPHammer](https://github.com/s0lst1c3/eaphammer) est un outil de nouvelle génération pour les attaques WPA Entreprise. Il peut en particulier faire une attaque de downgrade GTC, pour tenter de capturer les identifiants du client __en clair__, ce qui évite le besoin de l'attaque par dictionnaire.
 
@@ -146,19 +239,21 @@ Pour implémenter l’attaque :
 - Lancer une capture Wireshark
 - Tenter une connexion au réseau
 
+**Résultats de l'attaque**
+
+![](./assets/2022-05-19-15-00-36-image.png)
 
 ### Répondez aux questions suivantes :
 
 > **_Question :_** Expliquez en quelques mots l'attaque GTC Downgrade
 > 
-> **_Réponse :_** 
+> **_Réponse :_** EAP-GTC est une méthode d'authentification qui fait passer les credentials en clair dans le tunnel TLS. Si la victime cherche à se connecter à l'AP de l'attaquant (evil-twin), celui-ci peut lui proposer cette méthode d'authentification à la place de PEAP. Si le client accepte, les credentials passent en clair et c'est le jackpot pour l'attaquant qui peut les lire (il contrôle le tunnel TLS).
 
 ---
 
 > **_Question:_** Quelles sont vos conclusions et réflexions par rapport à la méthode hostapd-wpe ?
 > 
-> **_Réponse:_** 
-
+> **_Réponse:_** Downgrade GTC a l'avantage de pouvoir récupérer directement le mot de passe. Si celui-ci est complexe, il est difficile (voire impossible) de le brute-force avec hostapd-wpe. Cependant, pas tous les clients n'acceptent un downgrade GTC...  
 
 ### 4. En option, vous pouvez explorer d'autres outils comme [eapeak](https://github.com/rsmusllp/eapeak) ou [crEAP](https://github.com/W9HAX/crEAP/blob/master/crEAP.py) pour les garder dans votre arsenal de pentester.
 
@@ -168,8 +263,8 @@ Pour implémenter l’attaque :
 
 Un fork du repo original . Puis, un Pull Request contenant :
 
--	Captures d’écran + commentaires
--	Réponses aux questions
+- Captures d’écran + commentaires
+- Réponses aux questions
 
 ## Échéance
 
